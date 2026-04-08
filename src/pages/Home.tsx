@@ -8,7 +8,6 @@ import missionVisual from '../assets/mission_visual.png';
 import valuesVisual from '../assets/values_visual.png';
 import milestonesVisual from '../assets/milestones_visual.png';
 import ContactSection from '../components/ContactSection';
-import CurtainSection from '../components/CurtainSection';
 import './Home.css';
 
 const fadeUpVariant: any = {
@@ -26,10 +25,6 @@ const staggerContainer: any = {
   }
 };
 
-const pillarVariant: any = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
 
 const Home: React.FC = () => {
   const treeRef = useRef<HTMLDivElement>(null);

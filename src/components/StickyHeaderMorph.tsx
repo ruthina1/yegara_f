@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';

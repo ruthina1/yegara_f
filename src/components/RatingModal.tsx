@@ -18,6 +18,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ courseId, courseTitle, onClos
 
   useEffect(() => {
     fetchUserRating();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseId]);
 
   const fetchUserRating = async () => {

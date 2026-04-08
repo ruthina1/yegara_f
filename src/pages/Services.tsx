@@ -81,7 +81,6 @@ const StackCard = ({
   const blurValue = useTransform(progress, [rootRange[0], 1], [0, 3]);
   const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
 
-  const isLight = service.color === '#FBF8F5';
 
   return (
     <div ref={container} className="stack-card__wrapper" id={service.id}>

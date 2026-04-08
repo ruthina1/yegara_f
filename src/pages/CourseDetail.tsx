@@ -26,6 +26,7 @@ const CourseDetail: React.FC = () => {
   useEffect(() => {
     fetchCourse();
     fetchProgress();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchCourse = async () => {
