@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════════════════════════
+   CORPORATE NAV + STICKY HEADER MORPH — YTSC
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Morphing Text Layer ── */
+.morph-text-layer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.morph-text {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.85;
+  transform: translateY(-50%);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Nav Bar ── */
+.corp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 1000;
+  background: white;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.corp-nav--scrolled {
+  height: 90px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+.corp-nav--transparent-white {
+  background: white;
+  box-shadow: none;
+}
+
+.corp-nav__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: relative;
+}
+
+/* ── Logo ── */
+.corp-nav__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.corp-nav__logo img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.corp-nav--scrolled .corp-nav__logo img {
+  width: 55px;
+  height: 55px;
+}
+
+/* ── Center Brand (non-home static fallback) ── */
+.corp-nav__brand-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ytsc-blue);
+  user-select: none;
+}
+
+.corp-nav__brand-center-placeholder {
+  min-width: 120px;
+  height: 1px;
+}
+
+/* ── Right: All Nav Links ── */
+.corp-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.corp-nav__links-row {
+  display: none;
+  align-items: center;
+  gap: 28px;
+}
+
+@media (min-width: 1024px) {
+  .corp-nav__links-row {
+    display: flex;
+  }
+}
+
+/* NOTE: scroll-based show/hide is handled by React AnimatePresence, not CSS */
+
+.corp-nav__link {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(0, 0, 0, 0.45);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.corp-nav__link:hover,
+.corp-nav__link.active {
+  color: var(--ytsc-orange);
+}
+
+.corp-nav__action-btn {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 20px;
+  border: 1.5px solid #F47920;
+  border-radius: 999px;
+  background: #F47920;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.corp-nav__action-btn:hover {
+  background: #db6815;
+  border-color: #db6815;
+  color: #ffffff;
+}
+
+/* Mobile Toggle — always flex when rendered on mobile */
+.corp-nav__mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .corp-nav__mobile-toggle {
+    display: none;
+  }
+}
+
+.corp-nav__mobile-toggle {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: rgba(244, 121, 32, 0.6); /* Light faded orange like other elements */
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.corp-nav__mobile-toggle:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WHITE HERO SECTION
+   ═══════════════════════════════════════════════════════════════ */
+
+.white-hero {
+  height: 100vh;
+  width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.white-hero__subtitle {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.55em;
+  color: rgba(244, 121, 32, 0.5); /* Faded company orange */
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.white-hero__scroll {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.white-hero__scroll-line {
+  width: 1px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.white-hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ytsc-orange);
+  animation: scrollLineSlide 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollLineSlide {
+  0% { top: -100%; }
+  50% { top: 0; }
+  100% { top: 100%; }
+}
+
+.white-hero__scroll span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  color: rgba(244, 121, 32, 0.5); /* Faded company orange */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE MENU
+   ═══════════════════════════════════════════════════════════════ */
+
+.corp-mobile-menu {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 90px);
+  background: white;
+  z-index: 1200;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  display: block;
+}
+
+.corp-mobile-menu--open {
+  transform: translateX(0);
+}
+
+.corp-mobile-menu__inner {
+  padding: 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 600px;
+}
+
+.corp-mobile-menu__link {
+  font-size: 32px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: #0A1628;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  display: block;
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.corp-mobile-menu__link:hover {
+  color: var(--ytsc-orange);
+  padding-left: 12px;
+}

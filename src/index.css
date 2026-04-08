@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════
+   YTSC DESIGN SYSTEM — Brand Tokens
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Color Palette ── */
+  --ytsc-white: #FFFFFF;
+  --ytsc-off-white: #F8F9FC;
+  --ytsc-light-gray: #EEF1F6;
+  
+  --ytsc-blue: #1B3A5C;
+  --ytsc-blue-light: #2A5A8C;
+  --ytsc-blue-dark: #0F2440;
+  --ytsc-blue-muted: #3D6B99;
+  
+  --ytsc-orange: #F47920;
+  --ytsc-orange-light: #FF9A52;
+  --ytsc-orange-dark: #D4631A;
+  --ytsc-orange-glow: rgba(244, 121, 32, 0.15);
+  
+  --ytsc-dark: #0A1628;
+  --ytsc-gray: #6B7B8D;
+  --ytsc-gray-light: #9EAAB6;
+  --ytsc-text: #2D3748;
+  --ytsc-text-light: #718096;
+  
+  /* ── Typography ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-ethiopic: 'Noto Sans Ethiopic', 'Inter', sans-serif;
+  
+  /* ── Spacing ── */
+  --section-padding: 120px;
+  --container-max: 1280px;
+  --container-wide: 1440px;
+  
+  /* ── Transitions ── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: 0.2s var(--ease-out-expo);
+  --transition-base: 0.4s var(--ease-out-expo);
+  --transition-slow: 0.8s var(--ease-out-expo);
+  
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(11, 22, 40, 0.06);
+  --shadow-md: 0 4px 16px rgba(11, 22, 40, 0.08);
+  --shadow-lg: 0 12px 40px rgba(11, 22, 40, 0.12);
+  --shadow-xl: 0 24px 60px rgba(11, 22, 40, 0.16);
+  --shadow-orange: 0 8px 30px rgba(244, 121, 32, 0.25);
+  
+  /* ── Border Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+}
+
+/* ── Base Reset ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ytsc-text);
+  background: var(--ytsc-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Amharic Typography Helper ── */
+.amharic, [lang="am"] {
+  font-family: var(--font-ethiopic);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--ytsc-orange);
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════ */
+
+.ytsc-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ytsc-container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ytsc-section {
+  padding: var(--section-padding) 0;
+}
+
+.bg-light-gray {
+  background-color: var(--ytsc-off-white);
+}
+
+.ytsc-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ytsc-orange);
+}
+
+.ytsc-heading-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ytsc-blue);
+  letter-spacing: -0.02em;
+}
+
+.ytsc-heading-lg {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ytsc-blue);
+  letter-spacing: -0.01em;
+}
+
+.ytsc-heading-md {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ytsc-blue);
+}
+
+.ytsc-body {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ytsc-gray);
+}
+
+.ytsc-body-sm {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ytsc-gray);
+}
+
+/* ── Buttons ── */
+.ytsc-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--ytsc-orange);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-orange);
+}
+
+.ytsc-btn-primary:hover {
+  background: var(--ytsc-orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(244, 121, 32, 0.35);
+}
+
+.ytsc-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: transparent;
+  color: var(--ytsc-blue);
+  border: 2px solid var(--ytsc-blue);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition-base);
+}
+
+.ytsc-btn-secondary:hover {
+  background: var(--ytsc-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.ytsc-btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: white;
+  color: var(--ytsc-blue);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition-base);
+}
+
+.ytsc-btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Divider ── */ 
+.ytsc-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--ytsc-orange);
+  border-radius: 2px;
+}
+
+/* ── Cards ── */
+.ytsc-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--ytsc-light-gray);
+  transition: var(--transition-base);
+}
+
+.ytsc-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: transparent;
+}
+
+/* ── Animations ── */
+@keyframes ytsc-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ytsc-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ytsc-slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ytsc-scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeInUp {
+  animation: ytsc-fadeInUp 0.8s var(--ease-out-expo) forwards;
+}
+
+.animate-fadeIn {
+  animation: ytsc-fadeIn 0.6s var(--ease-out-expo) forwards;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 80px;
+  }
+  
+  .ytsc-container, .ytsc-container-wide {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: 60px;
+  }
+}

@@ -1,0 +1,470 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOME PAGE — YTSC Corporate Refined
+   ═══════════════════════════════════════════════════════════════ */
+
+.home-page {
+  background: var(--ytsc-white);
+  min-height: 100vh;
+}
+
+/* ── Reveal Content Section (Image after 100vh) ── */
+.ytsc-hero-content-reveal {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--ytsc-blue-dark);
+}
+
+.reveal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  filter: brightness(0.4);
+}
+
+.reveal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(10, 22, 40, 0.8) 0%, rgba(10, 22, 40, 0.2) 100%);
+  z-index: 1;
+}
+
+.reveal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.reveal-content .ytsc-label {
+  color: white !important;
+  opacity: 1 !important;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.reveal-content h2 {
+  color: white !important;
+  font-size: clamp(3rem, 7vw, 5.5rem) !important;
+  line-height: 1.1;
+  font-weight: 900;
+  margin-bottom: 32px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.reveal-content h2 span.text-orange {
+  color: var(--ytsc-orange) !important;
+}
+
+.reveal-content p {
+  color: white !important;
+  font-size: 20px !important;
+  line-height: 1.6;
+  opacity: 0.95 !important;
+  max-width: 800px;
+  margin: 0 auto 48px auto;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.reveal-content .flex {
+  justify-content: center;
+}
+
+/* ── Animation Utilities ── */
+.section-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.section-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Mission Section (Botronics-style) ── */
+.home-mission {
+  background: var(--ytsc-white);
+  padding: 100px 0 0;
+  border-top: 1px solid var(--ytsc-light-gray);
+}
+
+/* Top: Split hero — left text, right visual */
+.home-mission__hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center; /* Vertically center the heading and image */
+  gap: 80px; /* Add space between text and image */
+  min-height: 520px;
+  padding: 40px 0;
+  max-width: 1160px; /* Pull content closer to center */
+  margin: 0 auto;
+}
+
+.home-mission__hero--mirrored {
+  grid-template-areas: "right left";
+}
+
+.home-mission__hero--mirrored .home-mission__left {
+  grid-area: left;
+  padding: 40px 0 40px 60px; /* Swap padding to the other side */
+}
+
+.home-mission__hero--mirrored .home-mission__right {
+  grid-area: right;
+}
+
+/* Left side */
+.home-mission__left {
+  padding: 40px 0; /* Balanced padding */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Small bordered label — exact Botronics bracket style */
+.home-mission__label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(244, 121, 32, 0.6); /* Faded light orange */
+  border: none; /* Removed border */
+  padding: 5px 14px;
+  position: relative;
+}
+.home-mission__label::before,
+.home-mission__label::after {
+  content: '|';
+  font-size: 10px;
+  color: rgba(244, 121, 32, 0.6);
+  margin: 0 4px;
+}
+
+/* Large serif heading */
+.home-mission__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ytsc-blue);
+  margin: 0;
+}
+
+.home-mission__heading .text-orange {
+  color: var(--ytsc-orange);
+}
+
+/* Bold CTA button — dark bg like Botronics */
+.home-mission__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 36px;
+  background: var(--ytsc-blue);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+.home-mission__cta:hover {
+  background: var(--ytsc-orange);
+  transform: translateY(-2px);
+}
+
+/* Right side: visual fills the column to the edge */
+.home-mission__right {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center; /* Center the image vertically */
+  justify-content: center;
+}
+
+.home-mission__visual {
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: bottom center;
+  mix-blend-mode: multiply; /* Merges white bg of PNG into page */
+  filter: contrast(1.05);
+}
+
+/* Bottom: Two-column body text — Centered in a tighter container */
+.home-mission__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px; /* Increased gap to look like the illustration */
+  padding: 60px 0 100px;
+  border-top: 1px solid var(--ytsc-light-gray);
+  margin: 0 auto;
+  max-width: 1160px; /* Pull paragraphs closer together */
+}
+
+.home-mission__divider {
+  width: 100%;
+  max-width: 1160px;
+  height: 1px;
+  background: var(--ytsc-light-gray);
+  margin: 0 auto;
+}
+
+.home-mission__body-text {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--ytsc-gray);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .home-mission__hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .home-mission__left {
+    padding: 0 0 40px;
+  }
+  .home-mission__right {
+    min-height: 300px;
+  }
+  .home-mission__body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 40px 0 60px;
+  }
+}
+
+/* ── Pillars Section ── */
+/* ── Pillars Tree Structure ── */
+.home-pillars__tree {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 0;
+  z-index: 5; /* Creates stacking context for the tree */
+}
+
+/* Central Trunk Line — Always visible between cards */
+.home-pillars__tree::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px; /* Extremely thin line */
+  background-color: rgba(244, 121, 32, 0.4); /* Faded company orange */
+  transform: translateX(-50%);
+  z-index: 1;
+  /* Bind height precisely to scroll progress calculated in Home.tsx */
+  height: var(--scroll-tree, 0%); 
+  transition: height 0.1s ease-out; /* Micro-transition to polish scroll ticks */
+}
+
+.pillar-leaf-item {
+  display: flex;
+  margin-bottom: 60px;
+  width: 100%;
+  position: relative;
+}
+
+.pillar-leaf-item:last-child {
+  margin-bottom: 0;
+}
+
+.pillar-leaf-content {
+  width: 45%;
+  position: relative;
+  transition: var(--transition-base);
+}
+
+/* Leaf Shape */
+.leaf-card {
+  background: var(--ytsc-off-white);
+  padding: 40px;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.5s var(--ease-out-expo);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10; /* Ensure cards are above the connector lines */
+}
+
+/* Dynamic Leaf Shapes */
+/* Right side leaves */
+.pillar-leaf-item:nth-child(even) {
+  justify-content: flex-end;
+}
+
+.pillar-leaf-item:nth-child(even) .leaf-card {
+  border-radius: 0 100px 0 100px;
+  text-align: left;
+}
+
+/* Left side leaves */
+.pillar-leaf-item:nth-child(odd) {
+  justify-content: flex-start;
+}
+
+.pillar-leaf-item:nth-child(odd) .leaf-card {
+  border-radius: 100px 0 100px 0;
+  text-align: right;
+  align-items: flex-end;
+}
+
+/* Connector Branch Lines — Connecting trunk to cards */
+.pillar-leaf-item::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 0; /* Fallback */
+  height: 1px; /* Extremely thin line */
+  background-color: rgba(244, 121, 32, 0.4); /* Faded company orange */
+  z-index: 1; 
+  transform: translateY(-50%);
+  transition: width 0.1s ease-out; /* Smooth out small scroll ticks */
+}
+
+/* Branch lines explicitly bound to the central trunk's scroll progress, drawing step-by-step and capped at equal 5% lengths */
+.pillar-leaf-item:nth-child(1)::after { width: clamp(0%, calc((var(--scroll-raw, 0) - 5) * 1%), 5%); }
+.pillar-leaf-item:nth-child(2)::after { width: clamp(0%, calc((var(--scroll-raw, 0) - 25) * 1%), 5%); }
+.pillar-leaf-item:nth-child(3)::after { width: clamp(0%, calc((var(--scroll-raw, 0) - 45) * 1%), 5%); }
+.pillar-leaf-item:nth-child(4)::after { width: clamp(0%, calc((var(--scroll-raw, 0) - 65) * 1%), 5%); }
+.pillar-leaf-item:nth-child(5)::after { width: clamp(0%, calc((var(--scroll-raw, 0) - 85) * 1%), 5%); }
+
+.pillar-leaf-item:nth-child(even)::after {
+  left: 50%;
+}
+
+.pillar-leaf-item:nth-child(odd)::after {
+  right: 50%;
+}
+
+.leaf-card:hover {
+  transform: scale(1.05) translateY(-5px);
+  border-color: var(--ytsc-orange);
+}
+
+.leaf-card:hover .pillar-icon {
+  background: var(--ytsc-orange-glow);
+}
+
+.pillar-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: white;
+  color: var(--ytsc-blue);
+  border-radius: var(--radius-full);
+  width: max-content;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pillar-icon svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.pillar-title {
+  color: var(--ytsc-blue);
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.pillar-desc {
+  color: var(--ytsc-body);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 320px;
+}
+
+.pillar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--ytsc-orange);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .home-pillars__tree::before {
+    left: 20px;
+  }
+  .pillar-leaf-content {
+    width:calc(100% - 60px);
+    margin-left: 60px;
+  }
+  .pillar-leaf-item:nth-child(odd), 
+  .pillar-leaf-item:nth-child(even) {
+    justify-content: flex-start;
+  }
+  .pillar-leaf-item:nth-child(odd) .leaf-card,
+  .pillar-leaf-item:nth-child(even) .leaf-card {
+    border-radius: 0 50px 0 50px;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .pillar-leaf-item::after {
+    left: 20px !important;
+    width: 40px !important;
+  }
+}
+
+/* ── CTA Section ── */
+.home-cta-section {
+  background: var(--ytsc-blue);
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-cta__content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-outline-btn {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.cta-outline-btn:hover {
+  background: white !important;
+  color: var(--ytsc-blue) !important;
+}

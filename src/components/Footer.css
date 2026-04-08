@@ -1,0 +1,292 @@
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER — YTSC Corporate
+   ═══════════════════════════════════════════════════════════════ */
+
+.ytsc-footer {
+  background: var(--ytsc-dark);
+  color: var(--ytsc-white);
+  font-family: var(--font-sans);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── CTA Band ── */
+.footer-cta {
+  background: var(--ytsc-orange);
+  padding: 60px 0;
+  color: white;
+}
+
+.footer-cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+}
+
+@media (min-width: 992px) {
+  .footer-cta__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer-cta__text h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.footer-cta__text p {
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+.footer-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.footer-cta__actions .ytsc-btn-primary {
+  background: var(--ytsc-blue);
+  color: white;
+}
+
+.footer-cta__actions .ytsc-btn-primary:hover {
+  background: var(--ytsc-blue-dark);
+}
+
+/* ── Main Footer ── */
+.footer-main {
+  padding: 100px 0 60px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: 2.5fr 1fr 1.5fr 1fr 1.5fr;
+    gap: 40px;
+  }
+}
+
+/* ── Brand Column ── */
+.footer-brand__logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.footer-brand__logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.footer-brand__name {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: white;
+  line-height: 1;
+}
+
+.footer-brand__sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ytsc-orange);
+  margin-top: 4px;
+}
+
+.footer-brand__desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ytsc-gray-light);
+  margin-bottom: 24px;
+  max-width: 400px;
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ytsc-orange);
+  margin-bottom: 32px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  transition: var(--transition-fast);
+}
+
+.footer-social a:hover {
+  background: var(--ytsc-orange);
+  transform: translateY(-4px);
+}
+
+/* ── Columns (Links & Contact) ── */
+.footer-col__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-col__title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--ytsc-orange);
+}
+
+.footer-col__links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-col__links a {
+  font-size: 15px;
+  color: var(--ytsc-gray-light);
+  transition: var(--transition-fast);
+}
+
+.footer-col__links a:hover {
+  color: var(--ytsc-orange);
+  padding-left: 4px;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-contact__item {
+  display: flex;
+  gap: 16px;
+  color: var(--ytsc-gray-light);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.footer-contact__icon {
+  color: var(--ytsc-orange);
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.footer-contact__item a {
+  transition: var(--transition-fast);
+}
+
+.footer-contact__item a:hover {
+  color: var(--ytsc-orange);
+}
+
+/* ── Bottom Bar ── */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 0;
+}
+
+.footer-bottom__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ytsc-gray-light);
+}
+
+@media (min-width: 768px) {
+  .footer-bottom__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer-bottom__links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-bottom__links a {
+  transition: var(--transition-fast);
+}
+
+.footer-bottom__links a:hover {
+  color: white;
+}
+
+/* ── Massive Background Brand Text ── */
+.footer-huge-background {
+  position: relative;
+  display: block;
+  text-align: center;
+  font-family: var(--font-sans); /* Match Botronics clean sans-serif */
+  font-size: clamp(8rem, 26vw, 36rem); /* Substantial size */
+  font-weight: 800;
+  letter-spacing: -0.04em; /* Tight letter spacing like the reference */
+  text-transform: none; /* Title case "Yegara" */
+  /* Using the YTSC Orange color (#F47920 -> 244, 121, 32) */
+  background: linear-gradient(180deg, rgba(244, 121, 32, 0.25) 0%, rgba(244, 121, 32, 0.02) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent; /* Fallback */
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 0.8; /* Keep the bounding box tight */
+  margin-top: 40px; /* Guarantee space from the links above it */
+}
