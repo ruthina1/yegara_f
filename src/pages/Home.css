@@ -46,7 +46,7 @@
   max-width: 1000px;
   text-align: center;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 .reveal-content .ytsc-label {
@@ -61,7 +61,7 @@
 
 .reveal-content h2 {
   color: white !important;
-  font-size: clamp(3rem, 7vw, 5.5rem) !important;
+  font-size: clamp(2rem, 8vw, 5.5rem) !important;
   line-height: 1.1;
   font-weight: 900;
   margin-bottom: 32px;
@@ -82,9 +82,7 @@
   text-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.reveal-content .flex {
-  justify-content: center;
-}
+/* Cleaned up flex overrides */
 
 /* ── Animation Utilities ── */
 .section-fade-in {
@@ -162,7 +160,7 @@
 /* Large serif heading */
 .home-mission__heading {
   font-family: var(--font-serif);
-  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-size: clamp(1.8rem, 8vw, 4rem);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -242,20 +240,25 @@
 }
 
 @media (max-width: 900px) {
+  .home-mission {
+    padding: 40px 0 0;
+  }
   .home-mission__hero {
     grid-template-columns: 1fr;
     min-height: auto;
+    gap: 24px;
   }
   .home-mission__left {
-    padding: 0 0 40px;
+    padding: 0 12px 10px;
   }
   .home-mission__right {
-    min-height: 300px;
+    min-height: auto;
   }
   .home-mission__body {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 40px 0 60px;
+    padding: 30px 12px 60px;
+    margin: 0;
   }
 }
 

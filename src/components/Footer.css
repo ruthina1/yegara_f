@@ -66,13 +66,19 @@
 
 /* ── Main Footer ── */
 .footer-main {
-  padding: 100px 0 60px;
+  padding: 100px 60px 60px;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 60px;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .footer-main {
+    padding: 60px 20px 40px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -233,7 +239,7 @@
 /* ── Bottom Bar ── */
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 24px 0;
+  padding: 24px 60px;
 }
 
 .footer-bottom__inner {
@@ -273,7 +279,7 @@
   display: block;
   text-align: center;
   font-family: var(--font-sans); /* Match Botronics clean sans-serif */
-  font-size: clamp(8rem, 26vw, 36rem); /* Substantial size */
+  font-size: clamp(4rem, 26vw, 36rem); /* Substantial size */
   font-weight: 800;
   letter-spacing: -0.04em; /* Tight letter spacing like the reference */
   text-transform: none; /* Title case "Yegara" */

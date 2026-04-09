@@ -41,6 +41,7 @@ const Home: React.FC = () => {
   });
 
   const treeLineHeight = useTransform(smoothTreeProgress, [0, 1], ["0%", "100%"]);
+  const scrollRaw = useTransform(smoothTreeProgress, [0, 1], [0, 100]);
 
   return (
     <div className="home-page overflow-hidden">
@@ -53,12 +54,14 @@ const Home: React.FC = () => {
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            scale: 1.1
+            scale: 1.1,
+            filter: 'blur(6px)',
+            transform: 'scale(1.12)'
           }}
-          animate={{ scale: 1 }}
+          animate={{ scale: 1.12 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
-        <div className="absolute inset-0 bg-black/65 z-10" />
+        <div className="absolute inset-0 bg-black/75 z-10" />
         <div className="ytsc-container relative z-20">
           <motion.div 
             initial="hidden"
@@ -66,7 +69,7 @@ const Home: React.FC = () => {
             variants={staggerContainer}
             className="reveal-content"
           >
-            <motion.span variants={fadeUpVariant} className="ytsc-label mb-6 inline-block" style={{ color: 'rgba(244, 121, 32, 0.9)' }}>
+            <motion.span variants={fadeUpVariant} className="ytsc-label mb-6 inline-block" style={{ color: 'rgba(244,121,32,0.9)', letterSpacing: '0.35em', fontSize: '11px', fontWeight: 800 }}>
               Since 2022
             </motion.span>
             <motion.h2 variants={fadeUpVariant} className="ytsc-heading-lg text-white mb-8">
@@ -76,23 +79,21 @@ const Home: React.FC = () => {
             <motion.p variants={fadeUpVariant} className="ytsc-body text-white mb-10 max-w-2xl" style={{ opacity: 0.85 }}>
               Ethiopia's first national business, social, and development hub operating at the intersection of private enterprise and nonprofit collaboration.
             </motion.p>
-            <motion.div variants={fadeUpVariant} className="flex mt-12">
-              <div className="flex flex-row shadow-[0_20px_50px_rgba(244,121,32,0.3)] overflow-hidden rounded-sm">
+            <motion.div variants={fadeUpVariant} className="flex flex-row flex-wrap justify-center gap-6 mt-14">
                 <Link 
-                  to="/about" 
-                  style={{ backgroundColor: '#F47920', color: '#ffffff' }} 
-                  className="px-12 py-6 min-w-[240px] text-center font-bold uppercase tracking-[0.2em] text-[12px] hover:bg-[#e06c1a] transition-all duration-300 flex items-center justify-center"
+                   to="/about" 
+                   style={{ backgroundColor: '#F47920', color: '#ffffff', minWidth: '220px', fontSize: '13px', letterSpacing: '0.2em', padding: '22px 56px' }} 
+                   className="text-center font-bold uppercase hover:bg-[#d96a10] transition-all duration-300 flex items-center justify-center rounded-none"
                 >
                   Our Story
                 </Link>
                 <Link 
-                  to="/services" 
-                  style={{ backgroundColor: '#ffffff', color: '#0A1628' }} 
-                  className="px-12 py-6 min-w-[240px] text-center font-bold uppercase tracking-[0.2em] text-[12px] hover:bg-gray-50 transition-all duration-300 flex items-center justify-center border-l border-gray-100"
+                   to="/services" 
+                   style={{ backgroundColor: 'transparent', color: '#ffffff', border: '2px solid rgba(255,255,255,0.7)', minWidth: '220px', fontSize: '13px', letterSpacing: '0.2em', padding: '22px 56px' }} 
+                   className="text-center font-bold uppercase hover:bg-white hover:text-[#0A1628] transition-all duration-300 flex items-center justify-center rounded-none"
                 >
                   Our Services
                 </Link>
-              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -101,7 +102,7 @@ const Home: React.FC = () => {
       {/* CurtainSection removed */}
 
       {/* Mission Section */}
-      <section id="intro-section" className="home-mission py-24">
+      <section id="intro-section" className="home-mission py-10 md:py-24">
         <div className="ytsc-container-wide">
           
           <motion.div 
@@ -142,7 +143,7 @@ const Home: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          <div className="home-mission__divider my-24 h-px bg-gray-200"></div>
+          <div className="home-mission__divider my-10 md:my-24 h-px bg-gray-200"></div>
 
           {/* Values Section */}
           <motion.div 
@@ -179,7 +180,7 @@ const Home: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          <div className="home-mission__divider my-24 h-px bg-gray-200"></div>
+          <div className="home-mission__divider my-10 md:my-24 h-px bg-gray-200"></div>
 
           {/* Milestones */}
           <motion.div 
@@ -219,152 +220,151 @@ const Home: React.FC = () => {
       </section>
 
       {/* Pillars of Impact — Scroll-Draw Tree */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative" ref={treeRef}>
+      <section className="pt-10 pb-10 md:pt-24 md:pb-24 bg-[#fbfbfb] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative">
 
-          {/* Center Trunk Line — background track */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[1.5px] bg-[#F47920]/10 -translate-x-1/2" />
-          {/* Center Trunk Line — drawn on scroll */}
-          <motion.div 
-            className="absolute left-1/2 top-0 w-[1.5px] -translate-x-1/2 origin-top bg-[#F47920]/60"
-            style={{ height: treeLineHeight }}
-          />
-
-          {/* Section Title — right of center line */}
+          {/* Section Title */}
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="relative mb-32"
+            className="mb-10 md:mb-24 text-center"
           >
-            <div className="w-1/2 ml-auto pl-16">
-              <motion.span variants={fadeUpVariant} className="block text-[11px] font-extrabold tracking-[0.3em] uppercase text-[#F47920] mb-3">
-                | Our Services |
-              </motion.span>
-              <motion.h2 variants={fadeUpVariant} className="text-3xl md:text-4xl font-serif font-black text-gray-900">
-                Pillars of Impact
-              </motion.h2>
-            </div>
+            <motion.span variants={fadeUpVariant} className="block text-[11px] font-extrabold tracking-[0.3em] uppercase text-[#F47920] mb-3">
+              | Our Services |
+            </motion.span>
+            <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-5xl font-serif font-black text-gray-900">
+              Pillars of Impact
+            </motion.h2>
           </motion.div>
 
-          {/* ── Card 1: Left — Capacity Building ── */}
-          <div className="relative mb-16">
-            <motion.div 
-              className="w-[45%] mr-auto"
-              initial={{ opacity: 0, x: -80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Link to="/services#capacity" className="group block bg-[#fafafa] border border-gray-100 rounded-3xl p-12 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className="w-14 h-14 mx-auto mb-8 flex items-center justify-center text-3xl text-[#F47920]">
-                  <HiAcademicCap />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Capacity Building</h3>
-                <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
-                  Elevating potential through targeted skill-development programs for individuals and enterprises.
-                </p>
-                <span className="inline-flex items-center text-[11px] font-extrabold tracking-[0.2em] uppercase text-gray-900 group-hover:text-[#F47920] transition-colors">
-                  Learn More <HiArrowRight className="ml-2" />
-                </span>
-              </Link>
-            </motion.div>
-          </div>
+          <motion.div 
+            className="home-pillars__tree" 
+            ref={treeRef}
+            style={{ 
+              "--scroll-tree": treeLineHeight,
+              "--scroll-raw": scrollRaw 
+            } as any}
+          >
+            {/* ── Card 1: Left — Capacity Building ── */}
+            <div className="pillar-leaf-item">
+              <motion.div 
+                className="pillar-leaf-content"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link to="/services#capacity" className="leaf-card group">
+                  <div className="pillar-icon">
+                    <HiAcademicCap />
+                  </div>
+                  <h3 className="pillar-title">Capacity Building</h3>
+                  <p className="pillar-desc">
+                    Elevating potential through targeted skill-development programs for individuals and enterprises.
+                  </p>
+                  <span className="pillar-link">
+                    Learn More <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
 
-          {/* ── Card 2: Right — Impact Finance ── */}
-          <div className="relative mb-16">
-            <motion.div 
-              className="w-[45%] ml-auto"
-              initial={{ opacity: 0, x: 80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Link to="/services#finance" className="group block bg-[#fafafa] border border-gray-100 rounded-3xl p-12 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className="w-14 h-14 mx-auto mb-8 flex items-center justify-center text-3xl text-[#F47920]">
-                  <HiCurrencyDollar />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Impact Finance</h3>
-                <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
-                  Innovative financial tools designed to support sustainable and socially responsible initiatives.
-                </p>
-                <span className="inline-flex items-center text-[11px] font-extrabold tracking-[0.2em] uppercase text-gray-900 group-hover:text-[#F47920] transition-colors">
-                  Learn More <HiArrowRight className="ml-2" />
-                </span>
-              </Link>
-            </motion.div>
-          </div>
+            {/* ── Card 2: Right — Impact Finance ── */}
+            <div className="pillar-leaf-item">
+              <motion.div 
+                className="pillar-leaf-content"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link to="/services#finance" className="leaf-card group">
+                  <div className="pillar-icon">
+                    <HiCurrencyDollar />
+                  </div>
+                  <h3 className="pillar-title">Impact Finance</h3>
+                  <p className="pillar-desc">
+                    Innovative financial tools designed to support sustainable and socially responsible initiatives.
+                  </p>
+                  <span className="pillar-link">
+                    Learn More <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
 
-          {/* ── Card 3: Left — Business Development ── */}
-          <div className="relative mb-16">
-            <motion.div 
-              className="w-[45%] mr-auto"
-              initial={{ opacity: 0, x: -80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Link to="/services#bds" className="group block bg-[#fafafa] border border-gray-100 rounded-3xl p-12 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className="w-14 h-14 mx-auto mb-8 flex items-center justify-center text-3xl text-[#F47920]">
-                  <HiChartBar />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Business Development</h3>
-                <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
-                  Comprehensive BDS covering strategy, operations, and growth advisory for scalable success.
-                </p>
-                <span className="inline-flex items-center text-[11px] font-extrabold tracking-[0.2em] uppercase text-gray-900 group-hover:text-[#F47920] transition-colors">
-                  Learn More <HiArrowRight className="ml-2" />
-                </span>
-              </Link>
-            </motion.div>
-          </div>
+            {/* ── Card 3: Left — Business Development ── */}
+            <div className="pillar-leaf-item">
+              <motion.div 
+                className="pillar-leaf-content"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link to="/services#bds" className="leaf-card group">
+                  <div className="pillar-icon">
+                    <HiChartBar />
+                  </div>
+                  <h3 className="pillar-title">Business Development</h3>
+                  <p className="pillar-desc">
+                    Comprehensive BDS covering strategy, operations, and growth advisory for scalable success.
+                  </p>
+                  <span className="pillar-link">
+                    Learn More <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
 
-          {/* ── Card 4: Right — Research & Innovation ── */}
-          <div className="relative mb-16">
-            <motion.div 
-              className="w-[45%] ml-auto"
-              initial={{ opacity: 0, x: 80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Link to="/services#research" className="group block bg-[#fafafa] border border-gray-100 rounded-3xl p-12 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className="w-14 h-14 mx-auto mb-8 flex items-center justify-center text-3xl text-[#F47920]">
-                  <HiLightBulb />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Research & Innovation</h3>
-                <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
-                  Data-driven insights and innovative approaches to solve complex market challenges in Africa.
-                </p>
-                <span className="inline-flex items-center text-[11px] font-extrabold tracking-[0.2em] uppercase text-gray-900 group-hover:text-[#F47920] transition-colors">
-                  Learn More <HiArrowRight className="ml-2" />
-                </span>
-              </Link>
-            </motion.div>
-          </div>
+            {/* ── Card 4: Right — Research & Innovation ── */}
+            <div className="pillar-leaf-item">
+              <motion.div 
+                className="pillar-leaf-content"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link to="/services#research" className="leaf-card group">
+                  <div className="pillar-icon">
+                    <HiLightBulb />
+                  </div>
+                  <h3 className="pillar-title">Research & Innovation</h3>
+                  <p className="pillar-desc">
+                    Data-driven insights and innovative approaches to solve complex market challenges in Africa.
+                  </p>
+                  <span className="pillar-link">
+                    Learn More <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
 
-          {/* ── Card 5: Left — Partnership Facilitation ── */}
-          <div className="relative">
-            <motion.div 
-              className="w-[45%] mr-auto"
-              initial={{ opacity: 0, x: -80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Link to="/services#partnership" className="group block bg-[#fafafa] border border-gray-100 rounded-3xl p-12 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className="w-14 h-14 mx-auto mb-8 flex items-center justify-center text-3xl text-[#F47920]">
-                  <HiUserGroup />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Partnership Facilitation</h3>
-                <p className="text-base text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
-                  Bridging the gap between active private enterprises, non-profits, and government entities.
-                </p>
-                <span className="inline-flex items-center text-[11px] font-extrabold tracking-[0.2em] uppercase text-gray-900 group-hover:text-[#F47920] transition-colors">
-                  Learn More <HiArrowRight className="ml-2" />
-                </span>
-              </Link>
-            </motion.div>
-          </div>
+            {/* ── Card 5: Left — Partnership Facilitation ── */}
+            <div className="pillar-leaf-item">
+              <motion.div 
+                className="pillar-leaf-content"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link to="/services#partnership" className="leaf-card group">
+                  <div className="pillar-icon">
+                    <HiUserGroup />
+                  </div>
+                  <h3 className="pillar-title">Partnership Facilitation</h3>
+                  <p className="pillar-desc">
+                    Bridging the gap between active private enterprises, non-profits, and government entities.
+                  </p>
+                  <span className="pillar-link">
+                    Learn More <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
 
+          </motion.div>
         </div>
       </section>
 

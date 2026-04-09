@@ -6,7 +6,7 @@ import './Contact.css';
 const Contact: React.FC = () => {
   return (
     <div className="contact-page-light">
-      <div style={{ paddingTop: '15vh' }}>
+      <div style={{ paddingTop: '80px' }}>
         <ContactSection />
       </div>
       <Footer />

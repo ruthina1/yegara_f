@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
+import { FaGoogle, FaApple } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import './Login.css';
 
 const Login: React.FC = () => {
@@ -29,103 +31,134 @@ const Login: React.FC = () => {
     }
   };
 
+  const fadeUpVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
     <div className="login-page">
+      <Link to="/" className="back-to-home">
+        <FiArrowLeft size={16} /> Back to Website
+      </Link>
+
       <div className="login-branding">
-        <div className="brand-logo">
-          <div className="logo-square">Y</div>
-          <div className="brand-text">
-            <div className="brand-name">Yegara LMS</div>
-            <div className="brand-subtitle">Professional Training & Excellence</div>
-          </div>
-        </div>
+        <div className="login-branding__glow" />
+        <motion.div 
+          className="brand-content"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.div variants={fadeUpVariant} className="brand-logo" style={{ flexDirection: 'column', gap: '24px' }}>
+            <h1 className="brand-name">Yegara LMS</h1>
+            <p className="brand-subtitle">Professional Training & Excellence</p>
+          </motion.div>
+        </motion.div>
       </div>
 
       <div className="login-content">
-        <div className="login-header-text">
-          <h1>Welcome Back</h1>
-          <p>Please enter your details to sign in.</p>
-        </div>
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="w-full max-w-lg mx-auto"
+        >
+          <motion.div variants={fadeUpVariant} className="login-header-text">
+            <h1>Welcome Back</h1>
+            <p>Please enter your details to sign in.</p>
+          </motion.div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          {error && <div className="error-message">{error}</div>}
+          <motion.form variants={fadeUpVariant} onSubmit={handleSubmit} className="login-form">
+            {error && <div className="error-message">{error}</div>}
 
-          <div className="form-group">
-            <label htmlFor="email">EMAIL ADDRESS</label>
-            <div className="input-wrapper">
-              <FiMail className="input-icon" />
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="name@company.com"
-              />
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <div className="input-wrapper">
+                <FiMail className="input-icon" />
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="name@company.com"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="form-group">
-            <div className="password-label-row">
-              <label htmlFor="password">PASSWORD</label>
-              <Link to="#" className="forgot-link">Forgot?</Link>
+            <div className="form-group">
+              <div className="password-label-row">
+                <label htmlFor="password">Password</label>
+                <Link to="#" className="forgot-link">Forgot?</Link>
+              </div>
+              <div className="input-wrapper">
+                <FiLock className="input-icon" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
             </div>
-            <div className="input-wrapper">
-              <FiLock className="input-icon" />
+
+            <div className="checkbox-group">
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="Enter your password"
+                type="checkbox"
+                id="keepLoggedIn"
+                checked={keepLoggedIn}
+                onChange={(e) => setKeepLoggedIn(e.target.checked)}
               />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FiEyeOff /> : <FiEye />}
+              <label htmlFor="keepLoggedIn">Keep me logged in</label>
+            </div>
+
+            <button type="submit" className="btn-login" disabled={loading}>
+              {loading ? 'Signing in...' : 'Login to Dashboard'}
+            </button>
+          </motion.form>
+
+          <motion.div variants={fadeUpVariant} className="social-login">
+            <div className="divider">
+              <span>OR CONTINUE WITH</span>
+            </div>
+            <div className="social-buttons">
+              <button type="button" className="btn-social google">
+                <FaGoogle className="social-icon" style={{color: '#EA4335'}} />
+                Google
+              </button>
+              <button type="button" className="btn-social apple">
+                <FaApple className="social-icon" style={{fontSize: '20px'}} />
+                Apple
               </button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="checkbox-group">
-            <input
-              type="checkbox"
-              id="keepLoggedIn"
-              checked={keepLoggedIn}
-              onChange={(e) => setKeepLoggedIn(e.target.checked)}
-            />
-            <label htmlFor="keepLoggedIn">Keep me logged in</label>
-          </div>
-
-          <button type="submit" className="btn-login" disabled={loading}>
-            {loading ? 'Signing in...' : 'Login to Dashboard'}
-          </button>
-        </form>
-
-        <div className="social-login">
-          <div className="divider">
-            <span>OR CONTINUE WITH</span>
-          </div>
-          <div className="social-buttons">
-            <button type="button" className="btn-social google">
-              <span className="social-icon">G</span>
-              Google
-            </button>
-            <button type="button" className="btn-social apple">
-              <span className="social-icon">🍎</span>
-              Apple
-            </button>
-          </div>
-        </div>
-
-        <div className="register-link">
-          <p>
-            Don't have an account? <Link to="/register">Register Now</Link>
-          </p>
-        </div>
+          <motion.div variants={fadeUpVariant} className="register-link">
+            <p>
+              Don't have an account? <Link to="/register">Register Now</Link>
+            </p>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

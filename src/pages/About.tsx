@@ -20,12 +20,7 @@ const About: React.FC = () => {
           01 · HERO — Full-screen cinematic opener
          ═══════════════════════════════════════════════════ */}
       <section className="about-hero">
-        {/* Decorative concentric circles */}
-        <div className="about-hero__circles">
-          <div className="about-hero__circle about-hero__circle--lg" />
-          <div className="about-hero__circle about-hero__circle--md" />
-          <div className="about-hero__circle about-hero__circle--sm" />
-        </div>
+        {/* HERO CONTENT */}
 
         <div className="about-hero__content">
           <motion.span {...fadeIn()} className="about-hero__label">
@@ -33,7 +28,7 @@ const About: React.FC = () => {
           </motion.span>
           <motion.h1 {...fadeIn(0.15)} className="about-hero__title">
             Building <br />
-            <span className="text-brand">Bridges.</span>
+            <em>Bridges.</em>
           </motion.h1>
           <motion.p {...fadeIn(0.3)} className="about-hero__subtitle">
             Ethiopia's pioneering hub where private enterprise meets

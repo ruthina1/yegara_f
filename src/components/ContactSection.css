@@ -12,7 +12,7 @@
 
 /* ── Header ── */
 .contact-light__header {
-  margin-bottom: 80px;
+  margin-bottom: 32px;
 }
 
 .contact-light__title {
@@ -30,7 +30,7 @@
   grid-template-columns: 1fr;
   gap: 80px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 @media (min-width: 992px) {

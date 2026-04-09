@@ -46,28 +46,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FFFBF8;
+  background: #FFFFFF;
   overflow: hidden;
 }
 
-.about-hero__circles {
+.about-hero::before {
+  content: '';
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(#0A1628 1px, transparent 1px),
+    linear-gradient(90deg, #0A1628 1px, transparent 1px);
+  background-size: 80px 80px;
   pointer-events: none;
+  z-index: 1;
 }
 
-.about-hero__circle {
+.about-hero::after {
+  content: '';
   position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(244, 121, 32, 0.08);
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(244, 121, 32, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(244, 121, 32, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(27, 58, 92, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.about-hero__circle--lg { width: 80vw; height: 80vw; }
-.about-hero__circle--md { width: 55vw; height: 55vw; }
-.about-hero__circle--sm { width: 30vw; height: 30vw; }
+/* Removed circles */
 
 .about-hero__content {
   position: relative;
@@ -87,14 +95,30 @@
 }
 
 .about-hero__title {
-  font-family: var(--font-serif);
-  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(3.5rem, 9vw, 8rem);
   font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
   color: var(--ytsc-blue-dark);
-  text-transform: uppercase;
   margin: 0 0 40px;
+}
+
+.about-hero__title em {
+  font-style: italic;
+  color: #F47920;
+  position: relative;
+}
+
+.about-hero__title em::after {
+  content: '';
+  position: absolute;
+  bottom: 0.05em;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F47920, transparent);
+  border-radius: 2px;
 }
 
 .about-hero__subtitle {
@@ -135,7 +159,7 @@
    02 · STORY
    ═══════════════════════════════════════════════════════════════ */
 .about-story {
-  padding: 160px 0;
+  padding: 100px 0;
   background: #FBF8F5;
 }
 
@@ -171,7 +195,7 @@
    03 · IMPACT
    ═══════════════════════════════════════════════════════════════ */
 .about-impact {
-  padding: 160px 0;
+  padding: 100px 0;
   background: #0A1628 !important;
   background-color: #0A1628 !important;
   color: #fff;
@@ -254,7 +278,7 @@
    04 · FOUNDING
    ═══════════════════════════════════════════════════════════════ */
 .about-founding {
-  padding: 160px 0;
+  padding: 100px 0;
   background: #fff;
 }
 
@@ -345,7 +369,7 @@
    05 · QUOTE
    ═══════════════════════════════════════════════════════════════ */
 .about-quote {
-  padding: 140px 0;
+  padding: 90px 0;
   background: #fafafa;
 }
 
@@ -392,7 +416,7 @@
    06 · VALUES
    ═══════════════════════════════════════════════════════════════ */
 .about-values {
-  padding: 160px 0;
+  padding: 100px 0;
   background: #fff;
 }
 
@@ -471,7 +495,7 @@
 @media (min-width: 768px) {
   .about-cta-split {
     flex-direction: row;
-    min-height: 65vh;
+    min-height: 300px;
   }
 }
 
@@ -481,7 +505,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 100px 40px;
+  padding: 60px 40px;
   text-decoration: none;
   transition: flex 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -546,7 +570,7 @@
   .about-impact,
   .about-founding,
   .about-values {
-    padding: 100px 0;
+    padding: 70px 0;
   }
 
   .about-founding__cards {

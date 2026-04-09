@@ -149,25 +149,23 @@ const StickyHeaderMorph: React.FC = () => {
           <Link to="/news" className="corp-mobile-menu__link">News</Link>
           <Link to="/contact" className="corp-mobile-menu__link">Contact</Link>
           
-          <div style={{ marginTop: '20px' }}>
-            {user ? (
-              <button 
-                onClick={logout} 
-                className="corp-mobile-menu__link" 
-                style={{ color: 'var(--ytsc-orange)', border: 'none', background: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}
-              >
-                Logout
-              </button>
-            ) : (
-              <Link 
-                to="/login" 
-                className="corp-mobile-menu__link" 
-                style={{ color: 'var(--ytsc-orange)' }}
-              >
-                Shareholder Portal
-              </Link>
-            )}
-          </div>
+          {user ? (
+            <button 
+              onClick={logout} 
+              className="corp-mobile-menu__link" 
+              style={{ color: 'var(--ytsc-orange)', border: 'none', background: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link 
+              to="/login" 
+              className="corp-mobile-menu__link" 
+              style={{ color: 'var(--ytsc-orange)' }}
+            >
+              Portal
+            </Link>
+          )}
         </div>
       </div>
 
