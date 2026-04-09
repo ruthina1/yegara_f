@@ -79,18 +79,16 @@ const Home: React.FC = () => {
             <motion.p variants={fadeUpVariant} className="ytsc-body text-white mb-10 max-w-2xl" style={{ opacity: 0.85 }}>
               Ethiopia's first national business, social, and development hub operating at the intersection of private enterprise and nonprofit collaboration.
             </motion.p>
-            <motion.div variants={fadeUpVariant} className="flex flex-row flex-wrap justify-center gap-6 mt-14">
+            <motion.div variants={fadeUpVariant} className="flex flex-col md:flex-row mt-14 gap-6 justify-center">
                 <Link 
-                   to="/about" 
-                   style={{ backgroundColor: '#F47920', color: '#ffffff', minWidth: '220px', fontSize: '13px', letterSpacing: '0.2em', padding: '22px 56px' }} 
-                   className="text-center font-bold uppercase hover:bg-[#d96a10] transition-all duration-300 flex items-center justify-center rounded-none"
+                  to="/about" 
+                  className="hero-primary-btn"
                 >
                   Our Story
                 </Link>
                 <Link 
-                   to="/services" 
-                   style={{ backgroundColor: 'transparent', color: '#ffffff', border: '2px solid rgba(255,255,255,0.7)', minWidth: '220px', fontSize: '13px', letterSpacing: '0.2em', padding: '22px 56px' }} 
-                   className="text-center font-bold uppercase hover:bg-white hover:text-[#0A1628] transition-all duration-300 flex items-center justify-center rounded-none"
+                  to="/services" 
+                  className="hero-secondary-btn"
                 >
                   Our Services
                 </Link>
