@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { HiUserGroup, HiLightBulb, HiGlobeAlt, HiShieldCheck, HiLightningBolt, HiBadgeCheck, HiTrendingUp, HiAcademicCap } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import './About.css';
@@ -13,6 +13,8 @@ const fadeIn = (delay = 0): any => ({
 });
 
 const About: React.FC = () => {
+  const { scrollY } = useScroll();
+
   return (
     <div className="about-page">
 
@@ -146,28 +148,80 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           03 · IMPACT — Horizontal stat cards
          ═══════════════════════════════════════════════════ */}
-      <section className="about-impact">
+      <section className="about-impact about-impact--schematic">
         <div className="about-impact__container">
           <motion.div {...fadeIn()} className="about-impact__header">
-            <span className="about-section-label about-section-label--light">Our Reach</span>
+            <span className="about-section-label">Our Metrics</span>
             <h2 className="about-impact__title">
-              Measuring <span className="text-brand">Prosperity.</span>
+              Quantifying <br /> <span className="text-brand">Impact.</span>
             </h2>
           </motion.div>
 
-          <div className="about-impact__grid">
-            {[
-              { num: '2022', label: 'Founded', icon: <HiTrendingUp /> },
-              { num: '10k+', label: 'Individuals Reached', icon: <HiUserGroup /> },
-              { num: '50+', label: 'Enterprises Supported', icon: <HiAcademicCap /> },
-              { num: '07', label: 'Service Pillars', icon: <HiLightningBolt /> }
-            ].map((stat, i) => (
-              <motion.div key={i} {...fadeIn(i * 0.1)} className="about-impact__card">
-                <div className="about-impact__card-icon">{stat.icon}</div>
-                <h4 className="about-impact__card-num">{stat.num}</h4>
-                <p className="about-impact__card-label">{stat.label}</p>
+          <div className="about-impact__schematic">
+            {/* SVG Background Lines */}
+            <svg className="schematic-lines" viewBox="0 0 1000 500" preserveAspectRatio="none">
+              <motion.path 
+                d="M150,400 L500,100 L850,400" 
+                fill="none" 
+                stroke="rgba(244, 121, 32, 0.2)" 
+                strokeWidth="1.5"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+              />
+              <motion.path 
+                d="M500,100 L500,450" 
+                fill="none" 
+                stroke="rgba(244, 121, 32, 0.15)" 
+                strokeWidth="1"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+              />
+            </svg>
+
+            {/* Metric Nodes */}
+            <div className="schematic-node node--center">
+              <motion.div 
+                style={{ y: useTransform(scrollY, [1500, 2500], [0, -40]) }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span className="node-num node-num--hero">6k+</span>
+                <span className="node-label">Individuals Reached</span>
               </motion.div>
-            ))}
+            </div>
+
+            <div className="schematic-node node--right">
+              <motion.div 
+                style={{ y: useTransform(scrollY, [1500, 2500], [0, 20]) }}
+                {...fadeIn(0.3)}
+              >
+                <span className="node-num">50+</span>
+                <span className="node-label">Enterprises Supported</span>
+              </motion.div>
+            </div>
+
+            <div className="schematic-node node--left">
+              <motion.div 
+                style={{ y: useTransform(scrollY, [1500, 2500], [0, 20]) }}
+                {...fadeIn(0.2)}
+              >
+                <span className="node-num">2022</span>
+                <span className="node-label">Founded</span>
+              </motion.div>
+            </div>
+
+            <div className="schematic-node node--bottom">
+              <motion.div {...fadeIn(0.5)}>
+                <span className="node-num">07</span>
+                <span className="node-label">Service Pillars</span>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

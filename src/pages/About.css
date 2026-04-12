@@ -219,8 +219,6 @@
   overflow: hidden;
   white-space: nowrap;
   color: #F47920 !important;
-  border-right: 2px solid #F47920;
-  animation: cursorBlink 1s step-end infinite;
 }
 
 @keyframes cursorBlink {
@@ -247,8 +245,7 @@
   height: 8px;
   background: #F47920;
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(244, 121, 32, 0.4);
-  animation: dotPulse 2s infinite;
+  box-shadow: none;
 }
 
 @keyframes dotPulse {
@@ -311,6 +308,139 @@
 /* ═══════════════════════════════════════════════════════════════
    03 · IMPACT
    ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   03 · IMPACT — Schematic Quantitative Layout
+   ═══════════════════════════════════════════════════════════════ */
+.about-impact--schematic {
+  background: #0A1628;
+  padding: 160px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-impact--schematic .about-impact__title {
+  color: #FFFFFF !important;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.about-impact__schematic {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.schematic-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.schematic-node {
+  position: absolute;
+  z-index: 10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.node-num {
+  font-family: var(--font-sans);
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #1B3A5C;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1;
+  display: block;
+}
+
+.node-num--hero {
+  font-size: 85px;
+  color: var(--ytsc-orange);
+  text-shadow: 0 0 30px rgba(244, 121, 32, 0.25);
+}
+
+.node-label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 12px;
+}
+
+.node--left {
+  top: 65%;
+  left: 5%;
+}
+
+.node--right {
+  top: 65%;
+  right: 5%;
+}
+
+.node--center {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.node--bottom {
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 992px) {
+  .about-impact__schematic {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 0 24px;
+  }
+  .schematic-lines {
+    display: none;
+  }
+  .schematic-node {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+  }
+  .node-num--hero {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-impact__schematic {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Restoring the regular impact styles for other parts if needed */
+.about-impact__card {
+  padding: 48px 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
 .about-impact {
   padding: 100px 0;
   background: #0A1628 !important;
@@ -868,16 +998,40 @@
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 992px) {
+  .about-values__container,
+  .about-founding__container,
+  .about-impact__container,
+  .about-story__container {
+    padding: 0 24px;
+  }
+}
+
 @media (max-width: 768px) {
   .about-hero__title {
-    font-size: clamp(3rem, 14vw, 5rem);
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+    line-height: 1.0;
+  }
+
+  .about-hero__subtitle {
+    font-size: 1.1rem;
   }
 
   .about-story,
   .about-impact,
+  .about-impact--schematic,
   .about-founding,
-  .about-values {
-    padding: 70px 0;
+  .about-values,
+  .about-values--creative {
+    padding: 80px 0;
+  }
+
+  .about-impact__schematic {
+    height: auto;
+    margin-top: 40px;
   }
 
   .about-founding__cards {
@@ -886,5 +1040,53 @@
 
   .about-cta-split__panel {
     padding: 80px 32px;
+  }
+
+  .about-cta-split__title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-values__card--organic-vertical {
+    padding: 40px 24px;
+    border-radius: 30px;
+  }
+
+  .about-values__header {
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .v-card__title {
+    font-size: 22px;
+  }
+
+  .node-num--hero {
+    font-size: 60px;
+  }
+
+  .node-num {
+    font-size: 40px;
+  }
+
+  .about-impact__title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero__label {
+    padding: 8px 20px;
+    font-size: 0.6rem;
+  }
+
+  .about-section-label {
+    font-size: 10px;
+  }
+
+  .about-section-title {
+    font-size: 2rem;
   }
 }

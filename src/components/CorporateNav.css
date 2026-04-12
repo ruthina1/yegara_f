@@ -20,6 +20,7 @@
   transform: translateY(-50%);
   user-select: none;
   white-space: nowrap;
+  color: #1B3A5C !important;
 }
 
 /* ── Nav Bar ── */
@@ -86,7 +87,7 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--ytsc-blue);
+  color: #1B3A5C !important;
   user-select: none;
   pointer-events: none;
   flex-shrink: 0;
