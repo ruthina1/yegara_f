@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HiUserGroup, HiLightBulb, HiGlobeAlt } from 'react-icons/hi';
+import { HiUserGroup, HiLightBulb, HiGlobeAlt, HiShieldCheck, HiLightningBolt, HiBadgeCheck } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import './About.css';
 
