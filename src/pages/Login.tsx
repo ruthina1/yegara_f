@@ -53,7 +53,6 @@ const Login: React.FC = () => {
       </Link>
 
       <div className="login-branding">
-        <div className="login-branding__glow" />
         <motion.div 
           className="brand-content"
           initial="hidden"
@@ -132,9 +131,7 @@ const Login: React.FC = () => {
               <label htmlFor="keepLoggedIn">Keep me logged in</label>
             </div>
 
-            <button type="submit" className="btn-login" disabled={loading}>
-              {loading ? 'Signing in...' : 'Login to Dashboard'}
-            </button>
+
           </motion.form>
 
           <motion.div variants={fadeUpVariant} className="social-login">

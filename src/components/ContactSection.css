@@ -5,7 +5,7 @@
 .contact-light__container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 40px 40px 40px;
+  padding: 40px 40px 40px 40px;
   width: 100%;
   background: var(--ytsc-white);
 }
@@ -88,9 +88,9 @@
 .contact-light__submit {
   align-self: flex-start;
   margin-top: 20px;
-  background: transparent;
-  color: var(--ytsc-blue);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #F47920;
+  color: #FFFFFF;
+  border: 1px solid #F47920;
   padding: 12px 32px;
   border-radius: 999px;
   font-family: var(--font-sans);

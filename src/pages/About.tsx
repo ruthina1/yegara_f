@@ -44,28 +44,102 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           02 · STORY — Split narrative
          ═══════════════════════════════════════════════════ */}
-      <section className="about-story">
+      <section className="about-story about-story--creative">
         <div className="about-story__container">
-          <motion.div {...fadeIn()} className="about-story__left">
-            <span className="about-section-label">Our Story</span>
-            <h2 className="about-section-title">
-              A Vision for <br />
-              <span className="text-brand">Africa's Future.</span>
-            </h2>
+          <motion.div 
+            className="about-story__left"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="about-story__header-group">
+              <motion.span 
+                variants={{
+                  initial: { opacity: 0, x: -20 },
+                  animate: { opacity: 1, x: 0 }
+                }}
+                className="about-section-label"
+              >
+                Our Story
+              </motion.span>
+              <h2 className="about-section-title about-section-title--kinetic">
+                {["A", "Vision", "for"].map((word, i) => (
+                  <motion.span 
+                    key={i}
+                    custom={i}
+                    variants={{
+                      initial: { opacity: 0, y: 30, rotate: 2 },
+                      animate: (i: number) => ({
+                        opacity: 1,
+                        y: 0,
+                        rotate: 0,
+                        transition: { delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+                      })
+                    }}
+                    className="word-wrap"
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+                <br />
+                <motion.span 
+                  className="text-brand text-brand--reveal"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '100%' }}
+                  transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  Africa's Future.
+                </motion.span>
+              </h2>
+            </div>
+            
+            <div className="about-story__visual-anchor">
+              <div className="about-story__line-grow" />
+              <div className="about-story__dot-pulse" />
+            </div>
           </motion.div>
-          <motion.div {...fadeIn(0.15)} className="about-story__right">
-            <p className="about-story__text">
-              We believe that Africa's greatest lever for change is its people.
-              Yegara Trading Share Company was founded to build the capacity of
-              businesses and communities — equipping them with skills, capital access,
-              and the networks needed to unlock lasting prosperity.
-            </p>
-            <p className="about-story__text">
-              At the intersection of private enterprise and nonprofit synergy,
-              our consortium of Ethiopian professionals is designing solutions to
-              bridge the gap between community potential and institutional capital.
-            </p>
+
+          <motion.div 
+            className="about-story__right"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <div className="about-story__text-block">
+              <p className="about-story__text about-story__text--lead">
+                We believe that Africa's greatest lever for change is its people.
+                Yegara Trading Share Company was founded to build the capacity of
+                businesses and communities — equipping them with skills, capital access,
+                and the networks needed to unlock lasting prosperity.
+              </p>
+              <p className="about-story__text">
+                At the intersection of private enterprise and nonprofit synergy,
+                our consortium of Ethiopian professionals is designing solutions to
+                bridge the gap between community potential and institutional capital.
+              </p>
+            </div>
+            
+            <div className="about-story__signature">
+              <span className="signature-line" />
+              <span className="signature-text">Est. 2022</span>
+            </div>
           </motion.div>
+        </div>
+
+        {/* Dynamic Background SVG for creativity */}
+        <div className="about-story__bg-graphic">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <motion.path
+              d="M0,50 Q25,30 50,50 T100,50"
+              fill="none"
+              stroke="rgba(244, 121, 32, 0.08)"
+              strokeWidth="0.5"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            />
+          </svg>
         </div>
       </section>
 
@@ -166,32 +240,60 @@ const About: React.FC = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          06 · VALUES — Premium horizontal grid
+          06 · VALUES — Vertical Narrative Stack
          ═══════════════════════════════════════════════════ */}
-      <section className="about-values">
+      <section className="about-values about-values--creative">
         <div className="about-values__container">
-          <motion.div {...fadeIn()} className="about-values__header">
+          <motion.div 
+            className="about-values__header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <span className="about-section-label">Core Values</span>
             <h2 className="about-section-title">
               Our <span className="text-brand">Convictions.</span>
             </h2>
           </motion.div>
 
-          <div className="about-values__grid">
-            {[
-              { title: 'Collaboration', desc: 'Working together to achieve shared, sustainable success.', icon: <HiUserGroup /> },
-              { title: 'Innovation', desc: 'Pioneering solutions that open doors to new opportunities.', icon: <HiLightBulb /> },
-              { title: 'Inclusivity', desc: 'Ensuring everyone has a seat at the table and a voice.', icon: <HiGlobeAlt /> },
-              { title: 'Trustworthiness', desc: 'Long-lasting relationships anchored in integrity.', icon: <HiShieldCheck /> },
-              { title: 'Responsiveness', desc: 'Adapting swiftly to the evolving needs of communities.', icon: <HiLightningBolt /> },
-              { title: 'Excellence', desc: 'Pursuing the highest standards in every service.', icon: <HiBadgeCheck /> }
-            ].map((v, i) => (
-              <motion.div key={i} {...fadeIn(i * 0.08)} className="about-values__card">
-                <div className="about-values__card-icon" style={{ color: '#F47920' }}>{v.icon}</div>
-                <h3 className="about-values__card-title">{v.title}</h3>
-                <p className="about-values__card-desc">{v.desc}</p>
-              </motion.div>
-            ))}
+          <div className="about-values__constellation">
+            {/* Ambient Orbs */}
+            <div className="value-orb value-orb--1" />
+            <div className="value-orb value-orb--2" />
+            
+            {/* Vertical Connecting Line */}
+            <div className="about-values__vertical-line" />
+            
+            <div className="about-values__grid about-values__grid--vertical-stagger">
+              {[
+                { title: 'Collaboration', desc: 'Working together to achieve shared, sustainable success.', icon: <HiUserGroup />, index: '01' },
+                { title: 'Innovation', desc: 'Pioneering solutions that open doors to new opportunities.', icon: <HiLightBulb />, index: '02' },
+                { title: 'Inclusivity', desc: 'Ensuring everyone has a seat at the table and a voice.', icon: <HiGlobeAlt />, index: '03' },
+                { title: 'Trustworthiness', desc: 'Long-lasting relationships anchored in integrity.', icon: <HiShieldCheck />, index: '04' },
+                { title: 'Responsiveness', desc: 'Adapting swiftly to the evolving needs of communities.', icon: <HiLightningBolt />, index: '05' },
+                { title: 'Excellence', desc: 'Pursuing the highest standards in every service.', icon: <HiBadgeCheck />, index: '06' }
+              ].map((v, i) => (
+                <motion.div 
+                  key={i} 
+                  className="about-values__card about-values__card--organic-vertical"
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60, y: 50 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="v-card__content">
+                    <div className="v-card__head">
+                      <span className="v-card__index">{v.index}</span>
+                      <div className="v-card__icon">{v.icon}</div>
+                    </div>
+                    <h3 className="v-card__title">{v.title}</h3>
+                    <p className="v-card__desc">{v.desc}</p>
+                    <div className="v-card__accent" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

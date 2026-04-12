@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
             <div className="footer-cta__text">
                <h3>
                 Ready to Build <br />
-                <span style={{ color: '#F47920' }}>Lasting Impact?</span>
+                <em>Lasting Impact?</em>
               </h3>
               <p>Partner with YTSC to unlock sustainable growth opportunities across Ethiopia and Africa.</p>
             </div>

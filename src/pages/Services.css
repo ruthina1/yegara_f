@@ -34,7 +34,7 @@
   left: 0;
   right: 0;
   height: 200px;
-  background: linear-gradient(to top, #f8f9fc 0%, transparent 100%);
+  background: linear-gradient(to top, #FFFFFF 0%, transparent 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -147,7 +147,7 @@
   font-weight: 900;
   line-height: 0.92;
   letter-spacing: -0.04em;
-  color: #1B3A5C !important; /* Brand Blue */
+  color: #1B3A5C;
   margin-bottom: 2rem;
 }
 
@@ -495,7 +495,7 @@
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 900;
   line-height: 1.05;
-  color: #0A1628;
+  color: #1B3A5C;
   margin-bottom: 1.5rem;
 }
 
@@ -548,7 +548,7 @@
 
 .services-cta__btn--secondary {
   background: transparent;
-  color: #0A1628;
+  color: #1B3A5C;
   border: 1px solid rgba(10, 22, 40, 0.2);
 }
 

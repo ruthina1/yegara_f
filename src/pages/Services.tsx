@@ -282,9 +282,6 @@ const Services: React.FC = () => {
           })}
         </main>
       </div>
-
-
-
       <Footer />
     </div>
   );

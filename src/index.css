@@ -11,7 +11,7 @@
 :root {
   /* ── Color Palette ── */
   --ytsc-white: #FFFFFF;
-  --ytsc-off-white: #F8F9FC;
+  --ytsc-off-white: #FFFFFF;
   --ytsc-light-gray: #EEF1F6;
   
   --ytsc-blue: #1B3A5C;
@@ -142,7 +142,7 @@ img {
   color: var(--ytsc-orange);
 }
 
-.ytsc-heading-xl {
+.ytsc-heading-xl, h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 700;
