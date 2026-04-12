@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { HiArrowRight, HiAcademicCap, HiCurrencyDollar, HiChartBar, HiLightBulb, HiUserGroup } from 'react-icons/hi';
 import Footer from '../components/Footer';
-import heroBg from '../assets/hero_bg.png';
+import heroBg from '../assets/hero_bg.jpg';
 import missionVisual from '../assets/mission_visual.png';
 import valuesVisual from '../assets/values_visual.png';
 import milestonesVisual from '../assets/milestones_visual.png';

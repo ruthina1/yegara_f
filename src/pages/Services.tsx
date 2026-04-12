@@ -1,64 +1,76 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { HiAcademicCap, HiCurrencyDollar, HiChartBar, HiLightBulb, HiUserGroup } from 'react-icons/hi';
+import { HiAcademicCap, HiCurrencyDollar, HiChartBar, HiLightBulb, HiUserGroup, HiSparkles, HiChatAlt2, HiUsers, HiClipboardList, HiSearch } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import './Services.css';
 
 const servicesData = [
   {
-    id: 'capacity',
-    title: 'Capacity Building',
-    label: 'Empowerment',
-    description: 'Elevating potential through targeted skill-development. We provide extensive training for both individuals and enterprises to ensure our workforce remains competitive.',
-    details: 'Expert-led modules covering everything from basic entrepreneurship to advanced executive leadership.',
-    icon: <HiAcademicCap />,
-    color: '#0F2440',
-    textColor: '#FFFFFF',
-    accent: '#F47920',
-  },
-  {
-    id: 'finance',
-    title: 'Impact Finance',
-    label: 'Capital',
-    description: "Accessing capital shouldn't be a barrier to innovation. We deploy financial tools designed to support sustainable and socially responsible initiatives.",
-    details: 'Specialized funds designed for high-impact social enterprises and green technology startups.',
-    icon: <HiCurrencyDollar />,
-    color: '#F47920',
-    textColor: '#FFFFFF',
-    accent: '#0F2440',
-  },
-  {
-    id: 'bds',
-    title: 'Business Development',
-    label: 'Strategy',
-    description: 'Navigating the business landscape requires robust operational knowledge. Our comprehensive offerings cover strategy formulation and growth advisory.',
-    details: 'Setting your company up for scalable and enduring success across African markets.',
-    icon: <HiChartBar />,
-    color: '#FBF8F5',
-    textColor: '#1B3A5C',
-    accent: '#F47920',
-  },
-  {
-    id: 'research',
-    title: 'Research & Innovation',
-    label: 'Insights',
-    description: 'Data sits at the core of all rational decisions. We conduct continuous market research, sector analyses, and feasibility studies.',
-    details: 'Partner with our labs to develop innovative approaches that solve complex market challenges.',
-    icon: <HiLightBulb />,
+    id: 'workshops',
+    title: 'Workshops & Training',
+    label: 'Education',
+    description: 'Educational programs, seminars, and hands-on workshops on product development, fundraising, leadership, and digital transformation.',
+    details: 'Interactive sessions designed to build practical skills and knowledge.',
+    icon: <HiSparkles />,
     color: '#0A1628',
     textColor: '#FFFFFF',
     accent: '#F47920',
   },
   {
-    id: 'partnership',
-    title: 'Partnership Facilitation',
-    label: 'Alliance',
-    description: 'No single entity can achieve systemic change alone. We act as a vital bridge between active private enterprises, non-profits, and government.',
-    details: 'Forging strategic alliances capable of transforming socio-economic realities.',
-    icon: <HiUserGroup />,
+    id: 'mentorship',
+    title: 'Mentorship & Coaching',
+    label: 'Guidance',
+    description: 'Direct guidance from experienced entrepreneurs, industry leaders, and technical experts.',
+    details: 'One-on-one coaching to navigate challenges and accelerate growth.',
+    icon: <HiChatAlt2 />,
+    color: '#F47920',
+    textColor: '#FFFFFF',
+    accent: '#0F2440',
+  },
+  {
+    id: 'networking',
+    title: 'Networking & Community',
+    label: 'Connections',
+    description: 'Facilitating connections among entrepreneurs, investors, corporate partners, and stakeholders.',
+    details: 'Building a vibrant community of innovators and industry leaders.',
+    icon: <HiUsers />,
+    color: '#FBF8F5',
+    textColor: '#1B3A5C',
+    accent: '#F47920',
+  },
+  {
+    id: 'consultancy',
+    title: 'Consultancy Services',
+    label: 'Advisory',
+    description: 'Professional advisory by experts to solve problems, improve performance, and implement new strategies.',
+    details: 'Tailored solutions to optimize your business operations.',
+    icon: <HiClipboardList />,
     color: '#1B3A5C',
     textColor: '#FFFFFF',
     accent: '#F47920',
+  },
+  {
+    id: 'research-hub',
+    title: 'Research Hub',
+    label: 'Discovery',
+    description: 'Systematic studies aimed at gaining new knowledge and solving specific problems in science, technology, and business.',
+    details: 'Data-driven insights to inform your strategic decisions.',
+    icon: <HiSearch />,
+    color: '#0F2440',
+    textColor: '#FFFFFF',
+    accent: '#F47920',
+  },
+  {
+    id: 'cocreation',
+    title: 'Co-creation & Co-Work',
+    label: 'Collaboration',
+    description: 'Shared physical workspaces and collaborative product development for a productive, community-driven environment.',
+    details: 'Flexible workspaces designed for collaboration and innovation.',
+    icon: <HiUserGroup />,
+    color: '#F47920',
+    textColor: '#FFFFFF',
+    accent: '#0A1628',
   },
 ];
 
@@ -78,16 +90,12 @@ const StackCard = ({
   const targetScale = 1 - (servicesData.length - index) * 0.04;
   const scale = useTransform(progress, [rootRange[0], 1], [1, targetScale]);
 
-  const blurValue = useTransform(progress, [rootRange[0], 1], [0, 3]);
-  const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
-
 
   return (
     <div ref={container} className="stack-card__wrapper" id={service.id}>
       <motion.div
         style={{
           scale,
-          filter,
           backgroundColor: service.color,
           top: `calc(5vh + ${index * 18}px)`,
         }}
@@ -142,9 +150,10 @@ const StackCard = ({
             >
               {service.details}
             </div>
-            <button
+            <Link
+              to="/login"
               className="stack-card__cta"
-              style={{ color: service.textColor }}
+              style={{ color: service.textColor, textDecoration: 'none' }}
             >
               Explore Full Program
               <span
@@ -153,7 +162,7 @@ const StackCard = ({
               >
                 →
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </motion.div>
@@ -292,12 +301,12 @@ const Services: React.FC = () => {
             seeking strategic partnership, we have the tools for your success.
           </p>
           <div className="services-cta__buttons">
-            <button className="services-cta__btn services-cta__btn--primary">
+            <Link to="/login" className="services-cta__btn services-cta__btn--primary">
               Become a Partner
-            </button>
-            <button className="services-cta__btn services-cta__btn--secondary">
+            </Link>
+            <Link to="/innovation-hub" className="services-cta__btn services-cta__btn--secondary">
               Explore Our Hub
-            </button>
+            </Link>
           </div>
         </motion.div>
       </section>

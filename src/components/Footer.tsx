@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
                 "Trusted Partner for Lasting Impact!"
               </div>
               <div className="footer-social">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
+                <a href="https://www.linkedin.com/company/yegara-trading-share-company-ytsc/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
                 <a href="https://t.me" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><FaTelegramPlane /></a>

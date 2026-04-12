@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Services from './pages/Services';
+import InnovationHub from './pages/InnovationHub';
 import Contact from './pages/Contact';
 import './App.css';
 
@@ -55,6 +56,7 @@ const AppRoutes: React.FC = () => {
         />
         {/* Placeholders for new pages */}
         <Route path="/services" element={<Services />} />
+        <Route path="/innovation-hub" element={<InnovationHub />} />
         <Route path="/news" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>News Page (Coming Soon)</div>} />
         <Route path="/board" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>Board of Directors Page (Coming Soon)</div>} />
         <Route path="/contact" element={<Contact />} />

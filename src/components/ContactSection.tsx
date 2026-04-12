@@ -41,7 +41,7 @@ const ContactSection: React.FC = () => {
             <div className="info-block-light">
               <h3 className="info-block-light__title">SOCIAL NETWORKS</h3>
               <ul className="info-block-light__list">
-                <li><a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
+                <li><a href="https://www.linkedin.com/company/yegara-trading-share-company-ytsc/" target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
                 <li><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></li>
               </ul>
             </div>

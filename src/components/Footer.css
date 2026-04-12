@@ -3,8 +3,8 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .ytsc-footer {
-  background: var(--ytsc-dark);
-  color: var(--ytsc-white);
+  background: #FFFFFF;
+  color: var(--ytsc-blue-dark);
   font-family: var(--font-sans);
   position: relative;
   overflow: hidden;
@@ -12,9 +12,9 @@
 
 /* ── CTA Band ── */
 .footer-cta {
-  background: var(--ytsc-orange);
+  background: #FBF8F5; /* Matches the clean off-white aesthetic */
   padding: 60px 0;
-  color: white;
+  color: var(--ytsc-blue-dark);
 }
 
 .footer-cta__inner {
@@ -36,15 +36,16 @@
 .footer-cta__text h3 {
   font-family: var(--font-serif);
   font-size: clamp(28px, 4vw, 40px);
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 12px;
   line-height: 1.2;
+  color: var(--ytsc-blue-dark);
 }
 
 .footer-cta__text p {
   font-size: 18px;
   font-weight: 500;
-  opacity: 0.9;
+  color: var(--ytsc-gray);
   max-width: 600px;
 }
 
@@ -56,12 +57,22 @@
 }
 
 .footer-cta__actions .ytsc-btn-primary {
-  background: var(--ytsc-blue);
+  background: var(--ytsc-orange);
   color: white;
 }
 
 .footer-cta__actions .ytsc-btn-primary:hover {
-  background: var(--ytsc-blue-dark);
+  background: var(--ytsc-orange-dark);
+}
+
+.footer-cta__actions .ytsc-btn-white {
+  background: transparent;
+  color: var(--ytsc-blue-dark);
+  border: 1px solid rgba(15, 36, 64, 0.2);
+}
+
+.footer-cta__actions .ytsc-btn-white:hover {
+  background: rgba(15, 36, 64, 0.05);
 }
 
 /* ── Main Footer ── */
@@ -116,7 +127,7 @@
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: white;
+  color: var(--ytsc-blue-dark);
   line-height: 1;
 }
 
@@ -132,7 +143,7 @@
 .footer-brand__desc {
   font-size: 15px;
   line-height: 1.8;
-  color: var(--ytsc-gray-light);
+  color: var(--ytsc-gray);
   margin-bottom: 24px;
   max-width: 400px;
 }
@@ -156,23 +167,24 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--ytsc-light-gray);
   border-radius: 50%;
-  color: white;
+  color: var(--ytsc-blue-dark);
   font-size: 18px;
   transition: var(--transition-fast);
 }
 
 .footer-social a:hover {
   background: var(--ytsc-orange);
+  color: white;
   transform: translateY(-4px);
 }
 
 /* ── Columns (Links & Contact) ── */
 .footer-col__title {
   font-size: 16px;
-  font-weight: 700;
-  color: white;
+  font-weight: 800;
+  color: var(--ytsc-blue-dark);
   margin-bottom: 24px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -198,7 +210,7 @@
 
 .footer-col__links a {
   font-size: 15px;
-  color: var(--ytsc-gray-light);
+  color: var(--ytsc-gray);
   transition: var(--transition-fast);
 }
 
@@ -216,7 +228,7 @@
 .footer-contact__item {
   display: flex;
   gap: 16px;
-  color: var(--ytsc-gray-light);
+  color: var(--ytsc-gray);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -238,7 +250,7 @@
 
 /* ── Bottom Bar ── */
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(15, 36, 64, 0.1);
   padding: 24px 60px;
 }
 
@@ -249,7 +261,7 @@
   gap: 16px;
   text-align: center;
   font-size: 13px;
-  color: var(--ytsc-gray-light);
+  color: var(--ytsc-gray);
 }
 
 @media (min-width: 768px) {
@@ -270,7 +282,7 @@
 }
 
 .footer-bottom__links a:hover {
-  color: white;
+  color: var(--ytsc-orange);
 }
 
 /* ── Massive Background Brand Text ── */

@@ -47,6 +47,7 @@
   box-shadow: none;
 }
 
+/* ── Nav Inner ── */
 .corp-nav__inner {
   max-width: 1440px;
   margin: 0 auto;
@@ -63,6 +64,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  z-index: 2;
 }
 
 .corp-nav__logo img {
@@ -77,12 +79,8 @@
   height: 55px;
 }
 
-/* ── Center Brand (non-home static fallback) ── */
+/* ── Center Brand (non-home static YEGARA) ── */
 .corp-nav__brand-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 900;
@@ -90,24 +88,69 @@
   letter-spacing: 0.12em;
   color: var(--ytsc-blue);
   user-select: none;
+  pointer-events: none;
+  flex-shrink: 0;
+  padding: 0 16px;
 }
 
 .corp-nav__brand-center-placeholder {
-  min-width: 120px;
+  min-width: 100px;
   height: 1px;
+  flex-shrink: 1;
 }
 
-/* ── Right: All Nav Links ── */
-.corp-nav__right {
-  display: flex;
+/* ═══════════════════════════════════════════════════════════════
+   SPLIT NAV GROUPS (Left / Right of YEGARA)
+   ═══════════════════════════════════════════════════════════════ */
+
+.corp-nav__split-left,
+.corp-nav__split-right {
+  display: none;
   align-items: center;
-  gap: 16px;
+  gap: 28px;
+}
+
+/* Static variants for non-home pages — always visible on desktop */
+.corp-nav__split-left--static {
+  display: none;
+  align-items: center;
+  gap: 28px;
+}
+
+.corp-nav__split-right--static {
+  display: none;
+  align-items: center;
+  gap: 28px;
+}
+
+@media (min-width: 1024px) {
+  .corp-nav__split-left,
+  .corp-nav__split-right {
+    display: flex;
+  }
+
+  .corp-nav__split-left--static {
+    display: flex;
+  }
+
+  .corp-nav__split-right--static {
+    display: flex;
+  }
+}
+
+/* ── The initial all-right row (home page, unscrolled) ── */
+.corp-nav__all-right {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
 }
 
 .corp-nav__links-row {
   display: none;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
 }
 
 @media (min-width: 1024px) {
@@ -116,8 +159,7 @@
   }
 }
 
-/* NOTE: scroll-based show/hide is handled by React AnimatePresence, not CSS */
-
+/* ── Shared link styling ── */
 .corp-nav__link {
   font-size: 11px;
   font-weight: 800;
@@ -156,29 +198,28 @@
   color: #ffffff;
 }
 
-/* Mobile Toggle — always flex when rendered on mobile */
+/* ── Mobile Toggle ── */
 .corp-nav__mobile-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: rgba(244, 121, 32, 0.6);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  z-index: 2;
+  margin-left: auto;
 }
 
 @media (min-width: 1024px) {
   .corp-nav__mobile-toggle {
     display: none;
   }
-}
-
-.corp-nav__mobile-toggle {
-  width: 44px;
-  height: 44px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  color: rgba(244, 121, 32, 0.6); /* Light faded orange like other elements */
-  cursor: pointer;
-  border-radius: 8px;
-  transition: background 0.3s ease;
 }
 
 .corp-nav__mobile-toggle:hover {
