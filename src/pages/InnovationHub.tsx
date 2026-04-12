@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   HiGlobe,
@@ -9,7 +9,9 @@ import {
   HiUserGroup,
   HiChartBar,
   HiArrowRight,
-  HiSparkles
+  HiSparkles,
+  HiX,
+  HiCheckCircle
 } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import './InnovationHub.css';
@@ -21,48 +23,62 @@ const bentoHubs = [
     letter: 'A',
     title: 'Agri-Tech',
     gridClass: 'bento--wide-1 color-accent-1',
-    description: 'Focuses on agricultural technologies, from precision farming to sustainable supply chains. We empower entrepreneurs to revolutionize food systems.',
+    description: 'Transforming agricultural systems through precision technology and sustainable infrastructure.',
     icon: <HiGlobe />,
+    detailedDesc: 'Our Agri-Tech hub is at the forefront of Ethiopia\'s agricultural transformation. We integrate IoT for soil health monitoring, AI-driven supply chain optimization, and sustainable irrigation frameworks to empower the next generation of climate-smart farmers.',
+    meta: ['Precision Farming', 'Climate-Smart Ag', 'Value Chain Tech']
   },
   {
     id: 'edtech',
     letter: 'B',
     title: 'EdTech',
     gridClass: 'bento--tall-1',
-    description: 'Dedicated to supporting Educational Technology solutions to enhance learning, teaching, and education administration.',
+    description: 'Modernizing learning ecosystems through digital tools and adaptive pedagogy.',
     icon: <HiAcademicCap />,
+    highlights: ['Adaptive Learning', 'Teacher Portals', 'Digital Literacy'],
+    detailedDesc: 'Revolutionizing the educational landscape by bridging the digital divide. We develop offline-first learning solutions, interactive curriculum platforms, and teacher capacity-building tools designed for the diverse needs of Ethiopian classrooms.',
+    meta: ['LMS Development', 'Offline Learning', 'Curriculum Innovation']
   },
   {
     id: 'innovation-tech',
     letter: 'C',
     title: 'Innovation Tech',
     gridClass: 'bento--box-1',
-    description: 'Providing specialized infrastructure and laboratories for scaling cutting-edge R&D solutions.',
+    description: 'Specialized infrastructure for scaling cutting-edge R&D and engineering solutions.',
     icon: <HiCog />,
+    detailedDesc: 'Providing the hard technical foundation for hardware and software R&D. Our labs offer specialized equipment and prototyping spaces for tech startups moving from concept to industrial-grade products.',
+    meta: ['R&D Labs', 'Prototyping', 'Tech Infrastructure']
   },
   {
     id: 'impact',
     letter: 'D',
     title: 'Impact',
     gridClass: 'bento--box-2',
-    description: 'Co-working networks dedicated to social focus, fostering impactful projects in health, tech, and environmental sustainability.',
+    description: 'Nurturing social entrepreneurs working on sustainability and communal well-being.',
     icon: <HiHeart />,
+    detailedDesc: 'A community-driven space for ventures that prioritize social return. We support projects in health accessibility, environmental conservation, and social equity through collaborative networks.',
+    meta: ['Social Equity', 'Conservation', 'Health Tech']
   },
   {
     id: 'entrepreneurship',
     letter: 'E',
     title: 'Founders',
     gridClass: 'bento--tall-2 color-accent-2',
-    description: 'Comprehensive support systems for founders to navigate complex startup challenges through mentorship and capital networks.',
+    description: 'Comprehensive scaffolding for startup founders navigating complex growth challenges.',
     icon: <HiUserGroup />,
+    highlights: ['Incubation Programs', 'Investor Matching', 'Legal Scaffolding'],
+    detailedDesc: 'The ultimate sanctuary for entrepreneurs. We provide the strategic guidance, legal support, and capital access necessary to navigate the "valley of death" and scale startups into institutional enterprises.',
+    meta: ['VC Networking', 'Market Entry', 'Strategic Mentorship']
   },
   {
     id: 'business',
     letter: 'F',
     title: 'Business Growth',
     gridClass: 'bento--wide-2',
-    description: 'Nurtures the growth and scaling of massive enterprises, helping founders refine business models, optimize strategies, and launch to new markets.',
+    description: 'Optimizing strategy and operational models for high-potential growth ventures.',
     icon: <HiChartBar />,
+    detailedDesc: 'Nurturing the scaling of massive enterprises. We help founders refine business models, optimize operational strategies, and launch to new international markets with structural confidence.',
+    meta: ['Scale-up Strategy', 'Operational Excellence', 'Market Expansion']
   },
 ];
 
@@ -74,6 +90,18 @@ const fadeIn = (delay = 0): any => ({
 });
 
 const InnovationHub: React.FC = () => {
+  const [selectedHub, setSelectedHub] = useState<any>(null);
+
+  const openHub = (hub: any) => {
+    setSelectedHub(hub);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeHub = () => {
+    setSelectedHub(null);
+    document.body.style.overflow = 'auto';
+  };
+
   return (
     <div className="ihub-page">
       {/* ── HERO ── */}
@@ -130,7 +158,7 @@ const InnovationHub: React.FC = () => {
             </h2>
             <p className="ihub-bento__desc">
               Six interconnected ecosystems structurally integrated to scale up 
-              Africa's foremost innovation engine. Select a hub below.
+              foremost innovation engine. Select a hub below.
             </p>
           </motion.div>
 
@@ -140,6 +168,7 @@ const InnovationHub: React.FC = () => {
                 {...fadeIn(i * 0.1)} 
                 key={hub.id} 
                 className={`ihub-bento__card ${hub.gridClass}`}
+                onClick={() => openHub(hub)}
               >
                 {/* Visual Watermark */}
                 <div className="ihub-bento__watermark">{hub.letter}</div>
@@ -148,44 +177,97 @@ const InnovationHub: React.FC = () => {
                   {hub.icon}
                 </div>
 
+                {/* Fill B and E gaps with creative highlights */}
+                {hub.highlights && (
+                   <div className="ihub-bento__highlights">
+                     {hub.highlights.map(h => (
+                        <div key={h} className="ihub-bento__highlight-item">
+                           <div className="ihub-bento__highlight-dot" />
+                           {h}
+                        </div>
+                     ))}
+                   </div>
+                )}
+
                 <div className="ihub-bento__info">
                   <h3 className="ihub-bento__card-title">{hub.title}</h3>
                   <p className="ihub-bento__card-desc">{hub.description}</p>
                 </div>
 
-                {/* Animated Arrow */}
-                <Link to="/contact" className="ihub-bento__arrow">
+                {/* Animated Arrow - Now triggers the "Quick View" */}
+                <div className="ihub-bento__arrow">
                   <HiArrowRight />
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── BOLD CTA ── */}
-      <section className="ihub-cta">
-        <div className="ihub-cta__content">
-          <motion.div {...fadeIn()}>
-            <HiSparkles className="ihub-cta__icon" />
-            <h2 className="ihub-cta__title">
-              Ready to accelerate your <span>impact?</span>
-            </h2>
-            <p className="ihub-cta__text">
-              Whether you are an institutional investor navigating emerging markets, or a scaling 
-              enterprise requiring strategic growth scaffolding—Yegara is the bridge.
-            </p>
-            <div className="ihub-cta__buttons">
-              <Link to="/login" className="ihub-cta__btn ihub-cta__btn--primary">
-                Join The Portal <HiArrowRight />
-              </Link>
-              <Link to="/contact" className="ihub-cta__btn ihub-cta__btn--secondary">
-                Request Meeting
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ── CINEMATIC PORTAL MODAL ── */}
+      <AnimatePresence>
+        {selectedHub && (
+          <div className="ihub-portal">
+            <motion.div 
+              className="ihub-portal__backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeHub}
+            />
+            
+            <motion.div 
+              className="ihub-portal__window"
+              initial={{ y: 100, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 50, opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="ihub-portal__header">
+                <div className="ihub-portal__title-group">
+                  <div className="ihub-portal__letter">{selectedHub.letter}</div>
+                  <h2 className="ihub-portal__title">{selectedHub.title}</h2>
+                </div>
+                <button className="ihub-portal__close" onClick={closeHub}>
+                  <HiX />
+                </button>
+              </div>
+
+              <div className="ihub-portal__body">
+                 <div className="ihub-portal__left">
+                   <p className="ihub-portal__main-text">
+                      {selectedHub.detailedDesc}
+                   </p>
+                   <Link to="/contact" className="ihub-portal__cta" onClick={closeHub}>
+                      Partner With Us <HiArrowRight />
+                   </Link>
+                 </div>
+
+                 <div className="ihub-portal__sidebar">
+                    <div className="ihub-portal__meta-item">
+                       <h4>Key Expertise</h4>
+                       <div className="ihub-portal__meta-list">
+                          {selectedHub.meta?.map((m: string) => (
+                             <div key={m} className="ihub-portal__meta-li">
+                                <HiCheckCircle style={{color: '#F47920'}} />
+                                {m}
+                             </div>
+                          ))}
+                       </div>
+                    </div>
+
+                    <div className="ihub-portal__meta-item">
+                       <h4>Hub Status</h4>
+                       <p style={{fontSize: '0.9rem', color: '#64748B', fontWeight: 500}}>
+                          Operational - accepting applications from high-growth startups and strategic partners.
+                       </p>
+                    </div>
+                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

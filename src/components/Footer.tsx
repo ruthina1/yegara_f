@@ -13,7 +13,10 @@ const Footer: React.FC = () => {
         <div className="ytsc-container">
           <div className="footer-cta__inner">
             <div className="footer-cta__text">
-              <h3>Ready to Build Lasting Impact?</h3>
+               <h3>
+                Ready to Build <br />
+                <span style={{ color: '#F47920' }}>Lasting Impact?</span>
+              </h3>
               <p>Partner with YTSC to unlock sustainable growth opportunities across Ethiopia and Africa.</p>
             </div>
             <div className="footer-cta__actions">

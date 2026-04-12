@@ -57,10 +57,8 @@ const StickyHeaderMorph: React.FC = () => {
   );
   // color
   const color = useTransform(smooth, (p: number) => {
-    const r = Math.round(0 + p * 27);
-    const g = Math.round(0 + p * 58);
-    const b = Math.round(0 + p * 92);
-    return `rgb(${r},${g},${b})`;
+    // Keep it solid Brand Blue (#1B3A5C) throughout the morph
+    return `rgb(27, 58, 92)`;
   });
 
   // ── Split‑nav transforms (home only) ─────────────────────────────

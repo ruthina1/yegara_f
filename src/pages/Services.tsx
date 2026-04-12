@@ -283,33 +283,7 @@ const Services: React.FC = () => {
         </main>
       </div>
 
-      {/* ── CTA Section ── */}
-      <section className="services-cta">
-        <motion.div
-          className="services-cta__content"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <h2 className="services-cta__title">
-            Ready to <span style={{ color: '#F47920' }}>grow</span>
-            <br />with Yegara?
-          </h2>
-          <p className="services-cta__text">
-            Whether you're an individual looking to build skills or an enterprise
-            seeking strategic partnership, we have the tools for your success.
-          </p>
-          <div className="services-cta__buttons">
-            <Link to="/login" className="services-cta__btn services-cta__btn--primary">
-              Become a Partner
-            </Link>
-            <Link to="/innovation-hub" className="services-cta__btn services-cta__btn--secondary">
-              Explore Our Hub
-            </Link>
-          </div>
-        </motion.div>
-      </section>
+
 
       <Footer />
     </div>

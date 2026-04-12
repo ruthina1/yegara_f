@@ -107,7 +107,7 @@
   font-weight: 900;
   line-height: 0.92;
   letter-spacing: -0.04em;
-  color: var(--ytsc-blue-dark);
+  color: #1B3A5C !important;
   margin: 0 0 40px;
 }
 

@@ -249,7 +249,7 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--ytsc-blue);
+  color: #1B3A5C !important; /* Force Brand Blue as requested */
   margin: 0;
 }
 

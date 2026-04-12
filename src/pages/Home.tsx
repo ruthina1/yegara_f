@@ -229,7 +229,7 @@ const Home: React.FC = () => {
             <motion.span variants={fadeUpVariant} className="block text-[11px] font-extrabold tracking-[0.3em] uppercase text-[#F47920] mb-3">
               | Our Services |
             </motion.span>
-            <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-5xl font-serif font-black text-gray-900">
+            <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-5xl font-serif font-black" style={{ color: '#1B3A5C' }}>
               Pillars of Impact
             </motion.h2>
           </motion.div>
