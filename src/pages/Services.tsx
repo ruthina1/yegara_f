@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { HiAcademicCap, HiCurrencyDollar, HiChartBar, HiLightBulb, HiUserGroup, HiSparkles, HiChatAlt2, HiUsers, HiClipboardList, HiSearch } from 'react-icons/hi';
+import { HiUserGroup, HiSparkles, HiChatAlt2, HiUsers, HiClipboardList, HiSearch } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import './Services.css';
 
