@@ -1049,18 +1049,25 @@
 
 @media (max-width: 600px) {
   .about-values__card--organic-vertical {
-    padding: 40px 24px;
-    border-radius: 30px;
+    padding: 40px 32px;
+    border-radius: 16px !important; /* Making them square and professional on mobile */
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .about-values__grid--vertical-stagger {
+    padding: 0 16px;
+    gap: 32px;
   }
 
   .about-values__header {
     padding-left: 0;
-    text-align: center;
-    margin-bottom: 50px;
+    text-align: left;
+    margin-bottom: 40px;
   }
 
   .v-card__title {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .node-num--hero {
