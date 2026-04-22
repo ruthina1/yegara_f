@@ -6,19 +6,14 @@ import {
   HiAcademicCap, 
   HiUserGroup, 
   HiTrendingUp, 
-  HiLocationMarker, 
   HiShieldCheck,
   HiLightningBolt,
-  HiOfficeBuilding,
-  HiGlobe,
   HiStar,
-  HiOutlineUserGroup,
   HiHeart,
   HiArrowRight
 } from 'react-icons/hi';
 import Footer from '../components/Footer';
-import atiBg1 from '../assets/ati_bg1.png';
-import atiBg2 from '../assets/ati_bg2.png';
+
 import fikreImg from '../assets/fikre_journey_actual.png';
 import tsionImg from '../assets/tsion_journey_actual.png';
 import bizuyeImg from '../assets/bizuye_journey_actual.png';

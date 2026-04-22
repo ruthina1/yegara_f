@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiLayout, FiEdit3, FiFileText, FiSettings, FiHelpCircle, FiLogOut, FiPlus, FiTrash2, FiSend, FiImage, FiGrid } from 'react-icons/fi';
+import { FiEdit3, FiFileText, FiSettings, FiHelpCircle, FiTrash2, FiSend, FiImage, FiGrid } from 'react-icons/fi';
 import './Admin.css';
 
 interface NewsItem {

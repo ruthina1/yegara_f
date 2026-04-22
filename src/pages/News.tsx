@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { FiArrowLeft, FiX } from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 import './News.css';
 
 interface NewsItem {
