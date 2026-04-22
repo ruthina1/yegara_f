@@ -22,63 +22,73 @@ const bentoHubs = [
     id: 'agritech',
     letter: 'A',
     title: 'Agri-Tech',
-    gridClass: 'bento--wide-1 color-accent-1',
     description: 'Transforming agricultural systems through precision technology and sustainable infrastructure.',
     icon: <HiGlobe />,
     detailedDesc: 'Our Agri-Tech hub is at the forefront of Ethiopia\'s agricultural transformation. We integrate IoT for soil health monitoring, AI-driven supply chain optimization, and sustainable irrigation frameworks to empower the next generation of climate-smart farmers.',
-    meta: ['Precision Farming', 'Climate-Smart Ag', 'Value Chain Tech']
+    meta: ['Precision Farming', 'Climate-Smart Ag', 'Value Chain Tech'],
+    color: '#0A1628',
+    textColor: '#FFFFFF',
+    accent: '#F47920'
   },
   {
     id: 'edtech',
     letter: 'B',
     title: 'EdTech',
-    gridClass: 'bento--tall-1',
     description: 'Modernizing learning ecosystems through digital tools and adaptive pedagogy.',
     icon: <HiAcademicCap />,
-    highlights: ['Adaptive Learning', 'Teacher Portals', 'Digital Literacy'],
     detailedDesc: 'Revolutionizing the educational landscape by bridging the digital divide. We develop offline-first learning solutions, interactive curriculum platforms, and teacher capacity-building tools designed for the diverse needs of Ethiopian classrooms.',
-    meta: ['LMS Development', 'Offline Learning', 'Curriculum Innovation']
+    meta: ['LMS Development', 'Offline Learning', 'Curriculum Innovation'],
+    color: '#F47920',
+    textColor: '#FFFFFF',
+    accent: '#0A1628'
   },
   {
     id: 'innovation-tech',
     letter: 'C',
     title: 'Innovation Tech',
-    gridClass: 'bento--box-1',
     description: 'Specialized infrastructure for scaling cutting-edge R&D and engineering solutions.',
     icon: <HiCog />,
     detailedDesc: 'Providing the hard technical foundation for hardware and software R&D. Our labs offer specialized equipment and prototyping spaces for tech startups moving from concept to industrial-grade products.',
-    meta: ['R&D Labs', 'Prototyping', 'Tech Infrastructure']
+    meta: ['R&D Labs', 'Prototyping', 'Tech Infrastructure'],
+    color: '#F8F9FC',
+    textColor: '#1B3A5C',
+    accent: '#F47920'
   },
   {
     id: 'impact',
     letter: 'D',
     title: 'Impact',
-    gridClass: 'bento--box-2',
     description: 'Nurturing social entrepreneurs working on sustainability and communal well-being.',
     icon: <HiHeart />,
     detailedDesc: 'A community-driven space for ventures that prioritize social return. We support projects in health accessibility, environmental conservation, and social equity through collaborative networks.',
-    meta: ['Social Equity', 'Conservation', 'Health Tech']
+    meta: ['Social Equity', 'Conservation', 'Health Tech'],
+    color: '#1B3A5C',
+    textColor: '#FFFFFF',
+    accent: '#F47920'
   },
   {
     id: 'entrepreneurship',
     letter: 'E',
     title: 'Founders',
-    gridClass: 'bento--tall-2 color-accent-2',
     description: 'Comprehensive scaffolding for startup founders navigating complex growth challenges.',
     icon: <HiUserGroup />,
-    highlights: ['Incubation Programs', 'Investor Matching', 'Legal Scaffolding'],
     detailedDesc: 'The ultimate sanctuary for entrepreneurs. We provide the strategic guidance, legal support, and capital access necessary to navigate the "valley of death" and scale startups into institutional enterprises.',
-    meta: ['VC Networking', 'Market Entry', 'Strategic Mentorship']
+    meta: ['VC Networking', 'Market Entry', 'Strategic Mentorship'],
+    color: '#FFFFFF',
+    textColor: '#0A1628',
+    accent: '#F47920'
   },
   {
     id: 'business',
     letter: 'F',
     title: 'Business Growth',
-    gridClass: 'bento--wide-2',
     description: 'Optimizing strategy and operational models for high-potential growth ventures.',
     icon: <HiChartBar />,
     detailedDesc: 'Nurturing the scaling of massive enterprises. We help founders refine business models, optimize operational strategies, and launch to new international markets with structural confidence.',
-    meta: ['Scale-up Strategy', 'Operational Excellence', 'Market Expansion']
+    meta: ['Scale-up Strategy', 'Operational Excellence', 'Market Expansion'],
+    color: '#0F2440',
+    textColor: '#FFFFFF',
+    accent: '#F47920'
   },
 ];
 
@@ -162,41 +172,54 @@ const InnovationHub: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="ihub-bento__grid">
+          <div className="ihub-services-list">
             {bentoHubs.map((hub, i) => (
               <motion.div 
                 {...fadeIn(i * 0.1)} 
                 key={hub.id} 
-                className={`ihub-bento__card ${hub.gridClass}`}
+                className="ihub-service-card"
+                style={{ backgroundColor: hub.color, color: hub.textColor }}
                 onClick={() => openHub(hub)}
               >
-                {/* Visual Watermark */}
-                <div className="ihub-bento__watermark">{hub.letter}</div>
-
-                <div className="ihub-bento__icon-wrapper">
+                <div 
+                  className="ihub-service-card__icon-box"
+                  style={{ backgroundColor: hub.textColor, color: hub.color }}
+                >
                   {hub.icon}
+                  <div className="ihub-service-card__letter" style={{ color: hub.textColor }}>{hub.letter}</div>
                 </div>
 
-                {/* Fill B and E gaps with creative highlights */}
-                {hub.highlights && (
-                   <div className="ihub-bento__highlights">
-                     {hub.highlights.map(h => (
-                        <div key={h} className="ihub-bento__highlight-item">
-                           <div className="ihub-bento__highlight-dot" />
-                           {h}
-                        </div>
-                     ))}
-                   </div>
-                )}
-
-                <div className="ihub-bento__info">
-                  <h3 className="ihub-bento__card-title">{hub.title}</h3>
-                  <p className="ihub-bento__card-desc">{hub.description}</p>
-                </div>
-
-                {/* Animated Arrow - Now triggers the "Quick View" */}
-                <div className="ihub-bento__arrow">
-                  <HiArrowRight />
+                <div className="ihub-service-card__content">
+                  <div className="ihub-service-card__header">
+                    <h3 className="ihub-service-card__title" style={{ color: hub.textColor }}>{hub.title}</h3>
+                    <div className="ihub-service-card__tags">
+                      {hub.meta?.map(m => (
+                        <span 
+                          key={m} 
+                          className="ihub-service-card__tag"
+                          style={{ backgroundColor: hub.textColor + '22', color: hub.textColor }}
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="ihub-service-card__description" style={{ color: hub.textColor, opacity: 0.8 }}>
+                    {hub.description}
+                  </p>
+                  
+                  <div className="ihub-service-card__footer">
+                    <span 
+                      className="ihub-service-card__explore"
+                      style={{ color: hub.textColor }}
+                    >
+                      Explore Program
+                    </span>
+                    <HiArrowRight 
+                      className="ihub-service-card__arrow" 
+                      style={{ color: hub.accent }}
+                    />
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -238,7 +261,7 @@ const InnovationHub: React.FC = () => {
                    <p className="ihub-portal__main-text">
                       {selectedHub.detailedDesc}
                    </p>
-                   <Link to="/contact" className="ihub-portal__cta" onClick={closeHub}>
+                   <Link to="/login" className="ihub-portal__cta" onClick={closeHub}>
                       Partner With Us <HiArrowRight />
                    </Link>
                  </div>

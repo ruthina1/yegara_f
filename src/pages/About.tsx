@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HiUserGroup, HiLightBulb, HiGlobeAlt, HiShieldCheck, HiLightningBolt, HiBadgeCheck } from 'react-icons/hi';
+import { HiUserGroup, HiLightBulb, HiGlobeAlt, HiShieldCheck, HiLightningBolt, HiBadgeCheck, HiAcademicCap, HiTrendingUp } from 'react-icons/hi';
 import Footer from '../components/Footer';
+import fcLogo from '../assets/fc_africa_logo.png';
+import kifiyaLogo from '../assets/kifiya_logo.png';
+import mohasLogo from '../assets/mohas_logo.png';
+import molsLogo from '../assets/mols_logo.png';
+import hopeLogo from '../assets/hope_college_logo.png';
+import nefasLogo from '../assets/nefas_silk_logo.png';
 import './About.css';
 
 const fadeIn = (delay = 0): any => ({
@@ -26,7 +32,7 @@ const About: React.FC = () => {
 
         <div className="about-hero__content">
           <motion.span {...fadeIn()} className="about-hero__label">
-            EST. 2022  ·  ADDIS ABABA
+            EST. 2022  ·  TRUSTED PARTNER FOR LASTING IMPACT
           </motion.span>
           <motion.h1 {...fadeIn(0.15)} className="about-hero__title">
             Building <br />
@@ -110,10 +116,8 @@ const About: React.FC = () => {
           >
             <div className="about-story__text-block">
               <p className="about-story__text about-story__text--lead">
-                We believe that Africa's greatest lever for change is its people.
-                Yegara Trading Share Company was founded to build the capacity of
-                businesses and communities — equipping them with skills, capital access,
-                and the networks needed to unlock lasting prosperity.
+                Yegara Trading Share Company is a dynamic Ethiopian enterprise dedicated
+                to catalyzing sustainable socio-economic development through innovative, collaborative partnerships.
               </p>
               <p className="about-story__text">
                 At the intersection of private enterprise and nonprofit synergy,
@@ -237,7 +241,7 @@ const About: React.FC = () => {
               Built on <span className="text-brand">Purpose.</span>
             </h2>
             <p className="about-founding__intro-text">
-              Our founding consortium is driven by three pillars that shape every decision,
+              Our growth and socio-economic impact are driven by four strategic pillars that shape every decision,
               initiative, and partnership we pursue.
             </p>
           </motion.div>
@@ -245,25 +249,31 @@ const About: React.FC = () => {
           <div className="about-founding__cards">
             {[
               { 
-                icon: <HiUserGroup />, 
-                title: 'Founding Vision', 
-                desc: 'A consortium of Ethiopian professionals dedicated to bridging the socio-economic gap at the intersection of private enterprise and nonprofit synergy.',
+                icon: <HiAcademicCap />, 
+                title: 'Capacity Building', 
+                desc: 'Empowering individuals and organizations through tailored training and skill development programs.',
+                accent: 'var(--ytsc-orange)'
+              },
+              { 
+                icon: <HiTrendingUp />, 
+                title: 'Business Development', 
+                desc: 'Strategizing and implementing growth initiatives for sustainable enterprise expansion.',
                 accent: 'var(--ytsc-orange)'
               },
               { 
                 icon: <HiLightBulb />, 
-                title: 'Data-First Culture', 
-                desc: 'Our methodology is rooted in rigorous sector analysis, ensuring every initiative has a proven, sustainable pathway before deployment.',
+                title: 'Research & Innovation', 
+                desc: 'Driving evidence-based solutions and pioneering new technologies in the Ethiopian market.',
                 accent: 'var(--ytsc-orange)'
               },
               { 
-                icon: <HiGlobeAlt />, 
-                title: 'Systemic Shifts', 
-                desc: 'Impact isn\'t about charity. It\'s about equipping the market with tools to self-correct and thrive without external dependency.',
+                icon: <HiUserGroup />, 
+                title: 'Impact Partnerships & Finance', 
+                desc: 'Facilitating collaborative networks and financial solutions to bridge the development gap.',
                 accent: 'var(--ytsc-orange)'
               }
             ].map((card, i) => (
-              <motion.div key={i} {...fadeIn(i * 0.12)} className="about-founding__card">
+              <motion.div key={i} {...fadeIn(i * 0.1)} className="about-founding__card">
                 <div className="about-founding__card-icon" style={{ color: '#F47920' }}>
                   {card.icon}
                 </div>
@@ -284,9 +294,8 @@ const About: React.FC = () => {
           <motion.div {...fadeIn()} className="about-quote__content">
             <div className="about-quote__mark">"</div>
             <blockquote className="about-quote__text">
-              To become Africa's premier business network,
-              empowering businesses and communities for a
-              brighter, inclusive future.
+              To become Africa’s premier business network,
+              driving innovation and entrepreneurship.
             </blockquote>
             <cite className="about-quote__cite">— The Yegara Vision</cite>
           </motion.div>
@@ -346,6 +355,44 @@ const About: React.FC = () => {
                     <div className="v-card__accent" />
                   </div>
                 </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          07 · PARTNERS — Ecosystem Grid
+         ═══════════════════════════════════════════════════ */}
+      <section className="about-partners">
+        <div className="about-partners__container">
+          <motion.div {...fadeIn()} className="about-partners__header">
+            <span className="about-section-label">Partnership Ecosystem</span>
+            <h2 className="about-section-title">Collaborating for <span className="text-brand">Scale.</span></h2>
+          </motion.div>
+          
+          <div className="about-partners__marquee">
+            <div className="about-partners__track">
+              {[
+                { name: 'FCAfrica', logo: fcLogo },
+                { name: 'Kifiya FinTech', logo: kifiyaLogo },
+                { name: 'MoHas Consult', logo: mohasLogo },
+                { name: 'Ministry of Labor & Skills', logo: molsLogo },
+                { name: 'Hope Enterprise UC', logo: hopeLogo },
+                { name: 'Nefas Silk Polytechnic', logo: nefasLogo },
+                { name: 'FCAfrica', logo: fcLogo },
+                { name: 'Kifiya FinTech', logo: kifiyaLogo },
+                { name: 'MoHas Consult', logo: mohasLogo },
+                { name: 'Ministry of Labor & Skills', logo: molsLogo },
+                { name: 'Hope Enterprise UC', logo: hopeLogo },
+                { name: 'Nefas Silk Polytechnic', logo: nefasLogo }
+              ].map((partner, i) => (
+                <div key={i} className="partner-marquee-card">
+                  <div className="partner-logo-box">
+                    <img src={partner.logo} alt={partner.name} className="partner-marque-img" />
+                    <span className="partner-marque-name">{partner.name}</span>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

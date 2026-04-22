@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import StickyHeaderMorph from './components/StickyHeaderMorph';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -11,19 +11,24 @@ import CourseDetail from './pages/CourseDetail';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import About from './pages/About';
+import Portfolio from './pages/Portfolio';
 import Services from './pages/Services';
 import InnovationHub from './pages/InnovationHub';
 import Contact from './pages/Contact';
+import Admin from './pages/Admin';
+import News from './pages/News';
 import './App.css';
 
 const AppRoutes: React.FC = () => {
   const { user } = useAuth();
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <>
-      <StickyHeaderMorph />
+      {!isAdminRoute && <StickyHeaderMorph />}
       <Routes>
-        <Route path="/login" element={user ? <Navigate to="/courses" replace /> : <Login />} />
+        <Route path="/login" element={user ? <Navigate to={user.email === 'admin@yegara.com' ? '/admin' : '/courses'} replace /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to="/courses" replace /> : <Register />} />
         <Route path="/" element={<Home />} />
         <Route
@@ -50,14 +55,13 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/about"
-          element={<About />}
-        />
-        {/* Placeholders for new pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/services" element={<Services />} />
         <Route path="/innovation-hub" element={<InnovationHub />} />
-        <Route path="/news" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>News Page (Coming Soon)</div>} />
+        <Route path="/news" element={<News />} />
+        <Route path="/news/:id" element={<News />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/board" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>Board of Directors Page (Coming Soon)</div>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/shareholder" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>Shareholder Portal (Coming Soon)</div>} />

@@ -21,7 +21,11 @@ const Login: React.FC = () => {
     const result = await login(email, password);
 
     if (result.success) {
-      navigate('/courses');
+      if (email === 'admin@yegara.com') {
+        navigate('/admin');
+      } else {
+        navigate('/courses');
+      }
     } else {
       setError(result.error || 'Login failed');
     }
@@ -127,7 +131,9 @@ const Login: React.FC = () => {
               <label htmlFor="keepLoggedIn">Keep me logged in</label>
             </div>
 
-
+            <button type="submit" className="btn-login">
+              Sign In
+            </button>
           </motion.form>
 
           <motion.div variants={fadeUpVariant} className="social-login">

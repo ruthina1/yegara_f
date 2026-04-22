@@ -62,6 +62,7 @@ const Footer: React.FC = () => {
               <h4 className="footer-col__title">Company</h4>
               <nav className="footer-col__links">
                 <Link to="/about">About Us</Link>
+                <Link to="/portfolio">Impact Portfolio</Link>
                 <Link to="/board">Board of Directors</Link>
                 <Link to="/services">Services & Programs</Link>
                 <Link to="/news">News & Updates</Link>

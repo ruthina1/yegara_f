@@ -30,6 +30,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
+    // Pre-defined Admin Login
+    if (email === 'admin@yegara.com' && password === 'admin123') {
+      const adminUser = { id: 0, name: 'Yegara Admin', email: 'admin@yegara.com', role: 'admin' };
+      localStorage.setItem('token', 'admin-mock-token');
+      localStorage.setItem('user', JSON.stringify(adminUser));
+      setUser(adminUser);
+      return { success: true };
+    }
+
     try {
       const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;

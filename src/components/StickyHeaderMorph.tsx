@@ -4,11 +4,14 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';
+import yegaraIcon from '../assets/YEGARA-09.png';
+import { FaHandshake } from 'react-icons/fa';
 import './CorporateNav.css';
 
 const leftNavLinks = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
+  { label: 'Portfolio', path: '/portfolio' },
   { label: 'Services', path: '/services' },
 ];
 
@@ -40,38 +43,34 @@ const StickyHeaderMorph: React.FC = () => {
   // ── Morph ─────────────────────────────────────────────────────────
   const MORPH_END = 400;
   const morphProgress = useTransform(scrollY, [0, MORPH_END], [0, 1]);
-  const smooth = useSpring(morphProgress, { stiffness: 100, damping: 30, mass: 1 });
 
-  // Function-based transforms (these actually interpolate correctly)
+  // Function-based transforms (direct 1:1 scroll binding for perfect smoothness)
   // top: 50vh → 45px (center of nav)
-  const top = useTransform(smooth, (p: number) =>
+  const top = useTransform(morphProgress, (p: number) =>
     `calc(50vh - (${p} * 50vh) + (${p} * 45px))`
   );
   // fontSize: 18vw → 1.4rem  (function-based so it actually works)
-  const fontSize = useTransform(smooth, (p: number) =>
+  const fontSize = useTransform(morphProgress, (p: number) =>
     `clamp(1.4rem, ${18 - p * 16.6}vw, 28vh)`
   );
   // letterSpacing: -0.04em → 0.12em
-  const letterSpacing = useTransform(smooth, (p: number) =>
+  const letterSpacing = useTransform(morphProgress, (p: number) =>
     `${-0.04 + p * 0.16}em`
   );
   // color
-  const color = useTransform(smooth, (p: number) => {
-    // Keep it solid Brand Blue (#1B3A5C) throughout the morph
-    return `rgb(27, 58, 92)`;
-  });
+  const color = useTransform(morphProgress, () => `rgb(27, 58, 92)`);
 
   // ── Split‑nav transforms (home only) ─────────────────────────────
   // Left group: starts invisible & pushed right (off), slides into position
-  const leftGroupOpacity = useTransform(smooth, [0.6, 1], [0, 1]);
-  const leftGroupX = useTransform(smooth, [0.6, 1], [60, 0]);
+  const leftGroupOpacity = useTransform(morphProgress, [0.6, 1], [0, 1]);
+  const leftGroupX = useTransform(morphProgress, [0.6, 1], [60, 0]);
 
   // Right group: starts pushed fully right, then slides in from the right
-  const rightGroupOpacity = useTransform(smooth, [0.6, 1], [0, 1]);
-  const rightGroupX = useTransform(smooth, [0.6, 1], [-60, 0]);
+  const rightGroupOpacity = useTransform(morphProgress, [0.6, 1], [0, 1]);
+  const rightGroupX = useTransform(morphProgress, [0.6, 1], [-60, 0]);
 
   // All-right row (the initial single row of links on the right): fades OUT as split happens
-  const allRightOpacity = useTransform(smooth, [0.4, 0.7], [1, 0]);
+  const allRightOpacity = useTransform(morphProgress, [0.4, 0.7], [1, 0]);
 
   // Fade out hero sub-elements early
   const heroFade = useTransform(scrollY, [0, 150], [1, 0]);
@@ -223,9 +222,30 @@ const StickyHeaderMorph: React.FC = () => {
       {/* ── White Hero (Home only) ───────────────────────────────────── */}
       {isHome && (
         <section className="white-hero">
+          <motion.div className="white-hero__partnership-layer" style={{ opacity: heroFade }}>
+            {/* Left Side Handshake */}
+            <div className="partnership-side partnership-side--left">
+              <FaHandshake className="partnership-icon" />
+              <div className="partnership-accent shadow-pulse"></div>
+            </div>
+
+            {/* Right Side Handshake */}
+            <div className="partnership-side partnership-side--right">
+              <FaHandshake className="partnership-icon" style={{ transform: 'scaleX(-1)' }} />
+              <div className="partnership-accent shadow-pulse"></div>
+            </div>
+          </motion.div>
+
           <motion.span className="white-hero__subtitle" style={{ opacity: heroFade }}>
             TRADING SHARE COMPANY
           </motion.span>
+
+          <motion.div className="white-hero__intro-text" style={{ opacity: heroFade }}>
+            <span className="intro-text__label">Our Mandate</span>
+            <p className="intro-text__main">
+              Ethiopia's premier business network, driving <em>scalable innovation</em> and sustainable socio-economic development through <strong>collaborative partnerships.</strong>
+            </p>
+          </motion.div>
 
           <motion.div className="white-hero__scroll" style={{ opacity: heroFade }}>
             <div className="white-hero__scroll-line" />
@@ -239,6 +259,7 @@ const StickyHeaderMorph: React.FC = () => {
         <div className="corp-mobile-menu__inner">
           <Link to="/" className="corp-mobile-menu__link">Home</Link>
           <Link to="/about" className="corp-mobile-menu__link">About</Link>
+          <Link to="/portfolio" className="corp-mobile-menu__link">Portfolio</Link>
           <Link to="/services" className="corp-mobile-menu__link">Services</Link>
           <Link to="/innovation-hub" className="corp-mobile-menu__link">Innovation Hub</Link>
           <Link to="/news" className="corp-mobile-menu__link">News</Link>

@@ -1,9 +1,12 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { HiArrowRight, HiAcademicCap, HiCurrencyDollar, HiChartBar, HiLightBulb, HiUserGroup } from 'react-icons/hi';
 import Footer from '../components/Footer';
 import heroBg from '../assets/hero_bg.jpg';
+import slide1 from '../assets/hero_slide_1.png';
+import slide2 from '../assets/hero_slide_2.png';
+import slide4 from '../assets/hero_slide_4.png';
 import missionVisual from '../assets/mission_visual.png';
 import valuesVisual from '../assets/values_visual.png';
 import milestonesVisual from '../assets/milestones_visual.png';
@@ -27,6 +30,16 @@ const staggerContainer: any = {
 
 
 const Home: React.FC = () => {
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const slides = [heroBg, slide1, slide2, slide4];
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
   const treeRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress: rawTreeProgress } = useScroll({
@@ -46,22 +59,25 @@ const Home: React.FC = () => {
   return (
     <div className="home-page overflow-hidden">
       {/* Hero Section Parallax */}
-      <section className="ytsc-hero-content-reveal relative h-screen w-full flex items-center justify-center">
-        <motion.div 
-          className="absolute inset-0 z-0" 
-          style={{
-            backgroundImage: `url(${heroBg})`,
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            scale: 1.1,
-            filter: 'blur(6px)',
-            transform: 'scale(1.12)'
-          }}
-          animate={{ scale: 1.12 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        />
-        <div className="absolute inset-0 bg-black/75 z-10" />
+      <section className="ytsc-hero-content-reveal relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <AnimatePresence initial={false}>
+          <motion.div 
+            key={currentSlide}
+            className="absolute inset-0 z-0" 
+            style={{
+              backgroundImage: `url(${slides[currentSlide]})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+            }}
+            initial={{ opacity: 0, x: '100%', scale: 1.1 }}
+            animate={{ opacity: 1, x: 0, scale: 1.05 }}
+            exit={{ opacity: 0, x: '-100%', scale: 1.1 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </AnimatePresence>
+        {/* Ultra-Dark Overlay for maximum text pop */}
+        <div className="absolute inset-0 z-10" style={{ backgroundColor: 'rgba(6, 13, 24, 0.82)' }} />
         <div className="ytsc-container relative z-20">
           <motion.div 
             initial="hidden"
@@ -134,10 +150,10 @@ const Home: React.FC = () => {
             className="home-mission__body mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              We believe that Africa's greatest lever for change is its people. Yegara Trading Share Company was founded to build the capacity of businesses and communities — equipping them with skills, capital access, and the networks needed to unlock lasting prosperity.
+              We believe that Africa's greatest lever for change is its people. Our vision is to become Africa’s premier business network, driving innovation and entrepreneurship.
             </motion.p>
             <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              At Yegara, we imagine an Ethiopia where businesses are resilient, communities are empowered, and development is sustainable. By catalyzing collaboration between private enterprise, nonprofits, and government, we bridge vision and impact.
+              At Yegara, we catalyze sustainable socio-economic development through innovative, collaborative partnerships, bridging the gap between community potential and institutional capital.
             </motion.p>
           </motion.div>
 

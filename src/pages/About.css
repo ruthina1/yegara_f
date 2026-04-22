@@ -1097,3 +1097,113 @@
     font-size: 2rem;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   07 · PARTNERS
+   ═══════════════════════════════════════════════════════════════ */
+.about-partners {
+  padding: 120px 0;
+  background: white;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  overflow: hidden; /* Hide overflow for marquee */
+}
+
+.about-partners__container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.about-partners__header {
+  text-align: center;
+  margin-bottom: 80px;
+  padding: 0 40px;
+}
+
+/* ── MARQUEE ANIMATION ── */
+.about-partners__marquee {
+  width: 100%;
+  padding: 20px 0;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+.about-partners__track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: partnersScroll 40s linear infinite;
+}
+
+@keyframes partnersScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.partner-marquee-card {
+  width: 280px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.partner-logo-box {
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Clean transparent background */
+  display: flex;
+  flex-direction: column; /* Stack logo and text */
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  gap: 15px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.partner-logo-box:hover {
+  transform: translateY(-8px);
+}
+
+.partner-marque-img {
+  max-width: 100%;
+  max-height: 85px;
+  object-fit: contain;
+  transition: all 0.4s ease;
+}
+
+.partner-marque-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ytsc-blue);
+  text-align: center;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  margin-top: auto; /* Push to bottom */
+}
+
+.partner-logo-box:hover .partner-marque-img {
+  transform: scale(1.05);
+}
+
+/* Optional: Blur edges of the marquee */
+.about-partners__marquee::before,
+.about-partners__marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.about-partners__marquee::before {
+  left: 0;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.about-partners__marquee::after {
+  right: 0;
+  background: linear-gradient(to left, white, transparent);
+}
+
