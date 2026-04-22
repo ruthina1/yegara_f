@@ -24,6 +24,7 @@ const Admin: React.FC = () => {
   const [message, setMessage] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('yegara_news');
@@ -116,10 +117,16 @@ const Admin: React.FC = () => {
     navigate('/login');
   }
 
+
   return (
-    <div className="admin-layout-fayda">
+    <div className={`admin-layout-fayda ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+      {/* Overlay for mobile sidebar */}
+      {isSidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
       {/* ── SIDEBAR ── */}
-      <aside className="admin-sidebar-fayda">
+      <aside className={`admin-sidebar-fayda ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-top">
           <div className="sidebar-logo">
             <div className="logo-icon">Y</div>
@@ -131,19 +138,19 @@ const Admin: React.FC = () => {
             <nav className="sidebar-nav">
               <button 
                 className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
-                onClick={() => setActiveTab('overview')}
+                onClick={() => { setActiveTab('overview'); setIsSidebarOpen(false); }}
               >
                 <FiGrid className="nav-icon" /> Overview
               </button>
               <button 
                 className={`nav-item ${activeTab === 'post' ? 'active' : ''}`}
-                onClick={() => setActiveTab('post')}
+                onClick={() => { setActiveTab('post'); setIsSidebarOpen(false); }}
               >
                 <FiEdit3 className="nav-icon" /> Post News
               </button>
               <button 
                 className={`nav-item ${activeTab === 'manage' ? 'active' : ''}`}
-                onClick={() => setActiveTab('manage')}
+                onClick={() => { setActiveTab('manage'); setIsSidebarOpen(false); }}
               >
                 <FiFileText className="nav-icon" /> Manage News
               </button>
@@ -164,10 +171,15 @@ const Admin: React.FC = () => {
       {/* ── MAIN CONTENT ── */}
       <main className="admin-main-fayda">
         <header className="admin-top-header">
-          <div className="header-breadcrumbs">
-            <span>Admin</span>
-            <span className="breadcrumb-divider">/</span>
-            <span className="current-context">News Management</span>
+          <div className="header-left">
+            <button className="mobile-menu-btn" onClick={() => setIsSidebarOpen(true)}>
+              <FiGrid />
+            </button>
+            <div className="header-breadcrumbs">
+              <span>Admin</span>
+              <span className="breadcrumb-divider">/</span>
+              <span className="current-context">News Management</span>
+            </div>
           </div>
           <div className="header-actions">
             <button className="sign-out-btn" onClick={handleLogout}>

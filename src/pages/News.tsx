@@ -59,40 +59,40 @@ const News: React.FC = () => {
     const displayImages = article.imageUrls || (article.imageUrl ? [article.imageUrl] : []);
 
     return (
-      <div className="article-page" style={{ paddingTop: '100px', minHeight: '100vh', background: '#FAFAFA', paddingBottom: '100px' }}>
+      <div className="article-page">
         <div className="news-container">
-          <Link to="/news" className="back-to-news" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#64748B', fontWeight: 700, marginBottom: '30px', textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '0.85rem' }}>
+          <Link to="/news" className="back-to-news">
             <FiArrowLeft /> Back to News
           </Link>
           
-          <div className="article-main" style={{ background: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
+          <div className="article-main">
             {displayImages.length > 0 && (
-              <div className="article-header-media" style={{ width: '100%', height: '500px', background: '#f1f5f9' }}>
-                <img src={displayImages[0]} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div className="article-header-media">
+                <img src={displayImages[0]} alt={article.title} />
               </div>
             )}
             
-            <div className="article-body-content" style={{ padding: '60px 80px' }}>
-              <div className="blog-meta" style={{ marginBottom: '24px' }}>
+            <div className="article-body-content">
+              <div className="blog-meta">
                 <span className="blog-category">Corporate</span>
                 <span className="blog-date">
                   {new Date(article.date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                 </span>
               </div>
               
-              <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '3rem', fontWeight: 800, color: 'var(--ytsc-blue)', marginBottom: '40px', lineHeight: 1.15 }}>{article.title}</h1>
+              <h1 className="article-title">{article.title}</h1>
               
-              <div className="article-full-text" style={{ fontSize: '1.15rem', lineHeight: 1.8, color: '#475569', whiteSpace: 'pre-wrap' }}>
+              <div className="article-full-text">
                 {article.content}
               </div>
 
               {displayImages.length > 1 && (
-                <div className="article-gallery" style={{ marginTop: '60px' }}>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--ytsc-blue)', marginBottom: '20px', fontWeight: 700 }}>Gallery</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+                <div className="article-gallery">
+                  <h3>Gallery</h3>
+                  <div className="gallery-grid">
                     {displayImages.slice(1).map((imgUrl: string, idx: number) => (
-                      <div key={idx} style={{ height: '150px', borderRadius: '12px', overflow: 'hidden' }}>
-                        <img src={imgUrl} alt={`Gallery ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <div key={idx} className="gallery-item">
+                        <img src={imgUrl} alt={`Gallery ${idx}`} />
                       </div>
                     ))}
                   </div>

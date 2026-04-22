@@ -2337,21 +2337,298 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 1200px) {
-  .impact-constellation {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-  .constellation-grid { grid-template-columns: 1fr; margin-top: 0; }
-  .node-pos-1, .node-pos-2, .node-pos-3, .node-pos-4 { justify-self: center; transform: none; margin: 0; }
-  .constellation-svg-wrapper { display: none; }
+/* ── MOBILE RESPONSIVENESS OVERRIDE ── */
+.portfolio-page {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  position: relative !important;
 }
 
-@media (max-width: 1100px) {
-  .competitive-values-grid .cv-items { grid-template-columns: 1fr; }
-  .yegara-narrative-box { padding: 60px 40px; }
-  .action-card { padding: 40px; }
+/* Force all containers to stay within viewport */
+.ati-container, .ati-slide, .ati-slide__content {
+  max-width: 100vw !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1200px) {
+  .ati-container { padding: 0 30px; }
+}
+
+@media (max-width: 991px) {
+  .ati-slide { 
+    padding: 60px 0 !important; 
+    min-height: auto !important;
+    height: auto !important;
+  }
+  
+  .ati-container {
+    padding: 0 20px !important;
+  }
+
+  .gov-creative-layout,
+  .mesmer-dash-layout,
+  .overview-layout-elegant,
+  .safee-layout-graphic,
+  .geo-creative-layout,
+  .trainers-grid-alt,
+  .dual-btn-grid,
+  .vvm-grid,
+  .edu-grid-pres,
+  .vvm-item-row,
+  .cv-items {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 30px !important;
+    width: 100% !important;
+  }
+
+  .ati-section-header { 
+    text-align: center !important; 
+    margin-bottom: 30px !important;
+    width: 100% !important;
+  }
+  
+  .slide-label { 
+    justify-content: center !important; 
+    margin-bottom: 12px !important; 
+  }
+  .slide-label::after { display: none !important; }
+
+  .gov-creative-content, .mesmer-brand-col, .overview-text-elegant {
+    padding: 0 !important;
+    margin-bottom: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .gov-creative-stats { 
+    align-items: stretch !important; 
+    width: 100% !important;
+  }
+  .gov-glass-card { 
+    justify-content: center !important; 
+    padding: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  .journey-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    text-align: center !important;
+  }
+  .journey-visual { order: -1 !important; width: 100% !important; }
+  .journey-img-box { 
+    max-width: 100% !important; 
+    margin: 0 auto !important; 
+    border-radius: 20px !important; 
+  }
+
+  .impact-constellation { 
+    height: auto !important; 
+    display: flex !important; 
+    flex-direction: column !important; 
+    gap: 30px !important; 
+  }
+  .constellation-grid { 
+    grid-template-columns: 1fr !important; 
+    gap: 16px !important; 
+    width: 100% !important; 
+  }
+  .impact-node {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 16px !important;
+  }
+  .node-pos-1, .node-pos-2, .node-pos-3, .node-pos-4 { 
+    justify-self: center !important; 
+    transform: none !important; 
+    margin: 0 !important; 
+  }
+  .constellation-svg-wrapper { display: none !important; }
+
+  .cv-card { 
+    padding: 24px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+  .cv-icon { margin-bottom: 16px !important; }
+  
+  .yegara-narrative-box { 
+    padding: 40px 20px !important; 
+    border-radius: 24px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 40px !important;
+  }
+  .narrative-title { font-size: 1.6rem !important; margin-bottom: 16px !important; line-height: 1.2 !important; }
+
+  .inclusion-prof-grid { 
+    grid-template-columns: 1fr !important; 
+    width: 100% !important;
+    gap: 20px !important;
+  }
+  .total-card { grid-row: auto !important; }
+}
+
+@media (max-width: 767px) {
+  .ati-container { 
+    padding: 0 16px !important; 
+  }
+  
+  .ati-slide__content {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .slide-title--huge { 
+    font-size: 2rem !important; 
+    margin-bottom: 20px !important; 
+    line-height: 1.1 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .slide-title { 
+    font-size: 1.6rem !important; 
+    line-height: 1.2 !important; 
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .premium-text { font-size: 2.4rem !important; }
+  .neon-title { font-size: 1.8rem !important; }
+  .hero-giant { font-size: 2.2rem !important; }
+
+  .hologram-seal-container { width: 220px !important; height: 220px !important; }
+  .outer-ring { width: 200px !important; height: 200px !important; }
+  .middle-ring { width: 160px !important; height: 160px !important; }
+  .inner-ring { width: 120px !important; height: 120px !important; }
+  .hologram-core { width: 100px !important; height: 100px !important; }
+  .hologram-icon { font-size: 2.2rem !important; }
+  
+  .mesmer-stats-cluster { 
+    grid-template-columns: 1fr !important; 
+    gap: 16px !important; 
+    width: 100% !important;
+  }
+  .mesmer-floating-card { width: 100% !important; padding: 20px !important; }
+  .mesmer-floating-card:nth-child(even) { margin-top: 0 !important; }
+  .mfc-val { font-size: 2rem !important; }
+
+  .action-card { 
+    padding: 24px !important; 
+    border-radius: 20px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .action-card h3 { font-size: 1.4rem !important; margin-bottom: 12px !important; }
+  .action-card p { margin-bottom: 24px !important; font-size: 0.95rem !important; }
+  .action-btn { 
+    padding: 12px 24px !important; 
+    font-size: 0.9rem !important; 
+    width: 100% !important; 
+    justify-content: center !important; 
+  }
+
+  .chart-bar-row { 
+    grid-template-columns: 1fr !important; 
+    gap: 4px !important; 
+    width: 100% !important;
+  }
+  .bar-desc-pres { margin-top: 2px !important; font-size: 0.75rem !important; }
+
+  .inclusion-mini-grid { 
+    grid-template-columns: 1fr !important; 
+    width: 100% !important;
+    gap: 12px !important;
+  }
+  .p-card-val { font-size: 3rem !important; }
+  .p-card-lbl { font-size: 0.75rem !important; }
+  .p-card-val-wrap { margin-bottom: 20px !important; }
+  
+  .edu-grid-pres { grid-template-columns: 1fr !important; }
+  
+  .mosaic-grid { 
+    grid-template-columns: 1fr !important; 
+    grid-template-rows: auto !important; 
+    gap: 12px !important; 
+    width: 100% !important;
+  }
+  .mosaic-item { width: 100% !important; height: 200px !important; }
+  .mosaic-item--large, .mosaic-item--tall { 
+    grid-column: span 1 !important; 
+    grid-row: span 1 !important; 
+  }
+  .testimony-text { font-size: 1rem !important; line-height: 1.5 !important; }
+
+  .marquee-track { font-size: 3rem !important; }
+  
+  .trainers-hero-card .v-num { font-size: 3rem !important; }
+  .t-row { gap: 10px !important; padding-bottom: 12px !important; }
+  .t-count { font-size: 1.1rem !important; }
+  .t-loc { font-size: 0.85rem !important; }
+
+  .geo-map-visual { 
+    height: auto !important; 
+    min-height: 200px !important; 
+    width: 100% !important; 
+    margin-bottom: 20px !important;
+  }
+  .ethiopia-map-base { max-width: 100% !important; height: auto !important; }
+  .impact-pulse-container { transform: scale(0.5) !important; }
+  
+  .overview-elegant-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .elegant-prog-card {
+    padding: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+  .epc-title { font-size: 1.2rem !important; }
+  .epc-num-wrap { margin-bottom: 16px !important; }
+  .epc-content { margin-bottom: 16px !important; }
+}
+
+@media (max-width: 480px) {
+  .ati-slide { padding: 40px 0 !important; }
+  .slide-badge { 
+    padding: 6px 14px !important; 
+    font-size: 0.5rem !important; 
+    letter-spacing: 0.1em !important; 
+    margin-bottom: 1rem !important; 
+  }
+  .slide-title--huge { font-size: 1.8rem !important; }
+  .slide-title { font-size: 1.5rem !important; }
+  .hero-giant { font-size: 2rem !important; }
+  .premium-text { font-size: 2rem !important; }
+  .neon-title { font-size: 1.6rem !important; }
+  
+  .meta-val { font-size: 1rem !important; }
+  .meta-lbl { font-size: 0.6rem !important; }
+  
+  .pillar-pres-card { padding: 20px 14px !important; }
+  
+  .gov-glass-card { padding: 14px !important; gap: 10px !important; }
+  .gov-card-icon { font-size: 1.6rem !important; }
+  .gov-card-text .num { font-size: 1.6rem !important; }
+  
+  .impact-val { font-size: 1.2rem !important; }
+  
+  .journey-quote { font-size: 1rem !important; }
+  .j-point { font-size: 0.9rem !important; }
 }
 

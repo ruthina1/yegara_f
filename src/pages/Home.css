@@ -121,36 +121,50 @@
 
 @media (max-width: 768px) {
   .ytsc-hero-content-reveal {
-    padding: 80px 0 40px;
+    padding: 60px 0 40px;
+    height: auto;
+    min-height: 100vh;
   }
   .reveal-content {
-    padding: 0 24px;
+    padding: 0 20px;
     max-width: 100%;
     overflow: hidden;
   }
   .reveal-content h2 {
-    font-size: 1.8rem !important;
-    margin-bottom: 16px;
-    line-height: 1.15;
+    font-size: 2.2rem !important;
+    margin-bottom: 20px;
+    line-height: 1.2;
     word-wrap: break-word;
   }
   .reveal-content p {
-    font-size: 14px !important;
-    margin-bottom: 24px;
+    font-size: 15px !important;
+    margin-bottom: 32px;
+    line-height: 1.6;
   }
   .reveal-content .flex {
     flex-direction: column !important;
-    gap: 12px !important;
-    margin-top: 24px !important;
+    gap: 16px !important;
+    margin-top: 32px !important;
     width: 100%;
+    align-items: center;
   }
   .hero-primary-btn, .hero-secondary-btn {
     width: 100% !important;
+    max-width: 320px;
     min-width: unset !important;
-    padding: 14px 20px !important;
+    padding: 18px 24px !important;
     font-size: 12px !important;
-    letter-spacing: 0.1em !important;
+    letter-spacing: 0.15em !important;
     box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .reveal-content h2 {
+    font-size: 1.8rem !important;
+  }
+  .reveal-content p {
+    font-size: 14px !important;
   }
 }
 
@@ -326,24 +340,57 @@
 
 @media (max-width: 900px) {
   .home-mission {
-    padding: 40px 0 0;
+    padding: 60px 0 0;
   }
   .home-mission__hero {
     grid-template-columns: 1fr;
     min-height: auto;
-    gap: 24px;
+    gap: 40px;
+    padding: 20px 0;
   }
   .home-mission__left {
-    padding: 0 12px 10px;
+    padding: 0 20px;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+  .home-mission__heading {
+    font-size: 2.2rem;
   }
   .home-mission__right {
     min-height: auto;
+    padding: 0 20px;
+  }
+  .home-mission__visual {
+    max-height: 350px;
+    border-radius: 20px !important;
   }
   .home-mission__body {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 30px 12px 60px;
+    gap: 20px;
+    padding: 40px 20px 60px;
     margin: 0;
+  }
+  .home-mission__body-text {
+    font-size: 14px;
+    text-align: center;
+  }
+  .home-mission__hero--mirrored {
+    flex-direction: column !important;
+  }
+  .home-mission__hero--mirrored .home-mission__left {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-mission__heading {
+    font-size: 1.8rem;
+  }
+  .home-mission__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 24px;
   }
 }
 
@@ -510,12 +557,18 @@
 }
 
 @media (max-width: 768px) {
+  .home-pillars__tree {
+    padding: 40px 0;
+  }
   .home-pillars__tree::before {
     left: 20px;
   }
   .pillar-leaf-content {
-    width:calc(100% - 60px);
+    width: calc(100% - 60px);
     margin-left: 60px;
+  }
+  .pillar-leaf-item {
+    margin-bottom: 40px;
   }
   .pillar-leaf-item:nth-child(odd), 
   .pillar-leaf-item:nth-child(even) {
@@ -523,13 +576,40 @@
   }
   .pillar-leaf-item:nth-child(odd) .leaf-card,
   .pillar-leaf-item:nth-child(even) .leaf-card {
-    border-radius: 0 50px 0 50px;
+    border-radius: 0 30px 0 30px;
     text-align: left;
     align-items: flex-start;
+    padding: 30px;
   }
   .pillar-leaf-item::after {
     left: 20px !important;
     width: 40px !important;
+  }
+  .pillar-title {
+    font-size: 20px;
+  }
+  .pillar-desc {
+    font-size: 14px;
+    max-width: 100%;
+  }
+  .pillar-icon {
+    font-size: 24px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-pillars__tree::before,
+  .pillar-leaf-item::after {
+    display: none; /* Hide tree lines on very small screens to save space */
+  }
+  .pillar-leaf-content {
+    width: 100%;
+    margin-left: 0;
+  }
+  .leaf-card {
+    padding: 24px;
+    border-radius: 15px !important;
   }
 }
 

@@ -60,6 +60,12 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .corp-nav__inner {
+    padding: 0 20px;
+  }
+}
+
 /* ── Logo ── */
 .corp-nav__logo {
   flex-shrink: 0;
@@ -78,6 +84,17 @@
 .corp-nav--scrolled .corp-nav__logo img {
   width: 55px;
   height: 55px;
+}
+
+@media (max-width: 768px) {
+  .corp-nav__logo img {
+    width: 60px;
+    height: 60px;
+  }
+  .corp-nav--scrolled .corp-nav__logo img {
+    width: 45px;
+    height: 45px;
+  }
 }
 
 /* ── Center Brand (non-home static YEGARA) ── */
@@ -454,11 +471,18 @@
 }
 
 .corp-mobile-menu__inner {
-  padding: 48px 48px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   gap: 0;
   max-width: 600px;
+}
+
+@media (max-width: 480px) {
+  .corp-mobile-menu__link {
+    font-size: 18px;
+    padding: 14px 0;
+  }
 }
 
 .corp-mobile-menu__link {
