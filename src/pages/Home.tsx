@@ -147,7 +147,7 @@ const Home: React.FC = () => {
           {/* Intro Body */}
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="home-mission__body mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
               We believe that Africa's greatest lever for change is its people. Our vision is to become Africa’s premier business network, driving innovation and entrepreneurship.
@@ -157,7 +157,7 @@ const Home: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          <div className="home-mission__divider my-10 md:my-24 h-px bg-gray-200"></div>
+          <div className="home-mission__divider my-4 md:my-8 h-px bg-gray-200"></div>
 
           {/* Values Section */}
           <motion.div 
@@ -184,7 +184,7 @@ const Home: React.FC = () => {
 
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="home-mission__body mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
               <strong>Innovation & Responsiveness:</strong> We don't just react to the market; we anticipate its evolution. Our commitment is to pioneering solutions that open doors for our shareholders and communities alike.
@@ -194,7 +194,7 @@ const Home: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          <div className="home-mission__divider my-10 md:my-24 h-px bg-gray-200"></div>
+          <div className="home-mission__divider my-4 md:my-8 h-px bg-gray-200"></div>
 
           {/* Milestones */}
           <motion.div 
@@ -221,7 +221,7 @@ const Home: React.FC = () => {
 
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="home-mission__body mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
               <strong>2022 — The Foundation:</strong> Yegara was established as Ethiopia's first unified business-development-social hub. We began with a core focus on bridging the gap between capital and social innovation.

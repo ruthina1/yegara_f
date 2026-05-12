@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../utils/api';
 import { FiEdit3, FiFileText, FiSettings, FiHelpCircle, FiTrash2, FiSend, FiImage, FiGrid } from 'react-icons/fi';
 import './Admin.css';
 
@@ -26,11 +27,17 @@ const Admin: React.FC = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('yegara_news');
-    if (saved) {
-      setNews(JSON.parse(saved));
+  const fetchNews = async () => {
+    try {
+      const response = await api.get('/news');
+      setNews(response.data);
+    } catch (err) {
+      console.error('Failed to fetch news:', err);
     }
+  };
+
+  useEffect(() => {
+    fetchNews();
   }, []);
 
   // Protect Admin route manually just in case
@@ -53,46 +60,47 @@ const Admin: React.FC = () => {
     setImages(prev => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !date || !content) {
       setMessage('Please fill in all required fields.');
       return;
     }
 
-    let updatedNews: NewsItem[];
+    try {
+      if (editingId) {
+        // Update existing item
+        await api.put(`/news/${editingId}`, {
+          title,
+          content,
+          date,
+          imageUrls: images.length > 0 ? images : undefined,
+        });
+        setMessage('News updated successfully!');
+      } else {
+        // Create new item
+        await api.post('/news', {
+          title,
+          content,
+          date,
+          imageUrls: images.length > 0 ? images : undefined,
+        });
+        setMessage('News posted successfully!');
+      }
 
-    if (editingId) {
-      // Update existing item
-      updatedNews = news.map(item => 
-        item.id === editingId 
-          ? { ...item, title, date, content, imageUrls: images.length > 0 ? images : undefined, imageUrl: undefined }
-          : item
-      );
-      setMessage('News updated successfully!');
-    } else {
-      // Create new item
-      const newItem: NewsItem = {
-        id: Date.now().toString(),
-        title,
-        date,
-        content,
-        imageUrls: images.length > 0 ? images : undefined,
-      };
-      updatedNews = [newItem, ...news];
-      setMessage('News posted successfully!');
+      // Refresh news list from server
+      await fetchNews();
+
+      // Reset Form
+      setTitle('');
+      setDate(new Date().toISOString().split('T')[0]);
+      setContent('');
+      setImages([]);
+      setEditingId(null);
+    } catch (err: any) {
+      setMessage(err.response?.data?.error || 'Failed to save news.');
     }
 
-    setNews(updatedNews);
-    localStorage.setItem('yegara_news', JSON.stringify(updatedNews));
-
-    // Reset Form
-    setTitle('');
-    setDate(new Date().toISOString().split('T')[0]);
-    setContent('');
-    setImages([]);
-    setEditingId(null);
-    
     setTimeout(() => setMessage(''), 3000);
   };
 
@@ -106,10 +114,13 @@ const Admin: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string) => {
-    const updatedNews = news.filter((n: NewsItem) => n.id !== id);
-    setNews(updatedNews);
-    localStorage.setItem('yegara_news', JSON.stringify(updatedNews));
+  const handleDelete = async (id: string) => {
+    try {
+      await api.delete(`/news/${id}`);
+      await fetchNews();
+    } catch (err) {
+      console.error('Failed to delete news:', err);
+    }
   };
 
   const handleLogout = () => {

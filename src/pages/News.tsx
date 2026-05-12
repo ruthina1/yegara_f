@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import api from '../utils/api';
 import './News.css';
 
 interface NewsItem {
@@ -30,20 +31,24 @@ const News: React.FC = () => {
   }, [heroImages.length]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('yegara_news');
-    if (saved) {
-      setNews(JSON.parse(saved));
-    } else {
-      // Mock some initial data if empty
-      setNews([
-        {
-          id: '1',
-          title: 'Welcome to Yegara LMS',
-          date: new Date().toISOString().split('T')[0],
-          content: 'We are excited to announce the launch of our new Learning Management System portal. Check our courses and start learning today.'
-        }
-      ]);
-    }
+    const fetchNews = async () => {
+      try {
+        const response = await api.get('/news');
+        setNews(response.data);
+      } catch (err) {
+        console.error('Failed to fetch news:', err);
+        // Fallback mock data if server is down
+        setNews([
+          {
+            id: '1',
+            title: 'Welcome to Yegara LMS',
+            date: new Date().toISOString().split('T')[0],
+            content: 'We are excited to announce the launch of our new Learning Management System portal. Check our courses and start learning today.'
+          }
+        ]);
+      }
+    };
+    fetchNews();
   }, []);
 
   // Single Article View

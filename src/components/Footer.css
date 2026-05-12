@@ -75,9 +75,10 @@
 .footer-cta__actions .ytsc-btn-primary {
   background: #F47920 !important;
   color: #FFFFFF !important;
-  padding: 18px 44px;
+  padding: 14px 36px;
   font-size: 15px;
   display: inline-flex !important;
+  border-radius: 999px;
   box-shadow: 0 10px 30px rgba(244, 121, 32, 0.2);
 }
 
@@ -91,8 +92,9 @@
   background: transparent;
   color: var(--ytsc-blue-dark);
   border: 1px solid rgba(15, 36, 64, 0.2);
-  padding: 18px 44px;
+  padding: 14px 36px;
   font-size: 15px;
+  border-radius: 999px;
 }
 
 /* ── Main Footer ── */

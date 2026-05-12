@@ -103,8 +103,10 @@
 }
 
 .contact-light__submit:hover {
-  border-color: var(--ytsc-orange);
-  color: var(--ytsc-orange);
+  background: #D4631A;
+  border-color: #D4631A;
+  color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
 /* ── Right: Info Panels ── */

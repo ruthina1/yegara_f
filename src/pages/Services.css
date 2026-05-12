@@ -523,12 +523,13 @@
 }
 
 .services-cta__btn {
-  padding: 16px 40px;
+  padding: 14px 34px;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   border: none;
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.3s ease;
 }

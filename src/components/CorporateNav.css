@@ -404,6 +404,50 @@
   }
 }
 
+.white-hero__cta-wrap {
+  position: absolute;
+  top: 72%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hero-blink-btn {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1.5px solid #F47920;
+  background: #F47920;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+  animation: heroBlink 3s infinite ease-in-out;
+  box-shadow: 0 4px 15px rgba(244, 121, 32, 0.2);
+}
+
+.hero-blink-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(244, 121, 32, 0.3);
+}
+
+@keyframes heroBlink {
+  0%, 100% {
+    background-color: #F47920;
+    border-color: #F47920;
+    box-shadow: 0 4px 15px rgba(244, 121, 32, 0.2);
+  }
+  50% {
+    background-color: #1B3A5C;
+    border-color: #1B3A5C;
+    box-shadow: 0 4px 15px rgba(27, 58, 92, 0.2);
+  }
+}
+
 .white-hero__scroll {
   position: absolute;
   bottom: 48px;

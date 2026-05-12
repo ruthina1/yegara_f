@@ -247,6 +247,10 @@ const StickyHeaderMorph: React.FC = () => {
             </p>
           </motion.div>
 
+          <motion.div className="white-hero__cta-wrap" style={{ opacity: heroFade }}>
+            <Link to="/login" className="hero-blink-btn">Login</Link>
+          </motion.div>
+          
           <motion.div className="white-hero__scroll" style={{ opacity: heroFade }}>
             <div className="white-hero__scroll-line" />
             <span>EXPLORE</span>
