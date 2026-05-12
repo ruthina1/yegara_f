@@ -382,23 +382,26 @@
 
 .gov-creative-stats {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 50px;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 30px;
 }
 
 .gov-glass-card {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 30px;
+  gap: 16px;
+  padding: 16px 24px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: 16px;
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: default;
+  flex: 1;
+  max-width: 320px;
 }
 
 .gov-glass-card:hover {
@@ -412,38 +415,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   flex-shrink: 0;
 }
 
 .gov-card-text .num {
   display: block;
-  font-size: 2.5rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: white;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .gov-card-text .label {
-  font-size: 1rem;
+  font-size: 0.75rem;
   color: #94A3B8;
-  line-height: 1.5;
+  line-height: 1.4;
   font-weight: 500;
 }
 
 /* ── HOLOGRAM SEAL ── */
 .gov-creative-visual {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 40px;
   perspective: 1000px;
 }
 
 .hologram-seal-container {
-  width: 400px;
-  height: 400px;
+  width: 280px;
+  height: 280px;
   position: relative;
   display: flex;
   align-items: center;
@@ -465,16 +470,16 @@
 }
 
 .outer-ring {
-  width: 360px;
-  height: 360px;
+  width: 260px;
+  height: 260px;
   border: 1px dashed rgba(244, 121, 32, 0.4);
   animation: spinRight 20s linear infinite;
   box-shadow: 0 0 30px rgba(244, 121, 32, 0.1), inset 0 0 30px rgba(244, 121, 32, 0.1);
 }
 
 .middle-ring {
-  width: 280px;
-  height: 280px;
+  width: 200px;
+  height: 200px;
   border: 2px solid rgba(255, 255, 255, 0.05);
   border-top: 2px solid rgba(244, 121, 32, 0.8);
   border-bottom: 2px solid rgba(244, 121, 32, 0.8);
@@ -482,16 +487,16 @@
 }
 
 .inner-ring {
-  width: 220px;
-  height: 220px;
+  width: 150px;
+  height: 150px;
   border: 1px dotted rgba(255, 255, 255, 0.3);
   animation: spinRight 10s linear infinite;
 }
 
 .hologram-core {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   background: radial-gradient(circle at center, rgba(27, 58, 92, 0.9), rgba(10, 22, 40, 0.9));
   border: 2px solid rgba(244, 121, 32, 0.5);
   border-radius: 50%;
@@ -507,19 +512,19 @@
 }
 
 .hologram-icon {
-  font-size: 4.5rem;
+  font-size: 3rem;
   color: var(--ytsc-orange);
   filter: drop-shadow(0 0 10px rgba(244, 121, 32, 0.5));
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .hologram-core span {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .hologram-base-glow {
@@ -1978,16 +1983,16 @@
   z-index: 10;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 20px; /* Much closer */
-  max-width: 800px;
+  gap: 80px 100px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .impact-node {
-  max-width: 300px; /* Even smaller */
+  max-width: 380px;
   background: rgba(248, 250, 252, 0.4);
   backdrop-filter: blur(10px);
-  padding: 16px 20px; /* Tight padding */
+  padding: 32px;
   border-radius: 20px;
   display: flex;
   gap: 15px;
@@ -2286,16 +2291,16 @@
   z-index: 10;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 20px; /* Much closer */
-  max-width: 800px;
+  gap: 80px 100px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .impact-node {
-  max-width: 300px; /* Even smaller */
+  max-width: 380px;
   background: rgba(248, 250, 252, 0.4);
   backdrop-filter: blur(10px);
-  padding: 16px 20px; /* Tight padding */
+  padding: 32px;
   border-radius: 20px;
   display: flex;
   gap: 15px;

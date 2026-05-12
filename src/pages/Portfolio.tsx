@@ -65,21 +65,7 @@ const Portfolio: React.FC = () => {
         </div>
       </section>
 
-      {/* ── SLIDE 02: COMPANY PROFILE INTRO ── */}
-      <section className="ati-slide ati-slide--compact">
-        <div className="ati-container">
-           <div className="profile-intro-layout">
-              <motion.div {...fadeIn()} className="profile-intro-content">
-                 <span className="slide-label">The Enterprise</span>
-                 <h2 className="slide-title">Company Profile.</h2>
-                 <p className="slide-desc">
-                    Yegara Trading Share Company is a dynamic Ethiopian enterprise dedicated to catalyzing sustainable socio-economic development. 
-                    As a strategic partner for businesses and communities, we provide integrated solutions that drive shared prosperity and innovation.
-                 </p>
-              </motion.div>
-           </div>
-        </div>
-      </section>
+
 
 
 
@@ -100,24 +86,6 @@ const Portfolio: React.FC = () => {
                  <p className="slide-desc text-white" style={{ opacity: 0.8, marginBottom: '2.5rem', maxWidth: '500px' }}>
                     Yegara maintains an unwavering commitment to transparent, ethical, and fully compliant business operations. We have established a robust institutional framework to ensure the highest standards of corporate accountability. Through strict legal compliances, comprehensive protocol endorsements, and continuous board-level capacity building, we safeguard our stakeholders' trust and drive long-term operational excellence.
                  </p>
-                 
-                 <div className="gov-creative-stats">
-                    <motion.div whileHover={{ x: 10 }} className="gov-glass-card">
-                       <div className="gov-card-icon"><HiShieldCheck /></div>
-                       <div className="gov-card-text">
-                          <span className="num">+25</span>
-                          <span className="label">Governance documents finalized and endorsed.</span>
-                       </div>
-                    </motion.div>
-                    
-                    <motion.div whileHover={{ x: 10 }} className="gov-glass-card">
-                       <div className="gov-card-icon"><HiUserGroup /></div>
-                       <div className="gov-card-text">
-                          <span className="num">08</span>
-                          <span className="label">Board members engaged in capacity-building training.</span>
-                       </div>
-                    </motion.div>
-                 </div>
               </motion.div>
               
               <motion.div 
@@ -134,6 +102,24 @@ const Portfolio: React.FC = () => {
                   </div>
                   <div className="hologram-base-glow"></div>
                   <div className="hologram-scanline"></div>
+                </div>
+
+                <div className="gov-creative-stats mt-12">
+                   <motion.div whileHover={{ x: 10 }} className="gov-glass-card">
+                      <div className="gov-card-icon"><HiShieldCheck /></div>
+                      <div className="gov-card-text">
+                         <span className="num">+25</span>
+                         <span className="label">Governance documents finalized and endorsed.</span>
+                      </div>
+                   </motion.div>
+                   
+                   <motion.div whileHover={{ x: 10 }} className="gov-glass-card">
+                      <div className="gov-card-icon"><HiUserGroup /></div>
+                      <div className="gov-card-text">
+                         <span className="num">08</span>
+                         <span className="label">Board members engaged in capacity-building training.</span>
+                      </div>
+                   </motion.div>
                 </div>
               </motion.div>
            </div>
@@ -154,9 +140,9 @@ const Portfolio: React.FC = () => {
                  <svg width="100%" height="100%" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <motion.path 
                        d="M200,100 L1000,200 L200,500 L1000,700" 
-                       stroke="rgba(244, 121, 32, 0.12)" 
-                       strokeWidth="2" 
-                       strokeDasharray="10 10"
+                       stroke="rgba(244, 121, 32, 0.45)" 
+                       strokeWidth="5" 
+                       strokeDasharray="16 8"
                        initial={{ pathLength: 0 }}
                        whileInView={{ pathLength: 1 }}
                        transition={{ duration: 2.5, ease: "easeInOut" }}
@@ -392,7 +378,7 @@ const Portfolio: React.FC = () => {
                      </div>
                      <div className="epc-arrow">
                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
                        </svg>
                      </div>
                    </motion.div>

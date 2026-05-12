@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiMenu, HiX, HiArrowRight } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';
 
@@ -248,7 +248,9 @@ const StickyHeaderMorph: React.FC = () => {
           </motion.div>
 
           <motion.div className="white-hero__cta-wrap" style={{ opacity: heroFade }}>
-            <Link to="/login" className="hero-blink-btn">Login</Link>
+            <Link to="/login" className="hero-premium-cta">
+              Login <HiArrowRight className="cta-arrow" />
+            </Link>
           </motion.div>
           
           <motion.div className="white-hero__scroll" style={{ opacity: heroFade }}>

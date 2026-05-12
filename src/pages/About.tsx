@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { HiUserGroup, HiLightBulb, HiGlobeAlt, HiShieldCheck, HiLightningBolt, HiBadgeCheck, HiAcademicCap, HiTrendingUp } from 'react-icons/hi';
@@ -18,8 +18,22 @@ const fadeIn = (delay = 0): any => ({
   transition: { duration: 0.7, delay, ease: "easeOut" }
 });
 
+const ScrollWord = ({ word, index, total, progress }: any) => {
+  const opacity = useTransform(
+    progress, 
+    [index / total, (index + 0.8) / total], 
+    [0.1, 1]
+  );
+  return <motion.span style={{ opacity, display: 'inline-block', marginRight: '0.25em' }}>{word}</motion.span>;
+};
+
 const About: React.FC = () => {
   const { scrollY } = useScroll();
+  const quoteRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: quoteProgress } = useScroll({
+    target: quoteRef,
+    offset: ["start 80%", "end 40%"]
+  });
 
   return (
     <div className="about-page">
@@ -153,7 +167,7 @@ const About: React.FC = () => {
           03 · IMPACT — Horizontal stat cards
          ═══════════════════════════════════════════════════ */}
       <section className="about-impact about-impact--schematic">
-        <div className="about-impact__container">
+        <div className="about-impact__container about-impact__container--split">
           <motion.div {...fadeIn()} className="about-impact__header">
             <span className="about-section-label">Our Metrics</span>
             <h2 className="about-impact__title">
@@ -167,8 +181,8 @@ const About: React.FC = () => {
               <motion.path 
                 d="M150,400 L500,100 L850,400" 
                 fill="none" 
-                stroke="rgba(244, 121, 32, 0.2)" 
-                strokeWidth="1.5"
+                stroke="rgba(244, 121, 32, 0.5)" 
+                strokeWidth="2.5"
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
                 viewport={{ once: true }}
@@ -177,8 +191,8 @@ const About: React.FC = () => {
               <motion.path 
                 d="M500,100 L500,450" 
                 fill="none" 
-                stroke="rgba(244, 121, 32, 0.15)" 
-                strokeWidth="1"
+                stroke="rgba(244, 121, 32, 0.4)" 
+                strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
                 viewport={{ once: true }}
@@ -289,13 +303,22 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           05 · QUOTE — Cinematic pull quote
          ═══════════════════════════════════════════════════ */}
-      <section className="about-quote">
+      <section className="about-quote" ref={quoteRef}>
         <div className="about-quote__container">
-          <motion.div {...fadeIn()} className="about-quote__content">
+          <motion.div className="about-quote__content">
             <div className="about-quote__mark">"</div>
             <blockquote className="about-quote__text">
-              To become Africa’s premier business network,
-              driving innovation and entrepreneurship.
+              {"To become Africa’s premier business network, driving innovation and entrepreneurship."
+                .split(" ")
+                .map((word, i, arr) => (
+                  <ScrollWord 
+                    key={i} 
+                    word={word} 
+                    index={i} 
+                    total={arr.length} 
+                    progress={quoteProgress} 
+                  />
+                ))}
             </blockquote>
             <cite className="about-quote__cite">— The Yegara Vision</cite>
           </motion.div>
@@ -320,43 +343,28 @@ const About: React.FC = () => {
             </h2>
           </motion.div>
 
-          <div className="about-values__constellation">
-            {/* Ambient Orbs */}
-            <div className="value-orb value-orb--1" />
-            <div className="value-orb value-orb--2" />
-            
-            {/* Vertical Connecting Line */}
-            <div className="about-values__vertical-line" />
-            
-            <div className="about-values__grid about-values__grid--vertical-stagger">
-              {[
-                { title: 'Collaboration', desc: 'Working together to achieve shared, sustainable success.', icon: <HiUserGroup />, index: '01' },
-                { title: 'Innovation', desc: 'Pioneering solutions that open doors to new opportunities.', icon: <HiLightBulb />, index: '02' },
-                { title: 'Inclusivity', desc: 'Ensuring everyone has a seat at the table and a voice.', icon: <HiGlobeAlt />, index: '03' },
-                { title: 'Trustworthiness', desc: 'Long-lasting relationships anchored in integrity.', icon: <HiShieldCheck />, index: '04' },
-                { title: 'Responsiveness', desc: 'Adapting swiftly to the evolving needs of communities.', icon: <HiLightningBolt />, index: '05' },
-                { title: 'Excellence', desc: 'Pursuing the highest standards in every service.', icon: <HiBadgeCheck />, index: '06' }
-              ].map((v, i) => (
-                <motion.div 
-                  key={i} 
-                  className="about-values__card about-values__card--organic-vertical"
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60, y: 50 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div className="v-card__content">
-                    <div className="v-card__head">
-                      <span className="v-card__index">{v.index}</span>
-                      <div className="v-card__icon">{v.icon}</div>
-                    </div>
-                    <h3 className="v-card__title">{v.title}</h3>
-                    <p className="v-card__desc">{v.desc}</p>
-                    <div className="v-card__accent" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="about-values__grid">
+            {[
+              { title: 'Collaboration', desc: 'Working together to achieve shared, sustainable success.', icon: <HiUserGroup />, index: '01' },
+              { title: 'Innovation', desc: 'Pioneering solutions that open doors to new opportunities.', icon: <HiLightBulb />, index: '02' },
+              { title: 'Inclusivity', desc: 'Ensuring everyone has a seat at the table and a voice.', icon: <HiGlobeAlt />, index: '03' },
+              { title: 'Trustworthiness', desc: 'Long-lasting relationships anchored in integrity.', icon: <HiShieldCheck />, index: '04' },
+              { title: 'Responsiveness', desc: 'Adapting swiftly to the evolving needs of communities.', icon: <HiLightningBolt />, index: '05' },
+              { title: 'Excellence', desc: 'Pursuing the highest standards in every service.', icon: <HiBadgeCheck />, index: '06' }
+            ].map((v, i) => (
+              <motion.div 
+                key={i} 
+                className="about-founding__card about-values__card"
+                {...fadeIn(i * 0.1)}
+              >
+                <div className="about-founding__card-icon" style={{ color: '#F47920' }}>
+                  {v.icon}
+                </div>
+                <h3 className="about-founding__card-title">{v.title}</h3>
+                <p className="about-founding__card-desc">{v.desc}</p>
+                <div className="about-founding__card-line" style={{ background: '#F47920' }} />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

@@ -412,40 +412,78 @@
   z-index: 10;
 }
 
-.hero-blink-btn {
+.hero-premium-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 28px;
+  background: linear-gradient(135deg, #F47920 0%, #D4631A 100%);
+  color: #FFFFFF;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #ffffff;
   text-decoration: none;
-  padding: 10px 24px;
-  border-radius: 999px;
-  border: 1.5px solid #F47920;
-  background: #F47920;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(244, 121, 32, 0.25);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  white-space: nowrap;
-  animation: heroBlink 3s infinite ease-in-out;
-  box-shadow: 0 4px 15px rgba(244, 121, 32, 0.2);
+  z-index: 2;
 }
 
-.hero-blink-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(244, 121, 32, 0.3);
+.hero-premium-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: 0.6s;
 }
 
-@keyframes heroBlink {
-  0%, 100% {
-    background-color: #F47920;
-    border-color: #F47920;
-    box-shadow: 0 4px 15px rgba(244, 121, 32, 0.2);
-  }
-  50% {
-    background-color: #1B3A5C;
-    border-color: #1B3A5C;
-    box-shadow: 0 4px 15px rgba(27, 58, 92, 0.2);
-  }
+.hero-premium-cta:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(244, 121, 32, 0.4);
+  background: linear-gradient(135deg, #FF8C38 0%, #F47920 100%);
+}
+
+.hero-premium-cta:hover::before {
+  left: 100%;
+}
+
+.hero-premium-cta .cta-arrow {
+  font-size: 14px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-premium-cta:hover .cta-arrow {
+  transform: translateX(5px);
+}
+
+.hero-premium-cta::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F47920, #D4631A);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.hero-premium-cta:hover::after {
+  opacity: 1;
+  animation: heroCtaPulse 2s infinite;
+}
+
+@keyframes heroCtaPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  70% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
 }
 
 .white-hero__scroll {

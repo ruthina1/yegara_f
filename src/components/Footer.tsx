@@ -63,10 +63,8 @@ const Footer: React.FC = () => {
               <nav className="footer-col__links">
                 <Link to="/about">About Us</Link>
                 <Link to="/portfolio">Impact Portfolio</Link>
-                <Link to="/board">Board of Directors</Link>
                 <Link to="/services">Services & Programs</Link>
                 <Link to="/news">News & Updates</Link>
-                <Link to="/resources">Resources</Link>
               </nav>
             </div>
 
@@ -88,8 +86,6 @@ const Footer: React.FC = () => {
               <nav className="footer-col__links">
                 <Link to="/login">Shareholder Portal</Link>
                 <Link to="/handbook">Digital Handbook</Link>
-                <Link to="/resources">Reports & Documents</Link>
-                <Link to="/contact">Inquiries</Link>
               </nav>
             </div>
 
