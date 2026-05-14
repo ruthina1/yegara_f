@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
             {/* Column 1: Brand */}
             <div className="footer-brand">
               <div className="footer-brand__logo">
-                <img src={logo} alt="YTSC" />
+                <img src={logo} alt="Yegara Trading Share Company Logo" />
                 <div>
                   <div className="footer-brand__name">YEGARA</div>
                   <div className="footer-brand__sub">Trading Share Company</div>

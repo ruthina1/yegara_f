@@ -36,19 +36,19 @@ const About: React.FC = () => {
   });
 
   return (
-    <div className="about-page">
+    <main className="about-page">
 
       {/* ═══════════════════════════════════════════════════
           01 · HERO — Full-screen cinematic opener
          ═══════════════════════════════════════════════════ */}
-      <section className="about-hero">
+      <section className="about-hero" aria-labelledby="about-hero-title">
         {/* HERO CONTENT */}
 
         <div className="about-hero__content">
           <motion.span {...fadeIn()} className="about-hero__label">
             EST. 2022  ·  TRUSTED PARTNER FOR LASTING IMPACT
           </motion.span>
-          <motion.h1 {...fadeIn(0.15)} className="about-hero__title">
+          <motion.h1 id="about-hero-title" {...fadeIn(0.15)} className="about-hero__title">
             Building <br />
             <em>Bridges.</em>
           </motion.h1>
@@ -66,7 +66,7 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           02 · STORY — Split narrative
          ═══════════════════════════════════════════════════ */}
-      <section className="about-story about-story--creative">
+      <section className="about-story about-story--creative" aria-labelledby="story-heading">
         <div className="about-story__container">
           <motion.div 
             className="about-story__left"
@@ -84,7 +84,7 @@ const About: React.FC = () => {
               >
                 Our Story
               </motion.span>
-              <h2 className="about-section-title about-section-title--kinetic">
+              <h2 id="story-heading" className="about-section-title about-section-title--kinetic">
                 {["A", "Vision", "for"].map((word, i) => (
                   <motion.span 
                     key={i}
@@ -166,11 +166,11 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           03 · IMPACT — Horizontal stat cards
          ═══════════════════════════════════════════════════ */}
-      <section className="about-impact about-impact--schematic">
+      <section className="about-impact about-impact--schematic" aria-labelledby="impact-heading">
         <div className="about-impact__container about-impact__container--split">
           <motion.div {...fadeIn()} className="about-impact__header">
             <span className="about-section-label">Our Metrics</span>
-            <h2 className="about-impact__title">
+            <h2 id="impact-heading" className="about-impact__title">
               Quantifying <br /> <span className="text-brand">Impact.</span>
             </h2>
           </motion.div>
@@ -247,11 +247,11 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           04 · FOUNDING — Creative staggered blocks
          ═══════════════════════════════════════════════════ */}
-      <section className="about-founding">
+      <section className="about-founding" aria-labelledby="founding-heading">
         <div className="about-founding__container">
           <motion.div {...fadeIn()} className="about-founding__intro">
             <span className="about-section-label">Our Foundation</span>
-            <h2 className="about-section-title">
+            <h2 id="founding-heading" className="about-section-title">
               Built on <span className="text-brand">Purpose.</span>
             </h2>
             <p className="about-founding__intro-text">
@@ -328,7 +328,7 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           06 · VALUES — Vertical Narrative Stack
          ═══════════════════════════════════════════════════ */}
-      <section className="about-values about-values--creative">
+      <section id="values" className="about-values about-values--creative" aria-labelledby="values-heading">
         <div className="about-values__container">
           <motion.div 
             className="about-values__header"
@@ -338,7 +338,7 @@ const About: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="about-section-label">Core Values</span>
-            <h2 className="about-section-title">
+            <h2 id="values-heading" className="about-section-title">
               Our <span className="text-brand">Convictions.</span>
             </h2>
           </motion.div>
@@ -372,11 +372,11 @@ const About: React.FC = () => {
       {/* ═══════════════════════════════════════════════════
           07 · PARTNERS — Ecosystem Grid
          ═══════════════════════════════════════════════════ */}
-      <section className="about-partners">
+      <section className="about-partners" aria-labelledby="partners-heading">
         <div className="about-partners__container">
           <motion.div {...fadeIn()} className="about-partners__header">
             <span className="about-section-label">Partnership Ecosystem</span>
-            <h2 className="about-section-title">Collaborating for <span className="text-brand">Scale.</span></h2>
+            <h2 id="partners-heading" className="about-section-title">Collaborating for <span className="text-brand">Scale.</span></h2>
           </motion.div>
           
           <div className="about-partners__marquee">
@@ -397,7 +397,7 @@ const About: React.FC = () => {
               ].map((partner, i) => (
                 <div key={i} className="partner-marquee-card">
                   <div className="partner-logo-box">
-                    <img src={partner.logo} alt={partner.name} className="partner-marque-img" />
+                    <img src={partner.logo} alt={`${partner.name} - Yegara Strategic Partner Logo`} className="partner-marque-img" />
                     <span className="partner-marque-name">{partner.name}</span>
                   </div>
                 </div>
@@ -428,7 +428,7 @@ const About: React.FC = () => {
       </section>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 

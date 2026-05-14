@@ -188,8 +188,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: var(--ytsc-light-gray);
   border-radius: 50%;
   color: var(--ytsc-blue-dark);
@@ -236,6 +236,10 @@
   font-size: 15px;
   color: var(--ytsc-gray);
   transition: var(--transition-fast);
+  padding: 10px 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .footer-col__links a:hover {

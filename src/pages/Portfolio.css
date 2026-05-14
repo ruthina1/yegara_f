@@ -9,7 +9,7 @@
 .portfolio-page {
   background: var(--ytsc-white);
   color: #334155;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
@@ -115,7 +115,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 28px;
+  padding: 12px 32px;
+  min-height: 44px;
   border-radius: 100px;
   background: #FFFFFF;
   border: 1px solid rgba(244, 121, 32, 0.2);
@@ -129,7 +130,7 @@
 }
 
 .slide-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 3.5rem);
   line-height: 1.15;
   font-weight: 800;
@@ -156,18 +157,18 @@
   border-radius: 2px;
 }
 
-.ati-section-header {
-  margin-bottom: 60px;
+.ati-section-header { 
+  margin-bottom: 80px;
   text-align: left;
 }
 
 .slide-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   line-height: 1.1;
   color: var(--ytsc-blue);
-  margin: 0;
+  margin: 0 0 24px 0;
   letter-spacing: -0.02em;
 }
 
@@ -606,7 +607,14 @@
 }
 
 .partner-type { font-size: 0.65rem; font-weight: 800; color: var(--ytsc-orange); text-transform: uppercase; opacity: 0.6; display: block; }
-.partner-name { font-size: 1rem; font-weight: 700; color: var(--ytsc-blue); }
+.partner-name-pres { 
+  margin-top: 15px;
+  font-size: 0.95rem; 
+  font-weight: 800; 
+  color: var(--ytsc-blue); 
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
 @keyframes logoTicker {
   0% { transform: translateX(0); }
@@ -728,7 +736,7 @@
 }
 
 .premium-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: clamp(4rem, 10vw, 8rem);
   line-height: 0.9;
   letter-spacing: -0.02em;
@@ -765,8 +773,8 @@
 .overview-layout-elegant {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: 80px;
-  align-items: center;
+  gap: 40px;
+  align-items: flex-start;
 }
 
 .overview-text-elegant {
@@ -801,14 +809,14 @@
 .overview-elegant-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
 .elegant-prog-card {
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: 24px;
-  padding: 40px 32px;
+  border-radius: 20px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -828,7 +836,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
 }
 
 .epc-num {
@@ -851,28 +859,28 @@
 
 .epc-content {
   flex: 1;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 }
 
 .epc-title {
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--ytsc-blue);
   margin: 0 0 12px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   letter-spacing: -0.01em;
 }
 
 .epc-desc {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.6;
   color: #64748B;
   margin: 0;
 }
 
 .epc-arrow {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(0,0,0,0.05);
   display: flex;
@@ -898,6 +906,7 @@
   position: relative;
   overflow: hidden;
   color: white;
+  padding: 60px 0; /* Reduced from 120px */
 }
 
 .mesmer-glow-orb {
@@ -925,7 +934,7 @@
 .mesmer-dash-layout {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  gap: 80px;
+  gap: 40px; /* Reduced from 80px */
   align-items: center;
 }
 
@@ -935,39 +944,40 @@
 
 .neon-tag {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 10px 20px;
+  min-height: 44px;
   background: rgba(244, 121, 32, 0.1);
   border: 1px solid rgba(244, 121, 32, 0.3);
   color: var(--ytsc-orange);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   border-radius: 100px;
-  margin-bottom: 30px;
+  margin-bottom: 16px; /* Reduced from 30px */
 }
 
 .neon-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.5rem); /* Slightly smaller */
   line-height: 1;
   font-weight: 900;
   color: white;
-  margin: 0 0 24px;
+  margin: 0 0 16px; /* Reduced from 24px */
 }
 
 .neon-desc {
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-size: 1rem; /* Slightly smaller */
+  line-height: 1.6;
   color: #94A3B8;
-  margin-bottom: 40px;
+  margin-bottom: 24px; /* Reduced from 40px */
 }
 
 .mesmer-trust-box {
   display: flex;
   align-items: center;
-  padding: 24px 32px;
-  gap: 32px;
+  padding: 16px 24px;
+  gap: 24px;
 }
 
 .trust-stat {
@@ -1004,14 +1014,14 @@
 }
 
 .mesmer-floating-card {
-  padding: 40px 32px;
+  padding: 24px 20px;
   position: relative;
   overflow: hidden;
 }
 
 /* Add a floating bounce effect offset for even cards */
 .mesmer-floating-card:nth-child(even) {
-  margin-top: 40px;
+  margin-top: 20px; /* Reduced from 40px */
 }
 
 .mfc-inner {
@@ -1022,10 +1032,10 @@
 }
 
 .mfc-val {
-  font-size: 3rem;
+  font-size: 2.2rem; /* Reduced from 3rem */
   font-weight: 900;
   color: white;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   line-height: 1;
 }
 
@@ -1045,7 +1055,22 @@
 .mfc-orange .mfc-val, .mfc-blue .mfc-val { color: white; }
 
 /* ── CHART ── */
-.chart-pres { margin-top: 60px; display: flex; flex-direction: column; gap: 24px; max-width: 1000px; }
+.chart-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.chart-header .slide-label {
+  justify-content: center;
+}
+
+.chart-pres { 
+  margin: 60px auto 0; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 24px; 
+  max-width: 1000px; 
+}
 .chart-bar-row { display: grid; grid-template-columns: 2fr 3fr 2fr; gap: 40px; align-items: center; }
 .bar-label-group { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .bar-name { font-weight: 700; color: var(--ytsc-blue); }
@@ -1548,8 +1573,8 @@
 
 .orbit-node {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: white;
   border-radius: 10px;
   display: flex;
@@ -1869,10 +1894,10 @@
 }
 
 /* Corrected Regional Positions */
-.node-oromia { top: 55%; left: 45%; scale: 1.4; }
-.node-amhara { top: 32%; left: 48%; scale: 1.2; }
-.node-addis  { top: 45%; left: 51%; scale: 1; }
-.node-snnpr  { top: 68%; left: 38%; scale: 0.9; }
+.node-oromia { top: 60%; left: 46%; scale: 2.0; }
+.node-amhara { top: 32%; left: 48%; scale: 1.4; }
+.node-addis  { top: 45%; left: 51%; scale: 1.1; }
+.node-snnpr  { top: 72%; left: 36%; scale: 0.9; }
 .node-central { top: 58%; left: 55%; scale: 0.8; }
 
 /* ── GEOGRAPHIC SIDE DASHBOARD ── */
@@ -1974,7 +1999,7 @@
 /* ── IMPACT & PARTNERSHIP ECOSYSTEM ── */
 .impact-ecosystem-section {
   background: white;
-  padding: 160px 0; /* Increased padding */
+  padding: 40px 0;
 }
 
 
@@ -2020,8 +2045,8 @@
 }
 
 .impact-node__icon {
-  width: 40px; /* Minimized */
-  height: 40px;
+  width: 44px; /* Increased to 44px */
+  height: 44px;
   background: white;
   color: var(--ytsc-orange);
   border-radius: 10px;
@@ -2093,7 +2118,7 @@
 }
 
 .narrative-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: 3.2rem;
   font-weight: 800;
   margin-bottom: 40px;
@@ -2110,7 +2135,7 @@
 }
 
 .cv-header {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: 2.5rem;
   font-weight: 800;
   color: var(--ytsc-blue);
@@ -2229,7 +2254,7 @@
 }
 
 .action-card h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 24px;
@@ -2328,8 +2353,8 @@
 }
 
 .impact-node__icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: white;
   color: var(--ytsc-orange);
   border-radius: 10px;
@@ -2390,13 +2415,13 @@
 
   .ati-section-header { 
     text-align: center !important; 
-    margin-bottom: 30px !important;
+    margin-bottom: 20px !important;
     width: 100% !important;
   }
   
   .slide-label { 
     justify-content: center !important; 
-    margin-bottom: 12px !important; 
+    margin-bottom: 8px !important; 
   }
   .slide-label::after { display: none !important; }
 
@@ -2539,7 +2564,8 @@
   .action-card h3 { font-size: 1.4rem !important; margin-bottom: 12px !important; }
   .action-card p { margin-bottom: 24px !important; font-size: 0.95rem !important; }
   .action-btn { 
-    padding: 12px 24px !important; 
+    padding: 14px 24px !important; 
+    min-height: 44px;
     font-size: 0.9rem !important; 
     width: 100% !important; 
     justify-content: center !important; 
@@ -2611,8 +2637,9 @@
 @media (max-width: 480px) {
   .ati-slide { padding: 40px 0 !important; }
   .slide-badge { 
-    padding: 6px 14px !important; 
-    font-size: 0.5rem !important; 
+    padding: 10px 20px !important; 
+    min-height: 44px;
+    font-size: 0.6rem !important; 
     letter-spacing: 0.1em !important; 
     margin-bottom: 1rem !important; 
   }

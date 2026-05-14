@@ -131,20 +131,20 @@ async function init() {
   console.log('\n🌱 Seeding initial data...');
 
   // Admin user
-  const adminPassword = await bcrypt.hash('admin123', 10);
+  const adminPassword = await bcrypt.hash('admin1234', 10);
   await connection.query(`
     INSERT IGNORE INTO users (name, email, password, role)
     VALUES ('Yegara Admin', 'admin@yegara.com', ?, 'admin')
   `, [adminPassword]);
-  console.log('   👤 Admin user created (admin@yegara.com / admin123)');
+  console.log('   👤 Admin user created (admin@yegara.com / admin1234)');
 
   // Demo user
-  const demoPassword = await bcrypt.hash('demo123', 10);
+  const demoPassword = await bcrypt.hash('demo1234', 10);
   await connection.query(`
     INSERT IGNORE INTO users (name, email, password, role)
     VALUES ('Demo Student', 'demo@yegara.com', ?, 'user')
   `, [demoPassword]);
-  console.log('   👤 Demo user created (demo@yegara.com / demo123)');
+  console.log('   👤 Demo user created (demo@yegara.com / demo1234)');
 
   // Courses
   const [existingCourses] = await connection.query('SELECT COUNT(*) as count FROM courses');

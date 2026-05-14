@@ -68,7 +68,7 @@ const CorporateNav: React.FC = () => {
         <div className="corp-nav__inner">
           {/* Logo */}
           <Link to="/" className="corp-nav__logo">
-            <img src={logo} alt="Yegara Trading Share Company" />
+            <img src={logo} alt="Yegara Trading Share Company Logo" />
           </Link>
 
           {/* Right Side Group (Links + Actions) */}

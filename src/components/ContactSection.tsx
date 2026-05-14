@@ -17,16 +17,16 @@ const ContactSection: React.FC = () => {
           <div className="contact-light__form-wrapper">
             <form className="contact-light__form" onSubmit={(e) => e.preventDefault()}>
               <div className="form-group-light">
-                <input type="text" id="firstName" placeholder="First name" required />
+                <input type="text" id="firstName" placeholder="First name" aria-label="First name" required />
               </div>
               <div className="form-group-light">
-                <input type="text" id="lastName" placeholder="Last name" required />
+                <input type="text" id="lastName" placeholder="Last name" aria-label="Last name" required />
               </div>
               <div className="form-group-light">
-                <input type="email" id="email" placeholder="E-mail" required />
+                <input type="email" id="email" placeholder="E-mail" aria-label="E-mail address" required />
               </div>
               <div className="form-group-light">
-                <textarea id="message" rows={1} placeholder="Message" required></textarea>
+                <textarea id="message" rows={1} placeholder="Message" aria-label="Your message" required></textarea>
               </div>
               
               <button type="submit" className="contact-light__submit">
@@ -41,8 +41,8 @@ const ContactSection: React.FC = () => {
             <div className="info-block-light">
               <h3 className="info-block-light__title">SOCIAL NETWORKS</h3>
               <ul className="info-block-light__list">
-                <li><a href="https://www.linkedin.com/company/yegara-trading-share-company-ytsc/" target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
-                <li><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></li>
+                <li><a href="https://www.linkedin.com/company/yegara-trading-share-company-ytsc/" target="_blank" rel="noreferrer" aria-label="Follow us on LinkedIn">LinkedIn ↗</a></li>
+                <li><a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Follow us on Instagram">Instagram ↗</a></li>
               </ul>
             </div>
 

@@ -199,6 +199,37 @@ const News: React.FC = () => {
           )}
         </div>
       </div>
+      
+      {/* ── Resources & Insights Section ── */}
+      <section className="news-resources-section py-24 bg-[#f8f9fc]" aria-labelledby="resources-heading">
+        <div className="news-container">
+          <div className="section-header text-center mb-16">
+            <span className="news-tag" style={{ color: '#F47920' }}>KNOWLEDGE HUB</span>
+            <h2 id="resources-heading" className="text-4xl font-serif font-black mt-4" style={{ color: '#1B3A5C' }}>Resources & <span style={{ color: '#F47920' }}>Insights.</span></h2>
+            <p className="max-w-2xl mx-auto mt-6 text-gray-600">Explore our latest thinking on business development, impact investment, and social innovation in Africa.</p>
+          </div>
+
+          <div className="resources-grid grid grid-cols-1 md:grid-cols-2 gap-12">
+            <article className="resource-card bg-white p-10 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
+              <span className="text-[11px] font-black tracking-widest text-[#F47920] uppercase mb-4 block">Strategic Insight</span>
+              <h3 className="text-2xl font-serif font-bold mb-4 group-hover:text-[#F47920] transition-colors">Business Development in Ethiopia: Navigating the 2024 Landscape</h3>
+              <p className="text-gray-600 mb-8 leading-relaxed">As Ethiopia continues its economic liberalization, new opportunities arise for MSMEs and foreign investors alike. We analyze the core growth sectors and structural reforms driving the market.</p>
+              <Link to="/contact" className="text-[13px] font-bold flex items-center gap-2 text-[#1B3A5C]">
+                Request Full Brief <FiArrowLeft style={{ transform: 'rotate(180deg)' }} />
+              </Link>
+            </article>
+
+            <article className="resource-card bg-white p-10 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
+              <span className="text-[11px] font-black tracking-widest text-[#F47920] uppercase mb-4 block">Impact Investment</span>
+              <h3 className="text-2xl font-serif font-bold mb-4 group-hover:text-[#F47920] transition-colors">Impact Investment in Africa: Beyond the Bottom Line</h3>
+              <p className="text-gray-600 mb-8 leading-relaxed">Sustainable growth requires capital that understands social value. Discover how Yegara is bridging the gap between international institutional capital and local community potential.</p>
+              <Link to="/contact" className="text-[13px] font-bold flex items-center gap-2 text-[#1B3A5C]">
+                Join the Network <FiArrowLeft style={{ transform: 'rotate(180deg)' }} />
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

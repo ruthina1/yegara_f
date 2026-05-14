@@ -276,8 +276,10 @@
 .home-mission__cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 14px 32px;
+  min-height: 44px;
   background: var(--ytsc-blue);
   color: white;
   font-size: 12px;

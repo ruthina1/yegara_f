@@ -97,7 +97,7 @@ const StackCard = ({
         style={{
           scale,
           backgroundColor: service.color,
-          top: `calc(5vh + ${index * 18}px)`,
+          top: `calc(5vh + ${index * 6}px)`,
         }}
         className="stack-card"
       >
@@ -187,17 +187,17 @@ const Services: React.FC = () => {
   const pillLabels = ['Capacity Building', 'Impact Finance', 'Business Dev', 'Research', 'Partnerships'];
 
   return (
-    <div style={{ background: '#FFFFFF', overflowX: 'hidden' }}>
+    <main style={{ background: '#FFFFFF', overflowX: 'hidden' }}>
 
       {/* ── Hero Section ── */}
-      <section className="services-hero" style={{ paddingTop: '80px' }}>
+      <section className="services-hero" style={{ paddingTop: '80px' }} aria-labelledby="services-hero-title">
         {/* Orbs */}
         <div className="hero-orb hero-orb--1" />
         <div className="hero-orb hero-orb--2" />
         <div className="hero-orb hero-orb--3" />
 
-        {/* Grid pattern */}
-        <div className="hero-grid-pattern" />
+        {/* Grid pattern (handled by ::before) & Bottom Fade */}
+        <div className="services-hero__bottom-fade" />
 
         {/* Content */}
         <div className="services-hero__content">
@@ -213,6 +213,7 @@ const Services: React.FC = () => {
           </motion.div>
 
           <motion.h1
+            id="services-hero-title"
             className="services-hero__title"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -267,7 +268,7 @@ const Services: React.FC = () => {
 
       {/* ── Stacked Cards Section ── */}
       <div style={{ background: '#f8f9fc' }}>
-        <main ref={mainRef} className="relative w-full">
+        <section className="relative w-full" aria-label="Services List">
           {servicesData.map((service, i) => {
             const startRange = i / servicesData.length;
             return (
@@ -280,10 +281,10 @@ const Services: React.FC = () => {
               />
             );
           })}
-        </main>
+        </section>
       </div>
       <Footer />
-    </div>
+    </main>
   );
 };
 

@@ -110,11 +110,18 @@ router.put('/:id', authenticate, async (req, res) => {
     const { id } = req.params;
     const { title, content, date, imageUrls } = req.body;
 
-    const images = imageUrls && imageUrls.length > 0 ? JSON.stringify(imageUrls) : null;
+    // Ensure we handle undefined values for COALESCE to work in SQL
+    const updateTitle = title || null;
+    const updateContent = content || null;
+    const updateDate = date ? new Date(date).toISOString().split('T')[0] : null;
+    
+    // If imageUrls is provided (even if empty array), we want to update it.
+    // If it's undefined, we use COALESCE to keep the existing value.
+    const images = (imageUrls !== undefined) ? JSON.stringify(imageUrls) : null;
 
     const [result] = await pool.query(
-      'UPDATE news SET title = COALESCE(?, title), content = COALESCE(?, content), date = COALESCE(?, date), image_urls = ? WHERE id = ?',
-      [title, content, date, images, id]
+      'UPDATE news SET title = COALESCE(?, title), content = COALESCE(?, content), date = COALESCE(?, date), image_urls = COALESCE(?, image_urls) WHERE id = ?',
+      [updateTitle, updateContent, updateDate, images, id]
     );
 
     if (result.affectedRows === 0) {

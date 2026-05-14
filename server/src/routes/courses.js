@@ -79,15 +79,15 @@ router.post('/', authenticate, async (req, res) => {
       return res.status(403).json({ error: 'Admin access required.' });
     }
 
-    const { title, description, thumbnail_url } = req.body;
+    const { title, description, thumbnail_url, category } = req.body;
 
     if (!title) {
       return res.status(400).json({ error: 'Title is required.' });
     }
 
     const [result] = await pool.query(
-      'INSERT INTO courses (title, description, thumbnail_url) VALUES (?, ?, ?)',
-      [title, description || null, thumbnail_url || null]
+      'INSERT INTO courses (title, description, thumbnail_url, category) VALUES (?, ?, ?, ?)',
+      [title, description || null, thumbnail_url || null, category || null]
     );
 
     res.status(201).json({
@@ -115,9 +115,13 @@ router.put('/:id', authenticate, async (req, res) => {
     const { id } = req.params;
     const { title, description, thumbnail_url } = req.body;
 
+    const updateTitle = title || null;
+    const updateDescription = description || null;
+    const updateThumbnail = thumbnail_url || null;
+
     const [result] = await pool.query(
       'UPDATE courses SET title = COALESCE(?, title), description = COALESCE(?, description), thumbnail_url = COALESCE(?, thumbnail_url) WHERE id = ?',
-      [title, description, thumbnail_url, id]
+      [updateTitle, updateDescription, updateThumbnail, id]
     );
 
     if (result.affectedRows === 0) {

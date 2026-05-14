@@ -57,9 +57,9 @@ const Home: React.FC = () => {
   const scrollRaw = useTransform(smoothTreeProgress, [0, 1], [0, 100]);
 
   return (
-    <div className="home-page overflow-hidden">
+    <main className="home-page overflow-hidden">
       {/* Hero Section Parallax */}
-      <section className="ytsc-hero-content-reveal relative h-screen w-full flex items-center justify-center overflow-hidden">
+      <section className="ytsc-hero-content-reveal relative h-screen w-full flex items-center justify-center overflow-hidden" aria-labelledby="hero-heading">
         <AnimatePresence initial={false}>
           <motion.div 
             key={currentSlide}
@@ -88,10 +88,10 @@ const Home: React.FC = () => {
             <motion.span variants={fadeUpVariant} className="ytsc-label mb-6 inline-block" style={{ color: 'rgba(244,121,32,0.9)', letterSpacing: '0.35em', fontSize: '11px', fontWeight: 800 }}>
               Since 2022
             </motion.span>
-            <motion.h2 variants={fadeUpVariant} className="ytsc-heading-lg text-white mb-8">
+            <h1 id="hero-heading" className="ytsc-heading-lg text-white mb-8">
               Trusted Partner for <br />
               <span style={{ color: '#F47920' }}>Lasting Impact.</span>
-            </motion.h2>
+            </h1>
             <motion.p variants={fadeUpVariant} className="ytsc-body text-white mb-10 max-w-2xl" style={{ opacity: 0.85 }}>
               Ethiopia's first national business, social, and development hub operating at the intersection of private enterprise and nonprofit collaboration.
             </motion.p>
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
       {/* CurtainSection removed */}
 
       {/* Mission Section */}
-      <section id="intro-section" className="home-mission py-10 md:py-24">
+      <section id="vision-mission-section" className="home-mission py-10 md:py-24" aria-labelledby="mission-heading">
         <div className="ytsc-container-wide">
           
           <motion.div 
@@ -128,7 +128,7 @@ const Home: React.FC = () => {
           >
             <div className="home-mission__left">
               <motion.span variants={fadeUpVariant} className="home-mission__label">Vision &amp; Mission</motion.span>
-              <motion.h2 variants={fadeUpVariant} className="home-mission__heading">
+              <motion.h2 id="mission-heading" variants={fadeUpVariant} className="home-mission__heading">
                 Empowering Africa's<br />
                 <span style={{ color: '#F47920' }}>Future. Together.</span>
               </motion.h2>
@@ -140,7 +140,7 @@ const Home: React.FC = () => {
               variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } } }} 
               className="home-mission__right"
             >
-              <img src={missionVisual} alt="Mission" className="home-mission__visual rounded-3xl shadow-2xl" />
+              <img src={missionVisual} alt="Yegara Mission and Vision Visual Representation" className="home-mission__visual rounded-3xl shadow-2xl" />
             </motion.div>
           </motion.div>
 
@@ -160,81 +160,85 @@ const Home: React.FC = () => {
           <div className="home-mission__divider my-4 md:my-8 h-px bg-gray-200"></div>
 
           {/* Values Section */}
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-            className="home-mission__hero home-mission__hero--mirrored flex flex-col-reverse md:flex-row gap-12"
-          >
+          <section id="values-section" aria-labelledby="values-heading">
             <motion.div 
-              variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } } }} 
-              className="home-mission__right flex-1"
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
+              className="home-mission__hero home-mission__hero--mirrored flex flex-col-reverse md:flex-row gap-12"
             >
-              <img src={valuesVisual} alt="Values" className="home-mission__visual rounded-3xl shadow-2xl" />
-            </motion.div>
-            <div className="home-mission__left flex-1 flex flex-col justify-center">
-              <motion.span variants={fadeUpVariant} className="home-mission__label">Our Core Values</motion.span>
-              <motion.h2 variants={fadeUpVariant} className="home-mission__heading">
-                Excellence in Every<br />
-                <span style={{ color: '#F47920' }}>Collaboration.</span>
-              </motion.h2>
-              <motion.div variants={fadeUpVariant}>
-                <Link to="/about#values" className="home-mission__cta">Our Principles</Link>
+              <motion.div 
+                variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } } }} 
+                className="home-mission__right flex-1"
+              >
+                <img src={valuesVisual} alt="Yegara Core Values Visual Representation" className="home-mission__visual rounded-3xl shadow-2xl" />
               </motion.div>
-            </div>
-          </motion.div>
+              <div className="home-mission__left flex-1 flex flex-col justify-center">
+                <motion.span variants={fadeUpVariant} className="home-mission__label">Our Core Values</motion.span>
+                <motion.h2 id="values-heading" variants={fadeUpVariant} className="home-mission__heading">
+                  Excellence in Every<br />
+                  <span style={{ color: '#F47920' }}>Collaboration.</span>
+                </motion.h2>
+                <motion.div variants={fadeUpVariant}>
+                  <Link to="/about#values" className="home-mission__cta">Our Principles</Link>
+                </motion.div>
+              </div>
+            </motion.div>
 
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
-          >
-            <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              <strong>Innovation & Responsiveness:</strong> We don't just react to the market; we anticipate its evolution. Our commitment is to pioneering solutions that open doors for our shareholders and communities alike.
-            </motion.p>
-            <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              <strong>Trust & Inclusivity:</strong> Integrity is our baseline. We build transparent relationships and ensure every stakeholder has a voice in our collective progress toward a brighter future for Africa.
-            </motion.p>
-          </motion.div>
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+              className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
+                <strong>Innovation & Responsiveness:</strong> We don't just react to the market; we anticipate its evolution. Our commitment is to pioneering solutions that open doors for our shareholders and communities alike.
+              </motion.p>
+              <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
+                <strong>Trust & Inclusivity:</strong> Integrity is our baseline. We build transparent relationships and ensure every stakeholder has a voice in our collective progress toward a brighter future for Africa.
+              </motion.p>
+            </motion.div>
+          </section>
 
           <div className="home-mission__divider my-4 md:my-8 h-px bg-gray-200"></div>
 
           {/* Milestones */}
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-            className="home-mission__hero"
-          >
-            <div className="home-mission__left">
-              <motion.span variants={fadeUpVariant} className="home-mission__label">Our Milestones</motion.span>
-              <motion.h2 variants={fadeUpVariant} className="home-mission__heading">
-                Sustainable Scalability.<br />
-                <span style={{ color: '#F47920' }}>Proven Progress.</span>
-              </motion.h2>
-              <motion.div variants={fadeUpVariant}>
-                <Link to="/about" className="home-mission__cta">Our Roadmap</Link>
-              </motion.div>
-            </div>
+          <section id="milestones-section" aria-labelledby="milestones-heading">
             <motion.div 
-               variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } } }} 
-               className="home-mission__right"
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
+              className="home-mission__hero"
             >
-              <img src={milestonesVisual} alt="Milestones" className="home-mission__visual rounded-3xl shadow-2xl" />
+              <div className="home-mission__left">
+                <motion.span variants={fadeUpVariant} className="home-mission__label">Our Milestones</motion.span>
+                <motion.h2 id="milestones-heading" variants={fadeUpVariant} className="home-mission__heading">
+                  Sustainable Scalability.<br />
+                  <span style={{ color: '#F47920' }}>Proven Progress.</span>
+                </motion.h2>
+                <motion.div variants={fadeUpVariant}>
+                  <Link to="/about" className="home-mission__cta">Our Roadmap</Link>
+                </motion.div>
+              </div>
+              <motion.div 
+                 variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } } }} 
+                 className="home-mission__right"
+              >
+                <img src={milestonesVisual} alt="Yegara Growth Milestones Visual" className="home-mission__visual rounded-3xl shadow-2xl" />
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
-          >
-            <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              <strong>2022 — The Foundation:</strong> Yegara was established as Ethiopia's first unified business-development-social hub. We began with a core focus on bridging the gap between capital and social innovation.
-            </motion.p>
-            <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
-              <strong>2024 — Future Scaling:</strong> Today, we are expanding our national reach, having established core service pillars that support thousands of individuals and dozens of enterprises across the region.
-            </motion.p>
-          </motion.div>
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+              className="home-mission__body mt-4 grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
+                <strong>2022 — The Foundation:</strong> Yegara was established as Ethiopia's first unified business-development-social hub. We began with a core focus on bridging the gap between capital and social innovation.
+              </motion.p>
+              <motion.p variants={fadeUpVariant} className="home-mission__body-text text-lg text-gray-700 leading-relaxed">
+                <strong>2024 — Future Scaling:</strong> Today, we are expanding our national reach, having established core service pillars that support thousands of individuals and dozens of enterprises across the region.
+              </motion.p>
+            </motion.div>
+          </section>
         </div>
       </section>
 
       {/* Pillars of Impact — Scroll-Draw Tree */}
-      <section className="pt-10 pb-10 md:pt-24 md:pb-24 bg-[#fbfbfb] overflow-hidden">
+      <section id="pillars-section" className="pt-10 pb-10 md:pt-24 md:pb-24 bg-[#fbfbfb] overflow-hidden" aria-labelledby="pillars-heading">
         <div className="max-w-7xl mx-auto px-6 relative">
 
           {/* Section Title */}
@@ -245,7 +249,7 @@ const Home: React.FC = () => {
             <motion.span variants={fadeUpVariant} className="block text-[11px] font-extrabold tracking-[0.3em] uppercase text-[#F47920] mb-3">
               | Our Services |
             </motion.span>
-            <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-5xl font-serif font-black" style={{ color: '#1B3A5C' }}>
+            <motion.h2 id="pillars-heading" variants={fadeUpVariant} className="text-4xl md:text-5xl font-serif font-black" style={{ color: '#1B3A5C' }}>
               Pillars of Impact
             </motion.h2>
           </motion.div>
@@ -393,7 +397,7 @@ const Home: React.FC = () => {
       </motion.section>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 

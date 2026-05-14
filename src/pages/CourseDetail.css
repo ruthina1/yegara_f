@@ -1,6 +1,7 @@
 .course-player-page {
   min-height: 100vh;
   background: #ffffff;
+  font-family: var(--font-sans);
   padding-bottom: 80px;
 }
 
@@ -185,6 +186,7 @@
 }
 
 .module-header h3 {
+  font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;

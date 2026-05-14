@@ -76,8 +76,8 @@
 }
 
 .ihub-hero__title {
-  font-family: var(--font-serif, 'Playfair Display', serif);
-  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 9vw, 8rem);
   font-weight: 900;
   line-height: 0.92;
   letter-spacing: -0.04em;
@@ -408,7 +408,6 @@
 .ihub-portal__header {
   padding: 60px 80px 30px;
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
 }
 
@@ -422,16 +421,19 @@
   font-weight: 900;
   color: #F47920;
   line-height: 0.75;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .ihub-portal__title {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2.2rem, 4vw, 3.8rem); /* Slightly smaller to fit better */
   font-weight: 900;
   color: #1B3A5C;
   letter-spacing: -0.04em;
   line-height: 1;
+  margin-left: auto;
+  margin-right: 40px;
+  margin-top: 10px;
 }
 
 .ihub-portal__close {
@@ -465,6 +467,7 @@
   font-size: 1.2rem;
   line-height: 1.8;
   color: #475569;
+  margin-bottom: 40px; /* Increased space before CTA */
 }
 
 .ihub-portal__sidebar {
@@ -584,6 +587,8 @@
 
   .ihub-portal__header {
     padding: 40px 40px 20px;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .ihub-portal__body {

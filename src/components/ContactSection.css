@@ -91,7 +91,11 @@
   background: #F47920;
   color: #FFFFFF;
   border: 1px solid #F47920;
-  padding: 12px 32px;
+  padding: 14px 36px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   font-family: var(--font-sans);
   font-size: 13px;
@@ -155,6 +159,9 @@
   color: rgba(0, 0, 0, 0.6);
   transition: color 0.4s ease;
   line-height: 1.6;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .info-block-light__list li a:hover,

@@ -8,6 +8,7 @@ export interface User {
 export interface Course {
   id: number;
   title: string;
+  category?: string;
   description?: string;
   thumbnail_url?: string;
   averageRating?: number;

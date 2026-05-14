@@ -23,10 +23,11 @@ const AppRoutes: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <>
-      {!isAdminRoute && <StickyHeaderMorph />}
+      {!isAdminRoute && !isAuthRoute && <StickyHeaderMorph />}
       <Routes>
         <Route path="/login" element={user ? <Navigate to={user.email === 'admin@yegara.com' ? '/admin' : '/courses'} replace /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to="/courses" replace /> : <Register />} />

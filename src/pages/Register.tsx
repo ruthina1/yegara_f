@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message" role="alert" aria-live="polite">{error}</div>}
 
           <div className="form-group">
             <label htmlFor="name">FULL NAME</label>
@@ -97,6 +97,7 @@ const Register: React.FC = () => {
                 type="button"
                 className="password-toggle"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -113,11 +114,11 @@ const Register: React.FC = () => {
             <span>OR CONTINUE WITH</span>
           </div>
           <div className="social-buttons">
-            <button type="button" className="btn-social google">
+            <button type="button" className="btn-social google" aria-label="Register with Google">
               <span className="social-icon">G</span>
               Google
             </button>
-            <button type="button" className="btn-social apple">
+            <button type="button" className="btn-social apple" aria-label="Register with Apple">
               <span className="social-icon">🍎</span>
               Apple
             </button>

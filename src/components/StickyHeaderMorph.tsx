@@ -93,11 +93,11 @@ const StickyHeaderMorph: React.FC = () => {
       )}
 
       {/* ── Nav Bar ──────────────────────────────────────────────────── */}
-      <nav className={`corp-nav ${scrolled ? 'corp-nav--scrolled' : ''} ${isHome && !scrolled ? 'corp-nav--transparent-white' : ''}`}>
+      <nav className={`corp-nav ${scrolled ? 'corp-nav--scrolled' : ''} ${isHome && !scrolled ? 'corp-nav--transparent-white' : ''}`} aria-label="Main Navigation">
         <div className={`corp-nav__inner ${isHome ? 'corp-nav__inner--home' : ''}`}>
           {/* Left: Logo */}
           <Link to="/" className="corp-nav__logo">
-            <img src={logo} alt="YTSC" />
+            <img src={logo} alt="Yegara Trading Share Company Logo" />
           </Link>
 
           {/* ── HOME PAGE: Split layout ── */}
@@ -154,6 +154,7 @@ const StickyHeaderMorph: React.FC = () => {
                       <Link
                         to={link.path}
                         className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                        aria-current={location.pathname === link.path ? 'page' : undefined}
                       >
                         {link.label}
                       </Link>
@@ -181,6 +182,7 @@ const StickyHeaderMorph: React.FC = () => {
                     key={link.label}
                     to={link.path}
                     className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                    aria-current={location.pathname === link.path ? 'page' : undefined}
                   >
                     {link.label}
                   </Link>
@@ -196,6 +198,7 @@ const StickyHeaderMorph: React.FC = () => {
                     key={link.label}
                     to={link.path}
                     className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                    aria-current={location.pathname === link.path ? 'page' : undefined}
                   >
                     {link.label}
                   </Link>
@@ -213,6 +216,8 @@ const StickyHeaderMorph: React.FC = () => {
           <button
             className="corp-nav__mobile-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <HiX /> : <HiMenu />}
           </button>

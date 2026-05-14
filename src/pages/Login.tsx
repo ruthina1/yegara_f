@@ -48,8 +48,8 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-page">
-      <Link to="/" className="back-to-home">
-        <FiArrowLeft size={16} /> Back to Website
+      <Link to="/" className="back-to-home" title="Back to Home" aria-label="Back to Home">
+        <FiArrowLeft size={24} />
       </Link>
 
       <div className="login-branding">
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           </motion.div>
 
           <motion.form variants={fadeUpVariant} onSubmit={handleSubmit} className="login-form">
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="error-message" role="alert" aria-live="polite">{error}</div>}
 
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
@@ -115,6 +115,7 @@ const Login: React.FC = () => {
                   type="button"
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
@@ -141,11 +142,11 @@ const Login: React.FC = () => {
               <span>OR CONTINUE WITH</span>
             </div>
             <div className="social-buttons">
-              <button type="button" className="btn-social google">
+              <button type="button" className="btn-social google" aria-label="Sign in with Google">
                 <FaGoogle className="social-icon" style={{color: '#EA4335'}} />
                 Google
               </button>
-              <button type="button" className="btn-social apple">
+              <button type="button" className="btn-social apple" aria-label="Sign in with Apple">
                 <FaApple className="social-icon" style={{fontSize: '20px'}} />
                 Apple
               </button>

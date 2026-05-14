@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   HiMap, 
   HiAcademicCap, 
@@ -28,6 +28,8 @@ import testimony2 from '../assets/testimony_2.png';
 import testimony3 from '../assets/testimony_3.png';
 import testimony4 from '../assets/testimony_4.png';
 import ethiopiaMap from '../assets/ethiopia_map_color.png';
+import ediLogo from '../assets/edi_logo.jpg';
+import enatLogo from '../assets/enat_logo.jpg';
 import { HiOutlineChatAlt2 } from 'react-icons/hi';
 import './Portfolio.css';
 
@@ -38,19 +40,48 @@ const fadeIn = (delay = 0): any => ({
   transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }
 });
 
+const Word: React.FC<{ children: string; progress: any; range: [number, number] }> = ({ children, progress, range }) => {
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  return <motion.span style={{ opacity }}>{children} </motion.span>;
+};
+
+const ScrollRevealText: React.FC<{ text: string }> = ({ text }) => {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 90%", "end 60%"]
+  });
+
+  const words = text.split(" ");
+  
+  return (
+    <p ref={ref} className="testimony-text">
+      {words.map((word, i) => {
+        const start = i / words.length;
+        const end = (i + 1) / words.length;
+        return (
+          <Word key={i} progress={scrollYProgress} range={[start, end]}>
+            {word}
+          </Word>
+        );
+      })}
+    </p>
+  );
+};
+
 const Portfolio: React.FC = () => {
   return (
-    <div className="portfolio-page">
+    <main className="portfolio-page">
 
       {/* ── SLIDE 01: HERO / TITLE ── */}
-      <section className="ati-slide ati-slide--hero">
+      <section className="ati-slide ati-slide--hero" aria-labelledby="portfolio-hero-title">
         <div className="hero-orb hero-orb--1" />
         <div className="hero-grid-pattern" />
         <div className="ati-slide__content">
           <motion.div {...fadeIn()} className="slide-badge">
              Capability & Achievement · March 2026
           </motion.div>
-          <motion.h1 {...fadeIn(0.15)} className="slide-title slide-title--huge">
+          <motion.h1 id="portfolio-hero-title" {...fadeIn(0.15)} className="slide-title slide-title--huge">
              Yegara Trading <br />
              <em>Share Co.</em>
           </motion.h1>
@@ -72,7 +103,7 @@ const Portfolio: React.FC = () => {
 
 
       {/* ── SLIDE 05: GOVERNANCE & COMPLIANCE ── */}
-      <section className="ati-slide gov-cyber-section">
+      <section className="ati-slide gov-cyber-section" aria-labelledby="gov-heading">
         <div className="gov-cyber-grid-bg" />
         <div className="gov-glow-orb orb-1" />
         <div className="gov-glow-orb orb-2" />
@@ -81,7 +112,7 @@ const Portfolio: React.FC = () => {
            <div className="gov-creative-layout">
               <motion.div {...fadeIn()} className="gov-creative-content">
                  <span className="slide-label label-orange">Accountability</span>
-                 <h2 className="slide-title text-white">Governance <br />& Compliance.</h2>
+                 <h2 id="gov-heading" className="slide-title text-white">Governance <br />& Compliance.</h2>
                  
                  <p className="slide-desc text-white" style={{ opacity: 0.8, marginBottom: '2.5rem', maxWidth: '500px' }}>
                     Yegara maintains an unwavering commitment to transparent, ethical, and fully compliant business operations. We have established a robust institutional framework to ensure the highest standards of corporate accountability. Through strict legal compliances, comprehensive protocol endorsements, and continuous board-level capacity building, we safeguard our stakeholders' trust and drive long-term operational excellence.
@@ -127,15 +158,15 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* ── SLIDE 06: IMPACT & PARTNERSHIP ECOSYSTEM ── */}
-      <section className="ati-slide impact-ecosystem-section">
+      <section className="ati-slide impact-ecosystem-section" aria-labelledby="impact-heading">
         <div className="ati-container">
            <div className="ati-section-header text-center mb-16">
               <span className="slide-label">Impact & Partnership Ecosystem</span>
-              <h2 className="slide-title">Building Sustainable Change.</h2>
+              <h2 id="impact-heading" className="slide-title">Building Sustainable Change.</h2>
            </div>
 
            {/* 1: The Impact Ledger (Structured Organic Constellation) */}
-           <div className="impact-constellation mb-32">
+           <div className="impact-constellation mb-12">
               <div className="constellation-svg-wrapper">
                  <svg width="100%" height="100%" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <motion.path 
@@ -202,7 +233,7 @@ const Portfolio: React.FC = () => {
            </div>
 
            {/* 2: The Content Block (The Yegara Advantage - RESTORED DESIGN) */}
-           <div className="yegara-narrative-box mb-24">
+           <div className="yegara-narrative-box mb-12">
               <motion.div {...fadeIn()} className="narrative-inner">
                  <h3 className="narrative-title">The Yegara Strategic Narrative</h3>
                  <p className="narrative-text">
@@ -214,7 +245,7 @@ const Portfolio: React.FC = () => {
               </motion.div>
            </div>
 
-           <div className="competitive-values-grid mb-24">
+           <div className="competitive-values-grid mb-12">
               <h3 className="cv-header">The Yegara Advantage: Competitive Values</h3>
               <div className="cv-items">
                  {[
@@ -237,7 +268,7 @@ const Portfolio: React.FC = () => {
            </div>
 
            {/* 3: Partners Engaged (The Logo Wall) */}
-           <div className="partners-wall mb-24">
+           <div className="partners-wall mb-12">
               <div className="partners-wall__header">
                  <h3 className="wall-title text-center mb-12">Our Growing Partnership Network</h3>
                  <p className="wall-desc text-center mb-16 px-12">Yegara’s credibility is anchored in its diverse and high-value partnership ecosystem, enabling resource mobilization and impact scaling.</p>
@@ -248,22 +279,22 @@ const Portfolio: React.FC = () => {
                     {[...new Array(2)].map((_, groupIdx) => (
                        <React.Fragment key={groupIdx}>
                           {[
-                             { name: 'Enat Bank', logo: null, cat: 'Finance' },
-                             { name: 'Min. of Labour & Skills', logo: molsLogo, cat: 'Gov' },
-                             { name: 'EDI Ethiopia', logo: null, cat: 'Gov' },
-                             { name: 'Kifiya FinTech', logo: kifiyaLogo, cat: 'Private' },
-                             { name: 'First Consult', logo: fcLogo, cat: 'Private' },
-                             { name: 'MoHas Consult', logo: mohasLogo, cat: 'Private' },
-                             { name: 'Hope Enterprise UC', logo: hopeLogo, cat: 'Academia' },
-                             { name: 'Nifas Silk Poly', logo: nefasLogo, cat: 'Academia' }
-                          ].map((partner, i) => (
-                             <div key={`${groupIdx}-${i}`} className="partner-pres-card">
-                                <div className="partner-logo-box">
-                                   {partner.logo ? <img src={partner.logo} alt={partner.name} className="partner-logo-pres" /> : <div className="partner-initials">{partner.name}</div>}
-                                </div>
-
-                             </div>
-                          ))}
+                              { name: 'Enat Bank', logo: enatLogo, cat: 'Finance' },
+                              { name: 'Min. of Labour & Skills', logo: molsLogo, cat: 'Gov' },
+                              { name: 'EDI Ethiopia', logo: ediLogo, cat: 'Gov' },
+                              { name: 'Kifiya FinTech', logo: kifiyaLogo, cat: 'Private' },
+                              { name: 'First Consult', logo: fcLogo, cat: 'Private' },
+                              { name: 'MoHas Consult', logo: mohasLogo, cat: 'Private' },
+                              { name: 'Hope Enterprise UC', logo: hopeLogo, cat: 'Academia' },
+                              { name: 'Nifas Silk Poly', logo: nefasLogo, cat: 'Academia' }
+                           ].map((partner, i) => (
+                              <div key={`${groupIdx}-${i}`} className="partner-pres-card">
+                                 <div className="partner-logo-box">
+                                    {partner.logo ? <img src={partner.logo} alt={partner.name} className="partner-logo-pres" /> : <div className="partner-initials">{partner.name}</div>}
+                                 </div>
+                                 <div className="partner-name-pres">{partner.name}</div>
+                              </div>
+                           ))}
                        </React.Fragment>
                     ))}
                  </div>
@@ -304,7 +335,7 @@ const Portfolio: React.FC = () => {
 
 
       {/* ── SLIDE 07: MAJOR PROJECTS HEADER ── */}
-      <section className="ati-slide major-projects-hero">
+      <section className="ati-slide major-projects-hero" aria-labelledby="projects-hero-title">
         <div className="projects-ambient-glow" />
         <div className="projects-particle-field" />
         
@@ -323,10 +354,10 @@ const Portfolio: React.FC = () => {
              className="projects-title-wrapper"
            >
               <div className="chapter-badge"><span>02</span> Portfolio Segment</div>
-              <h1 className="hero-giant premium-text">
+              <h2 id="projects-hero-title" className="hero-giant premium-text">
                  Major<br/>
                  <span className="text-stroke">Projects.</span>
-              </h1>
+              </h2>
               <div className="hero-dash-premium" />
               <p className="projects-hero-subtitle">
                 Engineering sustainable impact at scale, bridging capital, capacity, and technology.
@@ -336,14 +367,14 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* ── SLIDE 08: PROJECTS OVERVIEW ── */}
-      <section className="ati-slide bg-light">
+      <section className="ati-slide bg-light" aria-labelledby="overview-heading">
         <div className="ati-container">
-           <div className="ati-section-header">
-              <span className="slide-label label-orange">Alignment</span>
-              <h2 className="slide-title">Program <br />Overview.</h2>
-           </div>
            <div className="overview-layout-elegant">
               <div className="overview-text-elegant">
+                 <div className="ati-section-header" style={{ marginBottom: '16px' }}>
+                    <span className="slide-label label-orange" style={{ marginBottom: '8px' }}>Alignment</span>
+                    <h2 id="overview-heading" className="slide-title" style={{ marginBottom: '8px' }}>Program <br />Overview.</h2>
+                 </div>
                  <p className="slide-desc slide-desc--elegant">
                     Our projects seamlessly align with Ethiopia’s national MSME development agenda, 
                     architecting pathways for bankability, digital integration, and inclusive socio-economic growth.
@@ -389,14 +420,14 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* ── SLIDE 09: MESMER HIGHLIGHTS ── */}
-      <section className="ati-slide mesmer-creative-bg">
+      <section className="ati-slide mesmer-creative-bg" aria-labelledby="mesmer-heading">
         <div className="mesmer-glow-orb m-orb-top" />
         <div className="mesmer-glow-orb m-orb-bottom" />
         
         <div className="ati-container relative-z">
            <div className="ati-section-header">
               <span className="neon-tag">Fintech & Bankability</span>
-              <h2 className="neon-title">MESMER PROGRAM.</h2>
+              <h2 id="mesmer-heading" className="neon-title">MESMER PROGRAM.</h2>
            </div>
 
            <div className="mesmer-dash-layout">
@@ -457,7 +488,7 @@ const Portfolio: React.FC = () => {
            <div className="journey-layout">
               <div className="journey-visual">
                  <motion.div {...fadeIn()} className="journey-img-box">
-                    <img src={fikreImg} alt="Fikerte" />
+                    <img src={fikreImg} alt="Success Story: Fikerte's business growth journey with Yegara" />
                     <div className="journey-label">Success Story — 01</div>
                  </motion.div>
               </div>
@@ -491,7 +522,7 @@ const Portfolio: React.FC = () => {
               </div>
               <div className="journey-visual">
                  <motion.div {...fadeIn()} className="journey-img-box">
-                    <img src={tsionImg} alt="Tsion" />
+                    <img src={tsionImg} alt="Success Story: Tsion's entrepreneurial expansion facilitated by Yegara" />
                     <div className="journey-label">Success Story — 02</div>
                  </motion.div>
               </div>
@@ -506,7 +537,7 @@ const Portfolio: React.FC = () => {
            <div className="journey-layout">
               <div className="journey-visual">
                  <motion.div {...fadeIn()} className="journey-img-box">
-                    <img src={bizuyeImg} alt="Bizuye" />
+                    <img src={bizuyeImg} alt="Success Story: Bizuye's shop transformation through Yegara support" />
                     <div className="journey-label">Success Story — 03</div>
                  </motion.div>
               </div>
@@ -631,24 +662,24 @@ const Portfolio: React.FC = () => {
               className="geo-map-visual"
             >
                <div className="ethiopia-svg-wrap">
-                  <img src={ethiopiaMap} alt="Ethiopia Map" className="ethiopia-map-base" />
+                  <img src={ethiopiaMap} alt="Geographic Impact Map: Showing YTSC presence across Ethiopia" className="ethiopia-map-base" />
                </div>
                <div className="impact-pulse-container">
                   <div className="pulse-node node-oromia">
                      <div className="node-ring" />
-                     <span className="node-label-geo">Oromia Engine</span>
+                     <span className="node-label-geo">Oromia Engine <span className="node-val">3,869</span></span>
                   </div>
                   <div className="pulse-node node-amhara">
                      <div className="node-ring" />
-                     <span className="node-label-geo">Amhara Reach</span>
+                     <span className="node-label-geo">Amhara Reach <span className="node-val">1,381</span></span>
                   </div>
                   <div className="pulse-node node-addis">
                      <div className="node-ring" />
-                     <span className="node-label-geo">Addis Hub</span>
+                     <span className="node-label-geo">Addis Hub <span className="node-val">607</span></span>
                   </div>
                   <div className="pulse-node node-snnpr">
                      <div className="node-ring" />
-                     <span className="node-label-geo">SNNPR Focus</span>
+                     <span className="node-label-geo">SNNPR & Central <span className="node-val">393</span></span>
                   </div>
                </div>
             </motion.div>
@@ -883,16 +914,16 @@ const Portfolio: React.FC = () => {
            
            <div className="mosaic-grid">
               <motion.div {...fadeIn(0.1)} className="mosaic-item mosaic-item--large">
-                 <img src={testimony1} alt="Community Shop" />
+                 <img src={testimony1} alt="Visual testimonial of a community shop success" />
               </motion.div>
               <motion.div {...fadeIn(0.2)} className="mosaic-item">
-                 <img src={testimony3} alt="Livestock Development" />
+                 <img src={testimony3} alt="Visual testimonial of livestock development impact" />
               </motion.div>
               <motion.div {...fadeIn(0.3)} className="mosaic-item mosaic-item--tall">
-                 <img src={testimony4} alt="Poultry Results" />
+                 <img src={testimony4} alt="Visual testimonial of poultry results at community level" />
               </motion.div>
               <motion.div {...fadeIn(0.4)} className="mosaic-item">
-                 <img src={testimony2} alt="MESMER Training" />
+                 <img src={testimony2} alt="Visual testimonial of MESMER training sessions in progress" />
               </motion.div>
            </div>
            
@@ -905,11 +936,7 @@ const Portfolio: React.FC = () => {
            >
               <div className="testimony-content">
                  <HiOutlineChatAlt2 className="quote-icon-large" />
-                 <p className="testimony-text">
-                   "Yegara didn't just provide a loan; they provided a roadmap for my family's future. 
-                   The training gave me the confidence to dream bigger, and today my business supports 
-                   not just my children, but my entire community's growth."
-                 </p>
+                 <ScrollRevealText text="Yegara didn't just provide a loan; they provided a roadmap for my family's future. The training gave me the confidence to dream bigger, and today my business supports not just my children, but my entire community's growth." />
                  <div className="testimony-author">
                     <span className="author-name">Bizuye H.</span>
                     <span className="author-role">Entrepreneur & Community Leader</span>
@@ -920,7 +947,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 

@@ -179,7 +179,11 @@ const InnovationHub: React.FC = () => {
                 key={hub.id} 
                 className="ihub-service-card"
                 style={{ backgroundColor: hub.color, color: hub.textColor }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Explore ${hub.title} hub`}
                 onClick={() => openHub(hub)}
+                onKeyDown={(e) => e.key === 'Enter' && openHub(hub)}
               >
                 <div 
                   className="ihub-service-card__icon-box"
@@ -230,7 +234,7 @@ const InnovationHub: React.FC = () => {
       {/* ── CINEMATIC PORTAL MODAL ── */}
       <AnimatePresence>
         {selectedHub && (
-          <div className="ihub-portal">
+          <div className="ihub-portal" role="dialog" aria-modal="true" aria-labelledby="portal-title">
             <motion.div 
               className="ihub-portal__backdrop"
               initial={{ opacity: 0 }}
@@ -247,11 +251,9 @@ const InnovationHub: React.FC = () => {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="ihub-portal__header">
-                <div className="ihub-portal__title-group">
-                  <div className="ihub-portal__letter">{selectedHub.letter}</div>
-                  <h2 className="ihub-portal__title">{selectedHub.title}</h2>
-                </div>
-                <button className="ihub-portal__close" onClick={closeHub}>
+                <div className="ihub-portal__letter" aria-hidden="true">{selectedHub.letter}</div>
+                <h2 id="portal-title" className="ihub-portal__title">{selectedHub.title}</h2>
+                <button className="ihub-portal__close" onClick={closeHub} aria-label="Close dialog">
                   <HiX />
                 </button>
               </div>
