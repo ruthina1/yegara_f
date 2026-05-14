@@ -100,115 +100,127 @@ const StickyHeaderMorph: React.FC = () => {
             <img src={logo} alt="Yegara Trading Share Company Logo" />
           </Link>
 
-          {/* ── HOME PAGE: Split layout ── */}
-          {isHome && (
+          {/* ── LOGGED IN STUDENT: Minimal Nav ── */}
+          {user && user.email !== 'admin@yegara.com' ? (
             <>
-              {/* LEFT group appears when scrolled (positioned after logo) */}
-              <motion.div
-                className="corp-nav__split-left"
-                style={{ opacity: leftGroupOpacity, x: leftGroupX }}
-              >
-                {leftNavLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.path}
-                    className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+              <span className="corp-nav__brand-center">YEGARA ACADEMY</span>
+              <div className="corp-nav__split-right corp-nav__split-right--static">
+                <button onClick={logout} className="corp-nav__action-btn">Logout</button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* ── HOME PAGE: Split layout ── */}
+              {isHome && (
+                <>
+                  {/* LEFT group appears when scrolled (positioned after logo) */}
+                  <motion.div
+                    className="corp-nav__split-left"
+                    style={{ opacity: leftGroupOpacity, x: leftGroupX }}
                   >
-                    {link.label}
-                  </Link>
-                ))}
-              </motion.div>
-
-              {/* Center placeholder for morphing YEGARA text */}
-              <span className="corp-nav__brand-center-placeholder" />
-
-              {/* RIGHT group appears when scrolled */}
-              <motion.div
-                className="corp-nav__split-right"
-                style={{ opacity: rightGroupOpacity, x: rightGroupX }}
-              >
-                {rightNavLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.path}
-                    className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {user ? (
-                  <button onClick={logout} className="corp-nav__action-btn">Logout</button>
-                ) : (
-                  <Link to="/login" className="corp-nav__action-btn">Portal</Link>
-                )}
-              </motion.div>
-
-              {/* Initial all-right row: visible at top, fades out as split takes over */}
-              <motion.div
-                className="corp-nav__all-right"
-                style={{ opacity: allRightOpacity }}
-              >
-                <div className="corp-nav__links-row">
-                  {allNavLinks.map((link) => (
-                    <div key={link.label}>
+                    {leftNavLinks.map((link) => (
                       <Link
+                        key={link.label}
+                        to={link.path}
+                        className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+
+                  {/* Center placeholder for morphing YEGARA text */}
+                  <span className="corp-nav__brand-center-placeholder" />
+
+                  {/* RIGHT group appears when scrolled */}
+                  <motion.div
+                    className="corp-nav__split-right"
+                    style={{ opacity: rightGroupOpacity, x: rightGroupX }}
+                  >
+                    {rightNavLinks.map((link) => (
+                      <Link
+                        key={link.label}
+                        to={link.path}
+                        className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                    {user ? (
+                      <button onClick={logout} className="corp-nav__action-btn">Logout</button>
+                    ) : (
+                      <Link to="/login" className="corp-nav__action-btn">Portal</Link>
+                    )}
+                  </motion.div>
+
+                  {/* Initial all-right row: visible at top, fades out as split takes over */}
+                  <motion.div
+                    className="corp-nav__all-right"
+                    style={{ opacity: allRightOpacity }}
+                  >
+                    <div className="corp-nav__links-row">
+                      {allNavLinks.map((link) => (
+                        <div key={link.label}>
+                          <Link
+                            to={link.path}
+                            className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                            aria-current={location.pathname === link.path ? 'page' : undefined}
+                          >
+                            {link.label}
+                          </Link>
+                        </div>
+                      ))}
+                      <div>
+                        {user ? (
+                          <button onClick={logout} className="corp-nav__action-btn">Logout</button>
+                        ) : (
+                          <Link to="/login" className="corp-nav__action-btn">Portal</Link>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </>
+              )}
+
+              {/* ── NON-HOME PAGES: Standard centered layout ── */}
+              {!isHome && (
+                <>
+                  {/* Left group */}
+                  <div className="corp-nav__split-left corp-nav__split-left--static">
+                    {leftNavLinks.map((link) => (
+                      <Link
+                        key={link.label}
                         to={link.path}
                         className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
                         aria-current={location.pathname === link.path ? 'page' : undefined}
                       >
                         {link.label}
                       </Link>
-                    </div>
-                  ))}
-                  <div>
+                    ))}
+                  </div>
+
+                  <span className="corp-nav__brand-center">YEGARA</span>
+
+                  {/* Right group */}
+                  <div className="corp-nav__split-right corp-nav__split-right--static">
+                    {rightNavLinks.map((link) => (
+                      <Link
+                        key={link.label}
+                        to={link.path}
+                        className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
+                        aria-current={location.pathname === link.path ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
                     {user ? (
                       <button onClick={logout} className="corp-nav__action-btn">Logout</button>
                     ) : (
                       <Link to="/login" className="corp-nav__action-btn">Portal</Link>
                     )}
                   </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-
-          {/* ── NON-HOME PAGES: Standard centered layout ── */}
-          {!isHome && (
-            <>
-              {/* Left group */}
-              <div className="corp-nav__split-left corp-nav__split-left--static">
-                {leftNavLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.path}
-                    className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
-                    aria-current={location.pathname === link.path ? 'page' : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-
-              <span className="corp-nav__brand-center">YEGARA</span>
-
-              {/* Right group */}
-              <div className="corp-nav__split-right corp-nav__split-right--static">
-                {rightNavLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.path}
-                    className={`corp-nav__link ${location.pathname === link.path ? 'active' : ''}`}
-                    aria-current={location.pathname === link.path ? 'page' : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {user ? (
-                  <button onClick={logout} className="corp-nav__action-btn">Logout</button>
-                ) : (
-                  <Link to="/login" className="corp-nav__action-btn">Portal</Link>
-                )}
-              </div>
+                </>
+              )}
             </>
           )}
 

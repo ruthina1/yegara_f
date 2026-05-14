@@ -31,7 +31,16 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/login" element={user ? <Navigate to={user.email === 'admin@yegara.com' ? '/admin' : '/courses'} replace /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to="/courses" replace /> : <Register />} />
-        <Route path="/" element={<Home />} />
+        <Route 
+          path="/" 
+          element={
+            user ? (
+              <Navigate to={user.email === 'admin@yegara.com' ? '/admin' : '/courses'} replace />
+            ) : (
+              <Home />
+            )
+          } 
+        />
         <Route
           path="/courses"
           element={

@@ -5,6 +5,16 @@ export interface User {
   role?: string;
 }
 
+export interface Chapter {
+  id?: number;
+  course_id?: number;
+  chapter_name: string;
+  content_text: string;
+  content_images?: string[];
+  video_url?: string;
+  order_index: number;
+}
+
 export interface Course {
   id: number;
   title: string;
@@ -13,6 +23,8 @@ export interface Course {
   thumbnail_url?: string;
   averageRating?: number;
   totalRatings?: number;
+  chapterCount?: number;
+  chapters?: Chapter[];
   content?: CourseContent[];
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { HiStar, HiClock } from 'react-icons/hi';
+import { HiStar } from 'react-icons/hi';
+import { FiBookOpen, FiClock } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import RatingModal from '../components/RatingModal';
@@ -14,7 +15,8 @@ const Courses: React.FC = () => {
   const [error, setError] = useState('');
   const [activeCategory, setActiveCategory] = useState('All Courses');
   const [ratingModal, setRatingModal] = useState<{ courseId: number; courseTitle: string } | null>(null);
-  const categories = ['All Courses', 'Leadership', 'Design', 'Business'];
+
+  const categories = ['All Courses', 'Business', 'Technology', 'Finance', 'Leadership', 'Marketing'];
 
   useEffect(() => {
     fetchCourses();
@@ -34,126 +36,109 @@ const Courses: React.FC = () => {
     }
   };
 
-  const getCategoryFromTitle = (title: string) => {
-    if (title.toLowerCase().includes('leadership')) return 'Leadership';
-    if (title.toLowerCase().includes('design') || title.toLowerCase().includes('react')) return 'Design';
-    if (title.toLowerCase().includes('business') || title.toLowerCase().includes('node')) return 'Business';
-    return 'Leadership';
-  };
-
   const filteredCourses = activeCategory === 'All Courses' 
     ? courses 
-    : courses.filter(course => getCategoryFromTitle(course.title) === activeCategory);
+    : courses.filter(course => course.category === activeCategory);
 
   if (loading) {
     return (
       <div className="courses-page">
-        <div className="loading">Loading courses...</div>
+        <div className="loading-container">
+          <div className="learning-spinner"></div>
+          <p>Curating your learning path...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="courses-page">
-      <div className="courses-content">
-        <div className="courses-title-section">
-          <h1>Our Courses</h1>
-          <p>Level up your professional skills.</p>
+      {/* ── HERO SECTION ── */}
+      <section className="courses-hero">
+        <div className="hero-blur-bg"></div>
+        <div className="courses-content">
+          <div className="courses-title-section">
+            <span className="subtitle">YEGARA ACADEMY</span>
+            <h1>Knowledge for the Next Generation</h1>
+            <p>Master the skills that drive the global economy with our expert-led modular courses.</p>
+          </div>
         </div>
+      </section>
 
+      <div className="courses-container-main">
         {error && <div className="error-banner">{error}</div>}
 
-        <div className="category-tabs">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`category-tab ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
+        {/* ── CATEGORY BAR ── */}
+        <div className="category-tabs-container">
+          <div className="category-tabs">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`category-tab ${activeCategory === category ? 'active' : ''}`}
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
+        {/* ── COURSES GRID ── */}
         <div className="courses-grid">
           {filteredCourses.length === 0 ? (
-            <div className="empty-state">
-              <p>No courses available in this category.</p>
+            <div className="empty-state-courses">
+              <FiBookOpen className="empty-ico" />
+              <h3>No courses found in this category</h3>
+              <p>Try exploring our other professional learning paths.</p>
+              <button onClick={() => setActiveCategory('All Courses')} className="btn-reset">View All Courses</button>
             </div>
           ) : (
             filteredCourses.map((course) => {
-              const category = getCategoryFromTitle(course.title);
-              const isFree = Math.random() > 0.5; // Random for demo
-              const price = isFree ? 'Free' : '8,500 ETB';
               const rating = course.averageRating || 0;
               const totalRatings = course.totalRatings || 0;
-              const duration = `${Math.floor(Math.random() * 10) + 5}h ${Math.floor(Math.random() * 60)}m`;
+              const chCount = course.chapterCount || 0;
               
-              // Get course-specific image based on course ID
-              const courseImages = [
-                'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1498050108023-c5249f4f0853?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop&auto=format'
+              const defaultImages = [
+                'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&fit=crop',
+                'https://images.unsplash.com/photo-1498050108023-c5249f4f0853?w=800&fit=crop',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&fit=crop'
               ];
-              const courseImage = courseImages[course.id % courseImages.length] || courseImages[0];
-              const displayImage = course.thumbnail_url || courseImage;
+              const displayImage = course.thumbnail_url || defaultImages[course.id % 3];
 
               return (
-                <div key={course.id} className="course-card">
-                  <div className="course-category-tag">{category.toUpperCase()}</div>
-                  <div className="course-image-wrapper">
-                    <img 
-                      src={displayImage} 
-                      alt={course.title}
-                      onError={(e: any) => {
-                        if (e.target.src !== courseImage) {
-                          e.target.src = courseImage;
-                        } else {
-                          e.target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&auto=format';
-                        }
-                      }}
-                    />
+                <Link to={`/courses/${course.id}`} key={course.id} className="course-card-premium">
+                  <div className="card-image-section">
+                    <img src={displayImage} alt={course.title} loading="lazy" />
+                    <div className="card-category-overlay">{course.category || 'Professional'}</div>
                   </div>
-                  <div className="course-info">
-                    <h3>{course.title}</h3>
-                    <div className="course-price">{price}</div>
-                    <div className="course-meta">
-                      <span 
-                        className="course-rating"
-                        onClick={(e) => {
+                  
+                  <div className="card-content-section">
+                    <div className="card-top-meta">
+                      <div className="rating-mini" onClick={(e) => {
                           e.preventDefault();
-                          e.stopPropagation();
-                          if (user) {
-                            setRatingModal({
-                              courseId: course.id,
-                              courseTitle: course.title
-                            });
-                          } else {
-                            alert('Please login to rate courses');
-                          }
-                        }}
-                        style={{ cursor: user ? 'pointer' : 'default' }}
-                        title={user ? 'Click to rate this course' : 'Login to rate'}
-                      >
-                        <HiStar className={`meta-icon ${rating > 0 ? 'rated' : ''}`} />
-                        {rating > 0 ? rating.toFixed(1) : 'No ratings'}
-                        {totalRatings > 0 && (
-                          <span className="rating-count"> ({totalRatings})</span>
-                        )}
-                      </span>
-                      <span className="course-duration">
-                        <HiClock className="meta-icon" />
-                        {duration}
-                      </span>
+                          e.stopPropagation(); // Prevent card click
+                          if (user) setRatingModal({ courseId: course.id, courseTitle: course.title });
+                        }}>
+                        <HiStar className={rating > 0 ? 'star-active' : 'star-dim'} />
+                        <span>{rating > 0 ? rating.toFixed(1) : 'New'}</span>
+                        {totalRatings > 0 && <span className="rat-count">({totalRatings})</span>}
+                      </div>
+                      <div className="chapters-count">
+                        <FiBookOpen /> {chCount} Chapters
+                      </div>
                     </div>
-                    <Link to={`/courses/${course.id}`} className="btn-start-learning">
-                      Start Learning
-                    </Link>
+
+                    <h3 className="course-card-title">{course.title}</h3>
+                    <p className="course-card-excerpt">{course.description}</p>
+                    
+                    <div className="card-footer-premium">
+                      <div className="price-tag">PREMIUM</div>
+                      <div className="btn-learn-more">
+                        Access Course <FiClock />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               );
             })
           )}
@@ -165,9 +150,7 @@ const Courses: React.FC = () => {
           courseId={ratingModal.courseId}
           courseTitle={ratingModal.courseTitle}
           onClose={() => setRatingModal(null)}
-          onRatingSubmitted={() => {
-            fetchCourses(); // Refresh courses to show updated ratings
-          }}
+          onRatingSubmitted={() => fetchCourses()}
         />
       )}
     </div>

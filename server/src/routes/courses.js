@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * GET /api/courses
- * List all courses with average rating and total ratings
+ * List all courses with average rating, total ratings, and chapter count
  */
 router.get('/', optionalAuth, async (req, res) => {
   try {
@@ -14,7 +14,8 @@ router.get('/', optionalAuth, async (req, res) => {
       SELECT 
         c.*,
         COALESCE(ROUND(AVG(r.rating), 1), 0) AS averageRating,
-        COUNT(r.id) AS totalRatings
+        COUNT(DISTINCT r.id) AS totalRatings,
+        (SELECT COUNT(*) FROM chapters ch WHERE ch.course_id = c.id) AS chapterCount
       FROM courses c
       LEFT JOIN ratings r ON c.id = r.course_id
       GROUP BY c.id
@@ -30,18 +31,17 @@ router.get('/', optionalAuth, async (req, res) => {
 
 /**
  * GET /api/courses/:id
- * Get a single course with its content
+ * Get a single course with its chapters
  */
 router.get('/:id', optionalAuth, async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Get course
     const [courses] = await pool.query(`
       SELECT 
         c.*,
         COALESCE(ROUND(AVG(r.rating), 1), 0) AS averageRating,
-        COUNT(r.id) AS totalRatings
+        COUNT(DISTINCT r.id) AS totalRatings
       FROM courses c
       LEFT JOIN ratings r ON c.id = r.course_id
       WHERE c.id = ?
@@ -54,12 +54,23 @@ router.get('/:id', optionalAuth, async (req, res) => {
 
     const course = courses[0];
 
-    // Get course content
+    // Get chapters
+    const [chapters] = await pool.query(
+      'SELECT * FROM chapters WHERE course_id = ? ORDER BY order_index ASC',
+      [id]
+    );
+
+    // Parse content_images JSON for each chapter
+    course.chapters = chapters.map(ch => ({
+      ...ch,
+      content_images: ch.content_images ? (typeof ch.content_images === 'string' ? JSON.parse(ch.content_images) : ch.content_images) : []
+    }));
+
+    // Also get legacy course_content if any
     const [content] = await pool.query(
       'SELECT * FROM course_content WHERE course_id = ? ORDER BY order_index ASC',
       [id]
     );
-
     course.content = content;
 
     res.json(course);
@@ -71,73 +82,130 @@ router.get('/:id', optionalAuth, async (req, res) => {
 
 /**
  * POST /api/courses
- * Create a new course (admin only)
+ * Create a new course with chapters (admin only)
  */
 router.post('/', authenticate, async (req, res) => {
+  const connection = await pool.getConnection();
   try {
     if (req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required.' });
     }
 
-    const { title, description, thumbnail_url, category } = req.body;
+    const { title, description, thumbnail_url, category, chapters } = req.body;
 
     if (!title) {
       return res.status(400).json({ error: 'Title is required.' });
     }
 
-    const [result] = await pool.query(
+    await connection.beginTransaction();
+
+    // Insert course
+    const [result] = await connection.query(
       'INSERT INTO courses (title, description, thumbnail_url, category) VALUES (?, ?, ?, ?)',
       [title, description || null, thumbnail_url || null, category || null]
     );
 
+    const courseId = result.insertId;
+
+    // Insert chapters if provided
+    if (chapters && chapters.length > 0) {
+      for (let i = 0; i < chapters.length; i++) {
+        const ch = chapters[i];
+        const imagesJson = ch.content_images && ch.content_images.length > 0 
+          ? JSON.stringify(ch.content_images) 
+          : null;
+
+        await connection.query(
+          'INSERT INTO chapters (course_id, chapter_name, content_text, content_images, video_url, order_index) VALUES (?, ?, ?, ?, ?, ?)',
+          [courseId, ch.chapter_name, ch.content_text, imagesJson, ch.video_url || null, i]
+        );
+      }
+    }
+
+    await connection.commit();
+
     res.status(201).json({
-      id: result.insertId,
+      id: courseId,
       title,
       description,
       thumbnail_url,
+      category,
+      chapterCount: chapters ? chapters.length : 0,
     });
   } catch (err) {
+    await connection.rollback();
     console.error('Error creating course:', err);
-    res.status(500).json({ error: 'Failed to create course.' });
+    res.status(500).json({ error: `Failed to create course: ${err.message}` });
+  } finally {
+    connection.release();
   }
 });
 
 /**
  * PUT /api/courses/:id
- * Update a course (admin only)
+ * Update a course and its chapters (admin only)
  */
 router.put('/:id', authenticate, async (req, res) => {
+  const connection = await pool.getConnection();
   try {
     if (req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required.' });
     }
 
     const { id } = req.params;
-    const { title, description, thumbnail_url } = req.body;
+    const { title, description, thumbnail_url, category, chapters } = req.body;
 
+    await connection.beginTransaction();
+
+    // Update course metadata
     const updateTitle = title || null;
     const updateDescription = description || null;
     const updateThumbnail = thumbnail_url || null;
+    const updateCategory = category || null;
 
-    const [result] = await pool.query(
-      'UPDATE courses SET title = COALESCE(?, title), description = COALESCE(?, description), thumbnail_url = COALESCE(?, thumbnail_url) WHERE id = ?',
-      [updateTitle, updateDescription, updateThumbnail, id]
+    const [result] = await connection.query(
+      'UPDATE courses SET title = COALESCE(?, title), description = COALESCE(?, description), thumbnail_url = COALESCE(?, thumbnail_url), category = COALESCE(?, category) WHERE id = ?',
+      [updateTitle, updateDescription, updateThumbnail, updateCategory, id]
     );
 
     if (result.affectedRows === 0) {
+      await connection.rollback();
       return res.status(404).json({ error: 'Course not found.' });
     }
 
+    // Replace chapters if provided
+    if (chapters !== undefined) {
+      await connection.query('DELETE FROM chapters WHERE course_id = ?', [id]);
+
+      if (chapters && chapters.length > 0) {
+        for (let i = 0; i < chapters.length; i++) {
+          const ch = chapters[i];
+          const imagesJson = ch.content_images && ch.content_images.length > 0 
+            ? JSON.stringify(ch.content_images) 
+            : null;
+
+          await connection.query(
+            'INSERT INTO chapters (course_id, chapter_name, content_text, content_images, video_url, order_index) VALUES (?, ?, ?, ?, ?, ?)',
+            [id, ch.chapter_name, ch.content_text, imagesJson, ch.video_url || null, i]
+          );
+        }
+      }
+    }
+
+    await connection.commit();
     res.json({ message: 'Course updated successfully.' });
   } catch (err) {
+    await connection.rollback();
     console.error('Error updating course:', err);
-    res.status(500).json({ error: 'Failed to update course.' });
+    res.status(500).json({ error: `Failed to update course: ${err.message}` });
+  } finally {
+    connection.release();
   }
 });
 
 /**
  * DELETE /api/courses/:id
- * Delete a course (admin only)
+ * Delete a course (admin only) — chapters cascade automatically
  */
 router.delete('/:id', authenticate, async (req, res) => {
   try {
