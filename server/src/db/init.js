@@ -127,6 +127,19 @@ async function init() {
   `);
   console.log('✅ Table: contact_messages');
 
+  await connection.query(`
+    CREATE TABLE IF NOT EXISTS saved_courses (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      course_id INT NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE KEY unique_save (user_id, course_id),
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB;
+  `);
+  console.log('✅ Table: saved_courses');
+
   // ── Seed Data ──
   console.log('\n🌱 Seeding initial data...');
 

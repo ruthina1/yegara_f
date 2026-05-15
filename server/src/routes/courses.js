@@ -10,17 +10,23 @@ const router = express.Router();
  */
 router.get('/', optionalAuth, async (req, res) => {
   try {
+    const userId = req.user ? req.user.id : null;
     const [courses] = await pool.query(`
       SELECT 
         c.*,
         COALESCE(ROUND(AVG(r.rating), 1), 0) AS averageRating,
         COUNT(DISTINCT r.id) AS totalRatings,
-        (SELECT COUNT(*) FROM chapters ch WHERE ch.course_id = c.id) AS chapterCount
+        (SELECT COUNT(*) FROM chapters ch WHERE ch.course_id = c.id) AS chapterCount,
+        COALESCE((
+          SELECT SUM(progress_percentage) 
+          FROM progress p 
+          WHERE p.course_id = c.id AND p.user_id = ?
+        ), 0) / NULLIF((SELECT COUNT(*) FROM chapters ch WHERE ch.course_id = c.id), 0) as userProgress
       FROM courses c
       LEFT JOIN ratings r ON c.id = r.course_id
       GROUP BY c.id
       ORDER BY c.created_at DESC
-    `);
+    `, [userId]);
 
     res.json(courses);
   } catch (err) {

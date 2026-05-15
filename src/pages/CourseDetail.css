@@ -115,6 +115,11 @@
 .chapter-article {
   max-width: 800px;
   margin: 0 auto;
+  transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.player-main-layout.sidebar-collapsed .chapter-article {
+  max-width: 1200px;
 }
 
 .article-header {
@@ -134,7 +139,7 @@
   font-size: 1.1rem;
   font-weight: 800;
   margin: 8px 0 16px;
-  color: #0f172a;
+  color: var(--ytsc-blue);
   line-height: 1.2;
 }
 
@@ -364,20 +369,20 @@
 .sidebar-resizer {
   position: absolute;
   top: 0;
-  left: -1.5px;
-  width: 3px;
+  left: -0.75px;
+  width: 1.5px;
   height: 100%;
   cursor: col-resize;
   z-index: 100;
-  background: rgba(255, 107, 53, 0.15);
+  background: rgba(255, 107, 53, 0.1);
   transition: all 0.2s ease;
 }
 
 .sidebar-resizer:hover,
 .player-sidebar.resizing .sidebar-resizer {
   background: rgba(255, 107, 53, 1);
-  width: 4px;
-  left: -2px;
+  width: 2px;
+  left: -1px;
 }
 
 .player-sidebar.collapsed {
@@ -581,7 +586,7 @@
 .empty-course-state h3 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--ytsc-blue);
   margin-bottom: 12px;
 }
 

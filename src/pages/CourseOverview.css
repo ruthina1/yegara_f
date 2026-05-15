@@ -12,14 +12,18 @@
 }
 
 .btn-back-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   color: #64748b;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
 }
 
 .btn-back-link:hover {
@@ -54,7 +58,7 @@
   font-family: var(--font-serif);
   font-size: 2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--ytsc-blue);
   line-height: 1.1;
   margin-bottom: 24px;
 }
@@ -71,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 700;
+  font-weight: 500;
   color: #475569;
   font-size: 0.9rem;
 }
@@ -84,8 +88,8 @@
 .overview-learning-objectives h3,
 .overview-curriculum h3 {
   font-size: 1.25rem;
-  font-weight: 800;
-  color: #0f172a;
+  font-weight: 600;
+  color: var(--ytsc-blue);
   margin-bottom: 16px;
 }
 
@@ -157,23 +161,26 @@
 }
 
 .ch-name {
-  font-weight: 700;
+  font-weight: 500;
   color: #1e293b;
   font-size: 0.95rem;
 }
 
 /* ── RIGHT COLUMN CTA ── */
+.overview-right {
+  position: sticky;
+  top: 100px;
+}
+
 .cta-card {
   background: white;
-  border-radius: 4px; /* Square look */
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 25px rgba(0,0,0,0.06);
   border: 1px solid #e2e8f0;
-  position: sticky;
-  top: 40px;
   cursor: pointer;
   transition: all 0.4s ease;
-  min-height: 480px; /* Increased height */
+  min-height: auto;
   display: flex;
   flex-direction: column;
 }
@@ -185,7 +192,7 @@
 
 .cta-preview {
   position: relative;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
 }
 
@@ -208,7 +215,7 @@
 }
 
 .cta-content {
-  padding: 24px;
+  padding: 32px 24px;
 }
 
 .btn-start-learning {
@@ -220,7 +227,7 @@
   background: #FF6B35;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 800;
   display: flex;
@@ -294,4 +301,10 @@
   .objectives-list {
     grid-template-columns: 1fr;
   }
+}
+
+.five-stars-wrapper {
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }

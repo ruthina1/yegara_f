@@ -62,8 +62,13 @@ const CourseOverview: React.FC = () => {
             
             <div className="overview-meta-strip">
               <div className="meta-item">
-                <FiStar className="star-icon" />
-                <span>{course.averageRating ? Number(course.averageRating).toFixed(1) : '4.8'} Rating</span>
+                <div className="five-stars-wrapper">
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const rating = course.averageRating ? Number(course.averageRating) : 0;
+                    return <FiStar key={star} className={rating >= star ? 'star-active' : 'star-dim'} />;
+                  })}
+                </div>
+                <span className="rating-number">{course.averageRating ? Number(course.averageRating).toFixed(1) : '4.8'}</span>
               </div>
               <div className="meta-item">
                 <FiBookOpen />

@@ -26,6 +26,8 @@ export interface Course {
   chapterCount?: number;
   chapters?: Chapter[];
   content?: CourseContent[];
+  created_at?: string;
+  userProgress?: number;
 }
 
 export interface CourseContent {

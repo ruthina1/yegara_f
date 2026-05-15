@@ -10,6 +10,7 @@ const progressRoutes = require('./routes/progress');
 const ratingRoutes = require('./routes/ratings');
 const newsRoutes = require('./routes/news');
 const contactRoutes = require('./routes/contact');
+const savedRoutes = require('./routes/saved');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use('/api/progress', progressRoutes);
 app.use('/api/ratings', ratingRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/saved', savedRoutes);
 
 // ── Health Check ──
 app.get('/api/health', (req, res) => {

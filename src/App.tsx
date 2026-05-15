@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import Courses from './pages/Courses';
 import CourseOverview from './pages/CourseOverview';
 import CourseDetail from './pages/CourseDetail';
+import SavedCourses from './pages/SavedCourses';
+import MyCourses from './pages/MyCourses';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import About from './pages/About';
@@ -67,6 +69,14 @@ const AppRoutes: React.FC = () => {
           }
         />
         <Route
+          path="/saved-courses"
+          element={
+            <ProtectedRoute>
+              <SavedCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
@@ -79,6 +89,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/innovation-hub" element={<InnovationHub />} />
         <Route path="/news" element={<News />} />
+        <Route path="/my-courses" element={<ProtectedRoute><MyCourses /></ProtectedRoute>} />
         <Route path="/news/:id" element={<News />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/board" element={<div style={{ paddingTop: '80px', minHeight: '100vh' }}>Board of Directors Page (Coming Soon)</div>} />

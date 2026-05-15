@@ -111,6 +111,8 @@ const StickyHeaderMorph: React.FC = () => {
             <>
               <span className="corp-nav__brand-center">YEGARA ACADEMY</span>
               <div className="corp-nav__split-right corp-nav__split-right--static">
+                <Link to="/my-courses" className={`corp-nav__link ${location.pathname === '/my-courses' ? 'active' : ''}`}>My Courses</Link>
+                <Link to="/saved-courses" className={`corp-nav__link ${location.pathname === '/saved-courses' ? 'active' : ''}`}>Saved</Link>
                 <button onClick={logout} className="corp-nav__action-btn">Logout</button>
               </div>
             </>
