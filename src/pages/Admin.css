@@ -1036,3 +1036,86 @@
   background: #f0f7ff;
   transform: translateY(-2px);
 }
+.content-block-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.block-type-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.block-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.block-actions button {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.block-actions button:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.block-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-del-block {
+  color: #ef4444 !important;
+}
+
+.btn-del-block:hover {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+}
+
+.btn-add-block {
+  flex: 1;
+  padding: 10px;
+  background: white;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-add-block:hover {
+  background: #f8fafc;
+  border-color: #FF6B35;
+  color: #FF6B35;
+}

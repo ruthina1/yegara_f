@@ -19,6 +19,12 @@ async function migrate() {
     `);
     console.log('✅ Column "thumbnail_url" modified to LONGTEXT');
 
+    // Change content_text in chapters to LONGTEXT to support large JSON blocks with base64 images
+    await connection.query(`
+      ALTER TABLE chapters MODIFY COLUMN content_text LONGTEXT
+    `);
+    console.log('✅ Column "content_text" in chapters modified to LONGTEXT');
+
     // Also change video_url in chapters just in case, though usually it's just a link
     await connection.query(`
       ALTER TABLE chapters MODIFY COLUMN video_url LONGTEXT

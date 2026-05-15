@@ -222,7 +222,43 @@ const CourseDetail: React.FC = () => {
               <div className="article-body">
                 {chapterTab === 'read' && (
                   <div className="content-card-premium fade-in">
-                    <p className="primary-text">{selectedChapter.content_text}</p>
+                    {(() => {
+                      if (!selectedChapter.content_text) return null;
+                      try {
+                        const blocks = JSON.parse(selectedChapter.content_text);
+                        if (Array.isArray(blocks)) {
+                          return blocks.map((block, idx) => {
+                            if (block.type === 'text') {
+                              return <p key={idx} className="primary-text" style={{ marginBottom: '24px' }}>{block.value}</p>;
+                            }
+                            if (block.type === 'image' && block.value) {
+                              return (
+                                <div key={idx} style={{ marginBottom: '24px', textAlign: 'center' }} onClick={() => setEnlargedImage(block.value)} className="cursor-zoom-in">
+                                  <img src={block.value} alt="Content block" style={{ maxWidth: '100%', borderRadius: '12px', cursor: 'zoom-in' }} />
+                                </div>
+                              );
+                            }
+                            if (block.type === 'video' && block.value) {
+                              return (
+                                <div key={idx} className="content-video-wrapper" style={{ marginBottom: '24px' }}>
+                                  <iframe 
+                                    src={block.value.replace('watch?v=', 'embed/')} 
+                                    title="Content Video"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                  ></iframe>
+                                </div>
+                              );
+                            }
+                            return null;
+                          });
+                        }
+                      } catch {
+                        return <p className="primary-text">{selectedChapter.content_text}</p>;
+                      }
+                      return <p className="primary-text">{selectedChapter.content_text}</p>;
+                    })()}
                   </div>
                 )}
                 

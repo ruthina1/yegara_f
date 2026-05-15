@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
-import { FiEdit3, FiFileText, FiSettings, FiHelpCircle, FiTrash2, FiSend, FiImage, FiGrid, FiBookOpen, FiSearch, FiX, FiPlus, FiFilm, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiEdit3, FiFileText, FiSettings, FiHelpCircle, FiTrash2, FiSend, FiImage, FiGrid, FiBookOpen, FiSearch, FiX, FiPlus, FiFilm, FiChevronDown, FiChevronUp, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import './Admin.css';
 import { Course, Chapter } from '../types';
 
@@ -43,6 +43,10 @@ const Admin: React.FC = () => {
   const [courseSortBy, setCourseSortBy] = useState('recent');
   const [courseFilterCategory, setCourseFilterCategory] = useState('All');
   const [editingCourseId, setEditingCourseId] = useState<number | null>(null);
+  const [selectedNews, setSelectedNews] = useState<string[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<number[]>([]);
+  const [isNewsSelectionMode, setIsNewsSelectionMode] = useState(false);
+  const [isCourseSelectionMode, setIsCourseSelectionMode] = useState(false);
 
   // ── Common UI State ──
   const [message, setMessage] = useState('');
@@ -178,24 +182,46 @@ const Admin: React.FC = () => {
   };
 
   const handleDeleteClick = (item: NewsItem | Course, type: 'news' | 'course') => {
-    setItemToDelete({ id: item.id, title: item.title, type });
+    // If item is part of a selection, treat as bulk delete
+    if (type === 'news' && selectedNews.includes(item.id as string)) {
+      setItemToDelete({ id: 'bulk', title: `${selectedNews.length} selected items`, type: 'news' });
+    } else if (type === 'course' && selectedCourses.includes(item.id as number)) {
+      setItemToDelete({ id: 'bulk', title: `${selectedCourses.length} selected items`, type: 'course' });
+    } else {
+      setItemToDelete({ id: item.id, title: item.title, type });
+    }
     setIsDeleteModalOpen(true);
   };
 
   const confirmDelete = async () => {
     if (!itemToDelete) return;
     try {
-      if (itemToDelete.type === 'news') {
-        await api.delete(`/news/${itemToDelete.id}`);
-        await fetchNews();
+      if (itemToDelete.id === 'bulk') {
+        if (itemToDelete.type === 'news') {
+          await Promise.all(selectedNews.map(id => api.delete(`/news/${id}`)));
+          setSelectedNews([]);
+          await fetchNews();
+        } else {
+          await Promise.all(selectedCourses.map(id => api.delete(`/courses/${id}`)));
+          setSelectedCourses([]);
+          await fetchCourses();
+        }
       } else {
-        await api.delete(`/courses/${itemToDelete.id}`);
-        await fetchCourses();
+        if (itemToDelete.type === 'news') {
+          await api.delete(`/news/${itemToDelete.id}`);
+          await fetchNews();
+        } else {
+          await api.delete(`/courses/${itemToDelete.id}`);
+          await fetchCourses();
+        }
       }
       setIsDeleteModalOpen(false);
       setItemToDelete(null);
+      setMessage('Successfully deleted.');
+      setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       console.error('Failed to delete:', err);
+      setMessage('Failed to delete some items.');
     }
   };
 
@@ -230,6 +256,38 @@ const Admin: React.FC = () => {
     return result;
   };
 
+  const toggleNewsSelection = (id: string) => {
+    setSelectedNews(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
+  const selectAllNews = () => {
+    const currentNews = getSortedNews();
+    if (selectedNews.length === currentNews.length && currentNews.length > 0) {
+      setSelectedNews([]);
+    } else {
+      setSelectedNews(currentNews.map(n => n.id));
+    }
+  };
+
+  const handleBulkDeleteNews = async () => {
+    if (selectedNews.length === 0) return;
+    if (window.confirm(`Are you sure you want to delete ${selectedNews.length} selected news articles?`)) {
+      try {
+        await Promise.all(selectedNews.map(id => api.delete(`/news/${id}`)));
+        setMessage(`${selectedNews.length} news articles deleted successfully!`);
+        setSelectedNews([]);
+        await fetchNews();
+        setTimeout(() => setMessage(''), 3000);
+      } catch (err) {
+        console.error('Bulk delete failed:', err);
+        setMessage('Failed to delete some articles.');
+      }
+    }
+  };
+
+
   const getSortedCourses = () => {
     let result = [...courses];
 
@@ -259,6 +317,38 @@ const Admin: React.FC = () => {
     }
     return result;
   };
+
+  const toggleCourseSelection = (id: number) => {
+    setSelectedCourses(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
+  const selectAllCourses = () => {
+    const currentCourses = getSortedCourses();
+    if (selectedCourses.length === currentCourses.length && currentCourses.length > 0) {
+      setSelectedCourses([]);
+    } else {
+      setSelectedCourses(currentCourses.map(c => c.id as number));
+    }
+  };
+
+  const handleBulkDeleteCourses = async () => {
+    if (selectedCourses.length === 0) return;
+    if (window.confirm(`Are you sure you want to delete ${selectedCourses.length} selected courses?`)) {
+      try {
+        await Promise.all(selectedCourses.map(id => api.delete(`/courses/${id}`)));
+        setMessage(`${selectedCourses.length} courses deleted successfully!`);
+        setSelectedCourses([]);
+        await fetchCourses();
+        setTimeout(() => setMessage(''), 3000);
+      } catch (err) {
+        console.error('Bulk delete failed:', err);
+        setMessage('Failed to delete some courses.');
+      }
+    }
+  };
+
 
   const handleClearSearch = () => {
     setSearchQuery('');
@@ -312,6 +402,78 @@ const Admin: React.FC = () => {
     e.target.value = '';
   };
 
+  type ContentBlock = { type: 'text' | 'image' | 'video'; value: string; id: string; };
+
+  const parseBlocks = (text: string): ContentBlock[] => {
+    if (!text) return [{ id: Math.random().toString(), type: 'text', value: '' }];
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) return parsed.map(b => ({...b, id: b.id || Math.random().toString()}));
+      return [{ id: Math.random().toString(), type: 'text', value: text }];
+    } catch {
+      return [{ id: Math.random().toString(), type: 'text', value: text }];
+    }
+  };
+
+  const updateBlock = (chapterIdx: number, blockId: string, value: string) => {
+    setCourseChapters(prev => prev.map((ch, i) => {
+      if (i !== chapterIdx) return ch;
+      const blocks = parseBlocks(ch.content_text);
+      const newBlocks = blocks.map(b => b.id === blockId ? { ...b, value } : b);
+      return { ...ch, content_text: JSON.stringify(newBlocks) };
+    }));
+  };
+
+  const addBlock = (chapterIdx: number, type: 'text' | 'image' | 'video') => {
+    setCourseChapters(prev => prev.map((ch, i) => {
+      if (i !== chapterIdx) return ch;
+      const blocks = parseBlocks(ch.content_text);
+      blocks.push({ id: Math.random().toString(), type, value: '' });
+      return { ...ch, content_text: JSON.stringify(blocks) };
+    }));
+  };
+
+  const removeBlock = (chapterIdx: number, blockId: string) => {
+    setCourseChapters(prev => prev.map((ch, i) => {
+      if (i !== chapterIdx) return ch;
+      const blocks = parseBlocks(ch.content_text);
+      const newBlocks = blocks.filter(b => b.id !== blockId);
+      return { ...ch, content_text: JSON.stringify(newBlocks) };
+    }));
+  };
+
+  const moveBlock = (chapterIdx: number, blockIdx: number, direction: 'up' | 'down') => {
+    setCourseChapters(prev => prev.map((ch, i) => {
+      if (i !== chapterIdx) return ch;
+      const blocks = parseBlocks(ch.content_text);
+      if (direction === 'up' && blockIdx > 0) {
+        const temp = blocks[blockIdx];
+        blocks[blockIdx] = blocks[blockIdx - 1];
+        blocks[blockIdx - 1] = temp;
+      } else if (direction === 'down' && blockIdx < blocks.length - 1) {
+        const temp = blocks[blockIdx];
+        blocks[blockIdx] = blocks[blockIdx + 1];
+        blocks[blockIdx + 1] = temp;
+      }
+      return { ...ch, content_text: JSON.stringify(blocks) };
+    }));
+  };
+
+  const handleBlockImageUpload = (e: React.ChangeEvent<HTMLInputElement>, chapterIdx: number, blockId: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 25 * 1024 * 1024) {
+      setMessage('File exceeds 25MB limit.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      updateBlock(chapterIdx, blockId, reader.result as string);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const removeChapterImage = (chapterIndex: number, imageIndex: number) => {
     setCourseChapters(prev => prev.map((ch, i) => {
       if (i === chapterIndex) {
@@ -338,7 +500,19 @@ const Admin: React.FC = () => {
         category: courseCategory,
         description: courseDescription,
         thumbnail_url: courseThumbnail,
-        chapters: courseChapters,
+        chapters: courseChapters.map(ch => {
+          const blocks = parseBlocks(ch.content_text);
+          const extractedImages = blocks.filter(b => b.type === 'image' && b.value).map(b => b.value);
+          const extractedVideo = blocks.find(b => b.type === 'video' && b.value)?.value;
+
+          const combinedImages = Array.from(new Set([...(ch.content_images || []), ...extractedImages]));
+
+          return {
+            ...ch,
+            content_images: combinedImages,
+            video_url: ch.video_url || extractedVideo || ''
+          };
+        }),
       };
 
       if (editingCourseId) {
@@ -506,6 +680,17 @@ const Admin: React.FC = () => {
               <div className="manage-header-row">
                 <h1 className="view-title" style={{ marginBottom: 0 }}>Manage News</h1>
                 <div className="manage-actions-left">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '16px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
+                      <input 
+                        type="checkbox" 
+                        checked={news.length > 0 && selectedNews.length === getSortedNews().length}
+                        onChange={selectAllNews}
+                        style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                      />
+                      <span>Select</span>
+                    </label>
+                  </div>
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <input
                       type="text"
@@ -548,9 +733,20 @@ const Admin: React.FC = () => {
                   <div className="empty-state">No news articles found.</div>
                 ) : (
                   getSortedNews().map((item: NewsItem) => (
-                    <div key={item.id} className="manage-card-fayda">
+                    <div key={item.id} className={`manage-card-fayda ${selectedNews.includes(item.id) ? 'selected' : ''}`}>
                       <div className="m-card-header">
-                        <h2>{item.title}</h2>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          {(news.length > 0 && selectedNews.length === getSortedNews().length) && (
+                            <input 
+                              type="checkbox" 
+                              checked={selectedNews.includes(item.id)}
+                              onChange={() => toggleNewsSelection(item.id)}
+                              className="item-checkbox"
+                              style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                            />
+                          )}
+                          <h2>{item.title}</h2>
+                        </div>
                         <div className="m-card-actions">
                           <button className="m-btn-edit" onClick={() => handleEdit(item)}><FiEdit3 /> Edit</button>
                           <button className="m-btn-delete" onClick={() => handleDeleteClick(item, 'news')}>
@@ -581,6 +777,17 @@ const Admin: React.FC = () => {
               <div className="manage-header-row">
                 <h1 className="view-title" style={{ marginBottom: 0 }}>Manage Courses</h1>
                 <div className="manage-actions-left">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '16px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
+                      <input 
+                        type="checkbox" 
+                        checked={courses.length > 0 && selectedCourses.length === getSortedCourses().length}
+                        onChange={selectAllCourses}
+                        style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                      />
+                      <span>Select</span>
+                    </label>
+                  </div>
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <input
                       type="text"
@@ -637,9 +844,18 @@ const Admin: React.FC = () => {
                   <div className="empty-state">No courses found.</div>
                 ) : (
                   getSortedCourses().map((item: Course) => (
-                    <div key={item.id} className="manage-card-fayda">
+                    <div key={item.id} className={`manage-card-fayda ${selectedCourses.includes(item.id as number) ? 'selected' : ''}`}>
                       <div className="m-card-header">
-                        <h2>{item.title}</h2>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <input 
+                            type="checkbox" 
+                            checked={selectedCourses.includes(item.id as number)}
+                            onChange={() => toggleCourseSelection(item.id as number)}
+                            className="item-checkbox"
+                            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                          />
+                          <h2>{item.title}</h2>
+                        </div>
                         <div className="m-card-actions">
                           <button className="m-btn-edit" onClick={() => handleCourseEdit(item)}><FiEdit3 /> Edit</button>
                           <button className="m-btn-delete" onClick={() => handleDeleteClick(item, 'course')}>
@@ -858,42 +1074,65 @@ const Admin: React.FC = () => {
                               </div>
 
                               <div className="f-group">
-                                <label>CONTENT TEXT *</label>
-                                <textarea
-                                  rows={5}
-                                  value={ch.content_text}
-                                  onChange={(e) => updateChapter(idx, 'content_text', e.target.value)}
-                                  placeholder="Write chapter content here..."
-                                />
-                              </div>
+                                <label>CONTENT BLOCKS *</label>
+                                <div className="blocks-container">
+                                  {parseBlocks(ch.content_text).map((block, bIdx, blocksArr) => (
+                                    <div key={block.id} className="content-block-item">
+                                      <div className="block-header">
+                                        <span className="block-type-badge">{block.type.toUpperCase()}</span>
+                                        <div className="block-actions">
+                                          <button type="button" disabled={bIdx === 0} onClick={() => moveBlock(idx, bIdx, 'up')} title="Move Up"><FiArrowUp /></button>
+                                          <button type="button" disabled={bIdx === blocksArr.length - 1} onClick={() => moveBlock(idx, bIdx, 'down')} title="Move Down"><FiArrowDown /></button>
+                                          <button type="button" className="btn-del-block" onClick={() => removeBlock(idx, block.id)} title="Delete Block"><FiTrash2 /></button>
+                                        </div>
+                                      </div>
+                                      
+                                      {block.type === 'text' && (
+                                        <textarea
+                                          rows={4}
+                                          value={block.value}
+                                          onChange={(e) => updateBlock(idx, block.id, e.target.value)}
+                                          placeholder="Write text content..."
+                                        />
+                                      )}
+                                      
+                                      {block.type === 'image' && (
+                                        <div className="block-image-uploader">
+                                          {block.value ? (
+                                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                                              <img src={block.value} alt="Block content" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }} />
+                                              <button type="button" onClick={() => updateBlock(idx, block.id, '')} style={{ position: 'absolute', top: 5, right: 5, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: 24, height: 24, cursor: 'pointer' }}>×</button>
+                                            </div>
+                                          ) : (
+                                            <label className="upload-trigger-compact" style={{ width: '100%', height: '100px', border: '1px dashed #cbd5e1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderRadius: '8px', color: '#64748b' }}>
+                                              <input type="file" accept="image/*" onChange={(e) => handleBlockImageUpload(e, idx, block.id)} hidden />
+                                              <FiImage size={24} />
+                                              <span style={{ fontSize: '0.85rem', marginTop: '8px' }}>Upload Image</span>
+                                            </label>
+                                          )}
+                                        </div>
+                                      )}
 
-                              <div className="f-group">
-                                <label>IMAGES (OPTIONAL)</label>
-                                <div className="chapter-image-grid">
-                                  {(ch.content_images || []).map((img, imgIdx) => (
-                                    <div key={imgIdx} className="chapter-img-item">
-                                      <img src={img} alt="" />
-                                      <button type="button" className="btn-del-img" onClick={() => removeChapterImage(idx, imgIdx)}>×</button>
+                                      {block.type === 'video' && (
+                                        <div style={{ position: 'relative' }}>
+                                          <FiFilm style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                                          <input
+                                            type="text"
+                                            value={block.value}
+                                            onChange={(e) => updateBlock(idx, block.id, e.target.value)}
+                                            placeholder="YouTube or Video Link..."
+                                            style={{ paddingLeft: '38px', width: '100%' }}
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   ))}
-                                  <label className="chapter-upload-btn">
-                                    <input type="file" accept="image/*" multiple onChange={(e) => handleChapterImageUpload(e, idx)} hidden />
-                                    <FiPlus />
-                                  </label>
-                                </div>
-                              </div>
-
-                              <div className="f-group">
-                                <label>VIDEO URL (OPTIONAL)</label>
-                                <div style={{ position: 'relative' }}>
-                                  <FiFilm style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-                                  <input
-                                    type="text"
-                                    value={ch.video_url || ''}
-                                    onChange={(e) => updateChapter(idx, 'video_url', e.target.value)}
-                                    placeholder="YouTube or Video Link..."
-                                    style={{ paddingLeft: '38px' }}
-                                  />
+                                  
+                                  <div className="add-block-buttons" style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                                    <button type="button" className="btn-add-block" onClick={() => addBlock(idx, 'text')}>+ Text</button>
+                                    <button type="button" className="btn-add-block" onClick={() => addBlock(idx, 'image')}>+ Image</button>
+                                    <button type="button" className="btn-add-block" onClick={() => addBlock(idx, 'video')}>+ Video</button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
