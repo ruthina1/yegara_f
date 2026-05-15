@@ -41,7 +41,8 @@ export interface Progress {
   id: number;
   user_id: number;
   course_id: number;
-  content_id: number;
+  content_id?: number;
+  chapter_id?: number;
   completed: boolean;
   progress_percentage: number;
 }

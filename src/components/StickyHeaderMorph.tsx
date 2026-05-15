@@ -39,6 +39,8 @@ const StickyHeaderMorph: React.FC = () => {
   useEffect(() => { setMobileOpen(false); }, [location]);
 
   const isHome = location.pathname === '/';
+  const isAcademy = location.pathname.startsWith('/courses');
+  const isPlayer = location.pathname.endsWith('/learn');
 
   // ── Morph ─────────────────────────────────────────────────────────
   const MORPH_END = 400;
@@ -92,9 +94,13 @@ const StickyHeaderMorph: React.FC = () => {
         </motion.div>
       )}
 
+      {/* Hide global nav on player page */}
+      {isPlayer && <div className="player-spacer" style={{ height: 0 }} />}
+
       {/* ── Nav Bar ──────────────────────────────────────────────────── */}
-      <nav className={`corp-nav ${scrolled ? 'corp-nav--scrolled' : ''} ${isHome && !scrolled ? 'corp-nav--transparent-white' : ''}`} aria-label="Main Navigation">
-        <div className={`corp-nav__inner ${isHome ? 'corp-nav__inner--home' : ''}`}>
+      {!isPlayer && (
+        <nav className={`corp-nav ${isAcademy ? 'corp-nav--compact' : ''} ${scrolled ? 'corp-nav--scrolled' : ''} ${isHome && !scrolled ? 'corp-nav--transparent-white' : ''}`} aria-label="Main Navigation">
+          <div className={`corp-nav__inner ${isHome ? 'corp-nav__inner--home' : ''}`}>
           {/* Left: Logo */}
           <Link to="/" className="corp-nav__logo">
             <img src={logo} alt="Yegara Trading Share Company Logo" />
@@ -235,6 +241,7 @@ const StickyHeaderMorph: React.FC = () => {
           </button>
         </div>
       </nav>
+      )}
 
       {/* ── White Hero (Home only) ───────────────────────────────────── */}
       {isHome && (
@@ -309,7 +316,7 @@ const StickyHeaderMorph: React.FC = () => {
       </div>
 
       {/* Spacer for non-home pages */}
-      {!isHome && <div style={{ height: 90 }} />}
+      {!isHome && !isPlayer && <div style={{ height: isAcademy ? 60 : 90 }} />}
     </>
   );
 };

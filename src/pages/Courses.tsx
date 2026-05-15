@@ -94,7 +94,7 @@ const Courses: React.FC = () => {
             </div>
           ) : (
             filteredCourses.map((course) => {
-              const rating = course.averageRating || 0;
+              const rating = Number(course.averageRating) || 0;
               const totalRatings = course.totalRatings || 0;
               const chCount = course.chapterCount || 0;
               
@@ -114,15 +114,6 @@ const Courses: React.FC = () => {
                   
                   <div className="card-content-section">
                     <div className="card-top-meta">
-                      <div className="rating-mini" onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation(); // Prevent card click
-                          if (user) setRatingModal({ courseId: course.id, courseTitle: course.title });
-                        }}>
-                        <HiStar className={rating > 0 ? 'star-active' : 'star-dim'} />
-                        <span>{rating > 0 ? rating.toFixed(1) : 'New'}</span>
-                        {totalRatings > 0 && <span className="rat-count">({totalRatings})</span>}
-                      </div>
                       <div className="chapters-count">
                         <FiBookOpen /> {chCount} Chapters
                       </div>
@@ -132,7 +123,14 @@ const Courses: React.FC = () => {
                     <p className="course-card-excerpt">{course.description}</p>
                     
                     <div className="card-footer-premium">
-                      <div className="price-tag">PREMIUM</div>
+                      <div className="interactive-rating-tag" onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation(); 
+                          if (user) setRatingModal({ courseId: course.id, courseTitle: course.title });
+                        }}>
+                        <HiStar className={rating > 0 ? 'star-active' : 'star-dim'} />
+                        <span>{rating > 0 ? rating.toFixed(1) : 'Rate'}</span>
+                      </div>
                       <div className="btn-learn-more">
                         Access Course <FiClock />
                       </div>

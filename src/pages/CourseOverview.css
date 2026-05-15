@@ -1,0 +1,297 @@
+.course-overview-page {
+  min-height: 100vh;
+  background: #fdfdfd;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.overview-nav {
+  max-width: 1400px; /* Wider to move button left */
+  margin: 0 auto 20px;
+  padding: 0 40px;
+}
+
+.btn-back-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.btn-back-link:hover {
+  color: #0f172a;
+}
+
+.overview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px; /* Reduced width for right column */
+  gap: 60px;
+  align-items: start;
+}
+
+/* ── LEFT COLUMN ── */
+.overview-category {
+  display: inline-block;
+  color: #FF6B35;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.overview-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.overview-meta-strip {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.star-icon {
+  color: #fbbf24;
+}
+
+.overview-description h3,
+.overview-learning-objectives h3,
+.overview-curriculum h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.overview-description p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 40px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.objectives-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.objectives-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.objectives-list li svg {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.mini-curriculum {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mini-chapter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  transition: all 0.2s ease;
+}
+
+.mini-chapter:hover {
+  border-color: #e2e8f0;
+  transform: translateX(5px);
+}
+
+.ch-num {
+  width: 28px;
+  height: 28px;
+  background: #f1f5f9;
+  color: #64748b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.ch-name {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+/* ── RIGHT COLUMN CTA ── */
+.cta-card {
+  background: white;
+  border-radius: 4px; /* Square look */
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  position: sticky;
+  top: 40px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  min-height: 480px; /* Increased height */
+  display: flex;
+  flex-direction: column;
+}
+
+.cta-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.cta-preview {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.cta-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  opacity: 0.8;
+}
+
+.cta-content {
+  padding: 24px;
+}
+
+.btn-start-learning {
+  width: fit-content;
+  min-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px 24px;
+  background: #FF6B35;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.btn-start-learning:hover {
+  background: #ff5a1f;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(255, 107, 53, 0.3);
+}
+
+.course-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.perk svg {
+  color: #FF6B35;
+}
+
+/* ── UTILS ── */
+.overview-loading {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f1f5f9;
+  border-top-color: #FF6B35;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .course-overview-page {
+    padding-top: 80px;
+  }
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .overview-title {
+    font-size: 2.2rem;
+  }
+  .cta-card {
+    position: static;
+  }
+  .objectives-list {
+    grid-template-columns: 1fr;
+  }
+}

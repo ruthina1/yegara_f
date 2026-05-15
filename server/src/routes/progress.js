@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * GET /api/progress/:courseId
- * Get user's progress for all content in a course
+ * Get user's progress for all content and chapters in a course
  */
 router.get('/:courseId', authenticate, async (req, res) => {
   try {
@@ -27,25 +27,38 @@ router.get('/:courseId', authenticate, async (req, res) => {
 
 /**
  * POST /api/progress
- * Create or update progress for a specific content item
+ * Create or update progress for a specific chapter or content item
  */
 router.post('/', authenticate, async (req, res) => {
   try {
-    const { courseId, contentId, completed, progressPercentage } = req.body;
+    const { courseId, contentId, chapterId, completed, progressPercentage } = req.body;
     const userId = req.user.id;
 
-    if (!courseId || !contentId) {
-      return res.status(400).json({ error: 'courseId and contentId are required.' });
+    if (!courseId || (!contentId && !chapterId)) {
+      return res.status(400).json({ error: 'courseId and either contentId or chapterId are required.' });
     }
 
     // Upsert progress
-    await pool.query(`
-      INSERT INTO progress (user_id, course_id, content_id, completed, progress_percentage)
-      VALUES (?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE
-        completed = VALUES(completed),
-        progress_percentage = VALUES(progress_percentage)
-    `, [userId, courseId, contentId, completed || false, progressPercentage || 0]);
+    // Note: We use a more flexible approach for the ON DUPLICATE KEY UPDATE
+    // since we might have added new unique constraints.
+    
+    if (chapterId) {
+      await pool.query(`
+        INSERT INTO progress (user_id, course_id, chapter_id, completed, progress_percentage)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+          completed = VALUES(completed),
+          progress_percentage = VALUES(progress_percentage)
+      `, [userId, courseId, chapterId, completed || false, progressPercentage || 0]);
+    } else {
+      await pool.query(`
+        INSERT INTO progress (user_id, course_id, content_id, completed, progress_percentage)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+          completed = VALUES(completed),
+          progress_percentage = VALUES(progress_percentage)
+      `, [userId, courseId, contentId, completed || false, progressPercentage || 0]);
+    }
 
     res.json({ message: 'Progress updated successfully.' });
   } catch (err) {
@@ -55,3 +68,4 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 module.exports = router;
+

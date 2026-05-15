@@ -7,6 +7,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Courses from './pages/Courses';
+import CourseOverview from './pages/CourseOverview';
 import CourseDetail from './pages/CourseDetail';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -51,6 +52,14 @@ const AppRoutes: React.FC = () => {
         />
         <Route
           path="/courses/:id"
+          element={
+            <ProtectedRoute>
+              <CourseOverview />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/courses/:id/learn"
           element={
             <ProtectedRoute>
               <CourseDetail />

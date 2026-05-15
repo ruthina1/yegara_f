@@ -6,6 +6,7 @@ import {
   FiPlay, 
   FiFileText,
   FiChevronLeft,
+  FiChevronRight,
   FiClock,
   FiBookOpen,
   FiImage,
@@ -27,10 +28,22 @@ const CourseDetail: React.FC = () => {
   const [selectedChapterIndex, setSelectedChapterIndex] = useState(0);
   const [progress, setProgress] = useState<Record<number, boolean>>({});
   const [courseProgress, setCourseProgress] = useState(0);
+  const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(380);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const [chapterTab, setChapterTab] = useState<'read' | 'images' | 'video'>('read');
 
   useEffect(() => {
     fetchCourse();
   }, [id]);
+
+  useEffect(() => {
+    if (selectedChapter) {
+      setChapterTab('read');
+    }
+  }, [selectedChapter]);
 
   const fetchCourse = async () => {
     try {
@@ -42,6 +55,26 @@ const CourseDetail: React.FC = () => {
         setSelectedChapter(response.data.chapters[0]);
         setSelectedChapterIndex(0);
       }
+      
+      // Fetch progress from DB
+      try {
+        const progressRes = await api.get<Progress[]>(`/progress/${id}`);
+        const progressMap: Record<number, boolean> = {};
+        progressRes.data.forEach(p => {
+          if (p.chapter_id) {
+            progressMap[p.chapter_id] = !!p.completed;
+          }
+        });
+        setProgress(progressMap);
+        
+        if (response.data.chapters) {
+          const completedCount = Object.values(progressMap).filter(Boolean).length;
+          setCourseProgress(Math.round((completedCount / response.data.chapters.length) * 100));
+        }
+      } catch (pErr) {
+        console.error('Failed to fetch progress:', pErr);
+      }
+
       setError('');
     } catch (err) {
       setError('Failed to load course details.');
@@ -51,16 +84,71 @@ const CourseDetail: React.FC = () => {
     }
   };
 
-  const markAsCompleted = (chapterId: number) => {
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  const stopResizing = () => {
+    setIsResizing(false);
+  };
+
+  const resizeSidebar = (e: MouseEvent) => {
+    if (isResizing) {
+      const newWidth = window.innerWidth - e.clientX;
+      if (newWidth > 250 && newWidth < 600) {
+        setSidebarWidth(newWidth);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isResizing) {
+      window.addEventListener('mousemove', resizeSidebar);
+      window.addEventListener('mouseup', stopResizing);
+    } else {
+      window.removeEventListener('mousemove', resizeSidebar);
+      window.removeEventListener('mouseup', stopResizing);
+    }
+    return () => {
+      window.removeEventListener('mousemove', resizeSidebar);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isResizing]);
+
+  const toggleCompletion = async (chapterId: number) => {
+    const isCurrentlyCompleted = !!progress[chapterId];
+    
+    // Optimistic update
     setProgress(prev => {
-      const newProgress = { ...prev, [chapterId]: true };
-      // Calculate new percentage
+      const newProgress = { ...prev, [chapterId]: !isCurrentlyCompleted };
       if (course?.chapters) {
         const completedCount = Object.values(newProgress).filter(Boolean).length;
         setCourseProgress(Math.round((completedCount / course.chapters.length) * 100));
       }
       return newProgress;
     });
+
+    try {
+      await api.post('/progress', {
+        courseId: id,
+        chapterId: chapterId,
+        completed: !isCurrentlyCompleted,
+        progressPercentage: !isCurrentlyCompleted ? 100 : 0
+      });
+    } catch (err) {
+      console.error('Failed to update progress in DB:', err);
+      // Rollback on failure
+      setProgress(prev => {
+        const newProgress = { ...prev, [chapterId]: isCurrentlyCompleted };
+        if (course?.chapters) {
+          const completedCount = Object.values(newProgress).filter(Boolean).length;
+          setCourseProgress(Math.round((completedCount / course.chapters.length) * 100));
+        }
+        return newProgress;
+      });
+    }
   };
 
   const handleNextChapter = () => {
@@ -81,7 +169,7 @@ const CourseDetail: React.FC = () => {
       {/* ── CINEMATIC HEADER ── */}
       <header className="player-top-bar">
         <div className="bar-left">
-          <Link to="/courses" className="btn-back-circle"><FiChevronLeft /></Link>
+          <Link to={`/courses/${id}`} className="btn-back-circle"><FiChevronLeft /></Link>
           <div className="course-info-mini">
             <span className="mini-cat">{course.category || 'General'}</span>
             <h1 className="mini-title">{course.title}</h1>
@@ -95,7 +183,7 @@ const CourseDetail: React.FC = () => {
         </div>
       </header>
 
-      <div className="player-main-layout">
+      <div className={`player-main-layout ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
         {/* ── CONTENT AREA ── */}
         <div className="content-viewport">
           {selectedChapter ? (
@@ -103,36 +191,67 @@ const CourseDetail: React.FC = () => {
               <div className="article-header">
                 <span className="chapter-label">MODULE {selectedChapterIndex + 1}</span>
                 <h2 className="chapter-main-title">{selectedChapter.chapter_name}</h2>
-                <div className="article-meta">
-                  <span><FiClock /> 12 min read</span>
-                  <span><FiBookOpen /> Professional Training</span>
+                
+                {/* ── INTERNAL CONTENT TABS ── */}
+                <div className="internal-tabs">
+                  <button 
+                    className={`int-tab ${chapterTab === 'read' ? 'active' : ''}`}
+                    onClick={() => setChapterTab('read')}
+                  >
+                    <FiBookOpen /> Read
+                  </button>
+                  {selectedChapter.content_images && selectedChapter.content_images.length > 0 && (
+                    <button 
+                      className={`int-tab ${chapterTab === 'images' ? 'active' : ''}`}
+                      onClick={() => setChapterTab('images')}
+                    >
+                      <FiImage /> Visuals
+                    </button>
+                  )}
+                  {selectedChapter.video_url && (
+                    <button 
+                      className={`int-tab ${chapterTab === 'video' ? 'active' : ''}`}
+                      onClick={() => setChapterTab('video')}
+                    >
+                      <FiFilm /> Watch
+                    </button>
+                  )}
                 </div>
               </div>
 
-              {/* Video Embed if exists */}
-              {selectedChapter.video_url && (
-                <div className="content-video-wrapper">
-                  <iframe 
-                    src={selectedChapter.video_url.replace('watch?v=', 'embed/')} 
-                    title="Chapter Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              )}
-
               <div className="article-body">
-                <div className="content-card-premium">
-                  <p className="primary-text">{selectedChapter.content_text}</p>
-                </div>
+                {chapterTab === 'read' && (
+                  <div className="content-card-premium fade-in">
+                    <p className="primary-text">{selectedChapter.content_text}</p>
+                  </div>
+                )}
                 
-                {selectedChapter.content_images && selectedChapter.content_images.length > 0 && (
-                  <div className="article-gallery">
+                {chapterTab === 'video' && selectedChapter.video_url && (
+                  <div className="content-video-wrapper fade-in">
+                    <iframe 
+                      src={selectedChapter.video_url.replace('watch?v=', 'embed/')} 
+                      title="Chapter Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                )}
+
+                {chapterTab === 'images' && selectedChapter.content_images && selectedChapter.content_images.length > 0 && (
+                  <div className="article-gallery fade-in">
                     {selectedChapter.content_images.map((img, i) => (
-                      <div key={i} className="gallery-item">
+                      <div 
+                        key={i} 
+                        className="gallery-item"
+                        onClick={() => setEnlargedImage(img)}
+                      >
                         <img src={img} alt={`Visual aid ${i+1}`} />
-                        <button className="btn-expand-img"><FiMaximize2 /></button>
+                        <button 
+                          className="btn-expand-img"
+                        >
+                          <FiMaximize2 />
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -142,9 +261,9 @@ const CourseDetail: React.FC = () => {
               <div className="article-footer">
                 <button 
                   className={`btn-complete ${progress[selectedChapter.id!] ? 'completed' : ''}`}
-                  onClick={() => markAsCompleted(selectedChapter.id!)}
+                  onClick={() => toggleCompletion(selectedChapter.id!)}
                 >
-                  {progress[selectedChapter.id!] ? <><FiCheck /> Completed</> : 'Mark as Finished'}
+                  {progress[selectedChapter.id!] ? 'Undo' : 'Mark as Finished'}
                 </button>
                 
                 {selectedChapterIndex < (course.chapters?.length || 0) - 1 && (
@@ -174,7 +293,20 @@ const CourseDetail: React.FC = () => {
         </div>
 
         {/* ── SIDEBAR CURRICULUM ── */}
-        <aside className="player-sidebar">
+        <aside 
+          className={`player-sidebar ${sidebarCollapsed ? 'collapsed' : ''} ${isResizing ? 'resizing' : ''}`}
+          style={{ width: sidebarCollapsed ? 0 : sidebarWidth }}
+        >
+          <div className="sidebar-resizer" onMouseDown={startResizing} />
+          
+          <button 
+            className="btn-sidebar-toggle" 
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+          >
+            {sidebarCollapsed ? <FiChevronLeft /> : <FiChevronRight />}
+          </button>
+          
           <div className="sidebar-header">
             <h3>Course Content</h3>
             <span>{course.chapters?.length || 0} Modules</span>
@@ -204,6 +336,18 @@ const CourseDetail: React.FC = () => {
       </div>
 
       <BottomNav />
+
+      {/* ── IMAGE ENLARGEMENT MODAL ── */}
+      {enlargedImage && (
+        <div className="image-modal-overlay" onClick={() => setEnlargedImage(null)}>
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <img src={enlargedImage} alt="Enlarged visual" />
+            <button className="btn-close-modal" onClick={() => setEnlargedImage(null)}>
+              <span style={{ fontSize: '2rem', fontWeight: 300 }}>&times;</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
