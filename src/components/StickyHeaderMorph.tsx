@@ -275,7 +275,7 @@ const StickyHeaderMorph: React.FC = () => {
 
           <motion.div className="white-hero__cta-wrap" style={{ opacity: heroFade }}>
             <Link to="/login" className="hero-premium-cta">
-              Login <HiArrowRight className="cta-arrow" />
+              Enter the Academy <HiArrowRight className="cta-arrow" />
             </Link>
           </motion.div>
           

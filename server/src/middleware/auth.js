@@ -8,13 +8,17 @@ const JWT_SECRET = process.env.JWT_SECRET || 'yegara-trading-lms-super-secret-ke
  * Attaches decoded user to req.user
  */
 const authenticate = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  let token = null;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Access denied. No token provided.' });
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
   }
 
-  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied. No token provided.' });
+  }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
@@ -40,10 +44,15 @@ const requireAdmin = (req, res, next) => {
  * Optional auth — attaches user if token is present, but doesn't block.
  */
 const optionalAuth = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  let token = null;
 
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.split(' ')[1];
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (token) {
     try {
       req.user = jwt.verify(token, JWT_SECRET);
     } catch (err) {

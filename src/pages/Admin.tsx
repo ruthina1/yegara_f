@@ -736,7 +736,7 @@ const Admin: React.FC = () => {
                     <div key={item.id} className={`manage-card-fayda ${selectedNews.includes(item.id) ? 'selected' : ''}`}>
                       <div className="m-card-header">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                          {(news.length > 0 && selectedNews.length === getSortedNews().length) && (
+                          {selectedNews.length > 0 && (
                             <input 
                               type="checkbox" 
                               checked={selectedNews.includes(item.id)}
@@ -847,13 +847,15 @@ const Admin: React.FC = () => {
                     <div key={item.id} className={`manage-card-fayda ${selectedCourses.includes(item.id as number) ? 'selected' : ''}`}>
                       <div className="m-card-header">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                          <input 
-                            type="checkbox" 
-                            checked={selectedCourses.includes(item.id as number)}
-                            onChange={() => toggleCourseSelection(item.id as number)}
-                            className="item-checkbox"
-                            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                          />
+                          {selectedCourses.length > 0 && (
+                            <input 
+                              type="checkbox" 
+                              checked={selectedCourses.includes(item.id as number)}
+                              onChange={() => toggleCourseSelection(item.id as number)}
+                              className="item-checkbox"
+                              style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                            />
+                          )}
                           <h2>{item.title}</h2>
                         </div>
                         <div className="m-card-actions">

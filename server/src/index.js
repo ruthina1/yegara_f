@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 require('dotenv').config();
 
 // Import routes
@@ -15,13 +20,32 @@ const savedRoutes = require('./routes/saved');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ── Middleware ──
+// ── Security Middleware ──
+// Set security HTTP headers
+app.use(helmet());
+
+// Rate Limiting: Limit each IP to 100 requests per 15 minutes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
+});
+app.use('/api', limiter);
+
+// ── Standard Middleware ──
 app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
   credentials: true,
 }));
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '50mb' })); // Body parser
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cookieParser()); // Parse cookies
+
+// ── Data Sanitization ──
+// Data sanitization against XSS
+app.use(xss());
+// Prevent HTTP Parameter Pollution
+app.use(hpp());
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));

@@ -177,42 +177,42 @@ async function init() {
     const courseContents = [
       // Course 1: Leadership Fundamentals
       { courseId: 1, items: [
-        { title: 'Introduction to Leadership', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'Leadership Styles & Models', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
-        { title: 'Team Building Strategies', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 3 },
+        { title: 'Introduction to Leadership', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'Leadership Styles & Models', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
+        { title: 'Team Building Strategies', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 3 },
         { title: 'Leadership Assessment Quiz', type: 'quiz', url: 'https://docs.google.com/forms/d/e/example/viewform', order: 4 },
       ]},
       // Course 2: Advanced React
       { courseId: 2, items: [
-        { title: 'React Hooks Deep Dive', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'State Management with Context', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
-        { title: 'React Router & Navigation', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 3 },
+        { title: 'React Hooks Deep Dive', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'State Management with Context', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
+        { title: 'React Router & Navigation', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 3 },
         { title: 'React Fundamentals Quiz', type: 'quiz', url: 'https://docs.google.com/forms/d/e/example/viewform', order: 4 },
       ]},
       // Course 3: Business Strategy
       { courseId: 3, items: [
-        { title: 'Market Analysis Fundamentals', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'Competitive Advantage Framework', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
-        { title: 'Growth Strategies', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 3 },
+        { title: 'Market Analysis Fundamentals', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'Competitive Advantage Framework', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
+        { title: 'Growth Strategies', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 3 },
       ]},
       // Course 4: Node.js Backend
       { courseId: 4, items: [
-        { title: 'Express.js Fundamentals', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'Database Integration', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
-        { title: 'REST API Design', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 3 },
+        { title: 'Express.js Fundamentals', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'Database Integration', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
+        { title: 'REST API Design', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 3 },
         { title: 'Backend Quiz', type: 'quiz', url: 'https://docs.google.com/forms/d/e/example/viewform', order: 4 },
       ]},
       // Course 5: Design Thinking
       { courseId: 5, items: [
-        { title: 'Empathy & User Research', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'Ideation & Prototyping', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
+        { title: 'Empathy & User Research', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'Ideation & Prototyping', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
         { title: 'Design Principles Quiz', type: 'quiz', url: 'https://docs.google.com/forms/d/e/example/viewform', order: 3 },
       ]},
       // Course 6: Financial Leadership
       { courseId: 6, items: [
-        { title: 'Reading Financial Statements', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 1 },
-        { title: 'Budgeting & Forecasting', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4', order: 2 },
-        { title: 'Investment Strategy', type: 'video', url: 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4', order: 3 },
+        { title: 'Reading Financial Statements', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 1 },
+        { title: 'Budgeting & Forecasting', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 2 },
+        { title: 'Investment Strategy', type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', order: 3 },
         { title: 'Finance Assessment', type: 'quiz', url: 'https://docs.google.com/forms/d/e/example/viewform', order: 4 },
       ]},
     ];

@@ -73,11 +73,16 @@ async function seed() {
           const blocks = generateBlocks(j);
           const contentText = JSON.stringify(blocks);
 
+          // Extract media for legacy tabs (Visuals, Watch)
+          const extractedImages = blocks.filter(b => b.type === 'image' && b.value).map(b => b.value);
+          const extractedVideo = blocks.find(b => b.type === 'video' && b.value)?.value || '';
+
           await connection.query(
-            'INSERT INTO chapters (course_id, chapter_name, content_text, order_index) VALUES (?, ?, ?, ?)',
-            [courseId, chapterName, contentText, j - 1]
+            'INSERT INTO chapters (course_id, chapter_name, content_text, content_images, video_url, order_index) VALUES (?, ?, ?, ?, ?, ?)',
+            [courseId, chapterName, contentText, JSON.stringify(extractedImages), extractedVideo, j - 1]
           );
         }
+
         console.log(`   Seeded 3 chapters for ${title}`);
       }
     }

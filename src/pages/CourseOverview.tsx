@@ -99,7 +99,11 @@ const CourseOverview: React.FC = () => {
               <h3>Course Content</h3>
               <div className="mini-curriculum">
                 {course.chapters?.map((ch, idx) => (
-                  <div key={ch.id || idx} className="mini-chapter">
+                  <div 
+                    key={ch.id || idx} 
+                    className="mini-chapter clickable"
+                    onClick={() => navigate(`/courses/${id}/learn`)}
+                  >
                     <span className="ch-num">{idx + 1}</span>
                     <span className="ch-name">{ch.chapter_name}</span>
                   </div>

@@ -293,6 +293,110 @@
   transform: translateY(0);
 }
 
+/* ── VISUALS MEDIA GRID ── */
+/* ── VISUALS SUBTABS TOGGLE ── */
+.visuals-subtabs {
+  display: flex;
+  gap: 4px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+  width: fit-content;
+  border: 1px solid #e2e8f0;
+}
+
+.subtab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.subtab-btn:hover {
+  color: #0f172a;
+}
+
+.subtab-btn.active {
+  background: white;
+  color: #FF6B35;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.media-card {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  background: #0f172a;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.media-card:hover {
+  transform: translateY(-4px);
+}
+
+.media-card iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.media-card.image-card {
+  cursor: zoom-in;
+  background: white;
+}
+
+.media-card.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.media-card.image-card:hover img {
+  transform: scale(1.05);
+}
+
+.media-card.image-card .btn-expand-img {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #0f172a;
+}
+
+.media-card.image-card:hover .btn-expand-img {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── ARTICLE FOOTER ── */
 .article-footer {
   display: flex;

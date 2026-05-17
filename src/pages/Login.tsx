@@ -1,164 +1,355 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 import { FaGoogle, FaApple } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import api from '../utils/api';
 import './Login.css';
+
+declare global {
+  interface Window {
+    google?: any;
+    AppleID?: any;
+  }
+}
+
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleSocialSuccess = useCallback(async (data: any) => {
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    window.location.href = data.user.email === 'admin@yegara.com' ? '/admin' : '/courses';
+  }, []);
+
+  // Load Social Sign-In SDKs (Google & Apple)
+  useEffect(() => {
+    let googleScript: HTMLScriptElement | null = null;
+    if (GOOGLE_CLIENT_ID) {
+      googleScript = document.createElement('script');
+      googleScript.src = 'https://accounts.google.com/gsi/client';
+      googleScript.async = true;
+      googleScript.defer = true;
+      document.head.appendChild(googleScript);
+    }
+
+    const appleScript = document.createElement('script');
+    appleScript.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
+    appleScript.async = true;
+    appleScript.defer = true;
+    document.head.appendChild(appleScript);
+
+    return () => {
+      if (googleScript && document.head.contains(googleScript)) {
+        document.head.removeChild(googleScript);
+      }
+      if (document.head.contains(appleScript)) {
+        document.head.removeChild(appleScript);
+      }
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     const result = await login(email, password);
+    setLoading(false);
 
     if (result.success) {
-      if (email === 'admin@yegara.com') {
-        navigate('/admin');
-      } else {
-        navigate('/courses');
-      }
+      navigate(email === 'admin@yegara.com' ? '/admin' : '/courses');
     } else {
       setError(result.error || 'Login failed');
     }
   };
 
-  const fadeUpVariant = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
+  const handleGoogleLogin = () => {
+    if (!GOOGLE_CLIENT_ID) {
+      setError('Google Sign-In is not configured. Please set REACT_APP_GOOGLE_CLIENT_ID.');
+      return;
+    }
+    setSocialLoading('google');
+    setError('');
+
+    try {
+      if (!window.google) {
+        setError('Google SDK is blocked or still loading. Please disable any adblockers/trackers and refresh.');
+        setSocialLoading('');
+        return;
+      }
+      
+      const client = window.google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+        callback: async (response: any) => {
+          if (response.error) {
+            setError('Google sign-in was cancelled or failed.');
+            setSocialLoading('');
+            return;
+          }
+          
+          try {
+            const res = await api.post('/auth/google', { access_token: response.access_token });
+            await handleSocialSuccess(res.data);
+          } catch (err: any) {
+            setError(err.response?.data?.error || 'Google sign-in failed on server');
+            setSocialLoading('');
+          }
+        },
+      });
+      
+      client.requestAccessToken();
+    } catch (err) {
+      setError('An error occurred while launching Google Sign-In. Please try again.');
+      setSocialLoading('');
+    }
   };
 
-  const staggerContainer = {
+  const handleAppleLogin = () => {
+    setSocialLoading('apple');
+    setError('');
+
+    if (!window.AppleID) {
+      setError('Apple Sign-In is not configured.');
+      setSocialLoading('');
+      return;
+    }
+
+    try {
+      window.AppleID.auth.init({
+        clientId: process.env.REACT_APP_APPLE_CLIENT_ID || '',
+        scope: 'name email',
+        redirectURI: window.location.origin + '/login',
+        usePopup: true,
+      });
+
+      window.AppleID.auth.signIn().then(async (response: any) => {
+        try {
+          const res = await api.post('/auth/apple', {
+            id_token: response.authorization.id_token,
+            user: response.user,
+          });
+          await handleSocialSuccess(res.data);
+        } catch (err: any) {
+          setError(err.response?.data?.error || 'Apple sign-in failed');
+          setSocialLoading('');
+        }
+      }).catch(() => {
+        setSocialLoading('');
+      });
+    } catch {
+      setError('Apple Sign-In failed to initialize.');
+      setSocialLoading('');
+    }
+  };
+
+  // Variants for staggered entrance animations on the left sidebar
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  } as any;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: 'easeOut' },
+    },
+  } as any;
 
   return (
-    <div className="login-page">
-      <Link to="/" className="back-to-home" title="Back to Home" aria-label="Back to Home">
-        <FiArrowLeft size={24} />
-      </Link>
-
-      <div className="login-branding">
+    <div className="auth-screen-wrapper">
+      <div className="auth-split-layout">
+        {/* Left Info Panel */}
         <motion.div 
-          className="brand-content"
+          className="auth-sidebar-info"
           initial="hidden"
           animate="visible"
-          variants={staggerContainer}
+          variants={containerVariants}
         >
-          <motion.div variants={fadeUpVariant} className="brand-logo" style={{ flexDirection: 'column', gap: '24px' }}>
-            <h1 className="brand-name">Yegara LMS</h1>
-            <p className="brand-subtitle">Professional Training & Excellence</p>
+          <div className="auth-sidebar-glow" />
+          
+          <motion.div className="auth-sidebar-brand" variants={itemVariants}>
+            <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px', color: 'inherit' }}>
+              <motion.div 
+                className="auth-sidebar-logo-mark"
+                whileHover={{ scale: 1.1, x: -4 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Back to Home"
+              >
+                <FiArrowLeft style={{ fontSize: '1.25rem' }} />
+              </motion.div>
+              <span className="auth-sidebar-brand-name">Yegara Academy</span>
+            </Link>
+          </motion.div>
+
+          <div className="auth-sidebar-content">
+            <motion.h2 className="auth-sidebar-welcome" variants={itemVariants}>
+              Welcome to the Academy
+            </motion.h2>
+            
+            <motion.p className="auth-sidebar-desc" variants={itemVariants}>
+              Your gateway to trading mastery and professional growth. Access interactive learning materials, deep-dive courses, visual player layouts, and real-time certification tracks designed to build financial excellence.
+            </motion.p>
+
+            <motion.div className="auth-sidebar-features" variants={itemVariants}>
+              <motion.div 
+                className="sidebar-feature-item"
+                whileHover={{ x: 6, color: '#f47920' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <span className="feature-dot"></span>
+                <span>Fully-featured visual player systems</span>
+              </motion.div>
+              <motion.div 
+                className="sidebar-feature-item"
+                whileHover={{ x: 6, color: '#f47920' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <span className="feature-dot"></span>
+                <span>Rich multimedia visual learning galleries</span>
+              </motion.div>
+              <motion.div 
+                className="sidebar-feature-item"
+                whileHover={{ x: 6, color: '#f47920' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <span className="feature-dot"></span>
+                <span>Integrated progress tracking & pathing</span>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          <motion.div className="auth-sidebar-footer" variants={itemVariants}>
+            © {new Date().getFullYear()} Yegara Trading. All rights reserved.
           </motion.div>
         </motion.div>
-      </div>
 
-      <div className="login-content">
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="w-full max-w-lg mx-auto"
-        >
-          <motion.div variants={fadeUpVariant} className="login-header-text">
-            <h1>Welcome Back</h1>
-            <p>Please enter your details to sign in.</p>
-          </motion.div>
-
-          <motion.form variants={fadeUpVariant} onSubmit={handleSubmit} className="login-form">
-            {error && <div className="error-message" role="alert" aria-live="polite">{error}</div>}
-
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <div className="input-wrapper">
-                <FiMail className="input-icon" />
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="name@company.com"
-                />
-              </div>
+        {/* Right Form Panel */}
+        <div className="auth-form-panel">
+          <div className="auth-flat-card">
+            {/* Header */}
+            <div className="auth-header">
+              <h1>Sign In</h1>
+              <p>Access your training materials and courses</p>
             </div>
 
-            <div className="form-group">
-              <div className="password-label-row">
-                <label htmlFor="password">Password</label>
-                <Link to="#" className="forgot-link">Forgot?</Link>
-              </div>
-              <div className="input-wrapper">
-                <FiLock className="input-icon" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </button>
-              </div>
-            </div>
-
-            <div className="checkbox-group">
-              <input
-                type="checkbox"
-                id="keepLoggedIn"
-                checked={keepLoggedIn}
-                onChange={(e) => setKeepLoggedIn(e.target.checked)}
-              />
-              <label htmlFor="keepLoggedIn">Keep me logged in</label>
-            </div>
-
-            <button type="submit" className="btn-login">
-              Sign In
-            </button>
-          </motion.form>
-
-          <motion.div variants={fadeUpVariant} className="social-login">
-            <div className="divider">
-              <span>OR CONTINUE WITH</span>
-            </div>
-            <div className="social-buttons">
-              <button type="button" className="btn-social google" aria-label="Sign in with Google">
-                <FaGoogle className="social-icon" style={{color: '#EA4335'}} />
+            {/* Social login buttons */}
+            <div className="auth-social-row">
+              <button
+                type="button"
+                className="auth-social-btn"
+                onClick={handleGoogleLogin}
+                disabled={!!socialLoading}
+              >
+                {socialLoading === 'google' ? (
+                  <span className="auth-spinner-mini" />
+                ) : (
+                  <FaGoogle className="auth-social-icon google-icon" />
+                )}
                 Google
               </button>
-              <button type="button" className="btn-social apple" aria-label="Sign in with Apple">
-                <FaApple className="social-icon" style={{fontSize: '20px'}} />
+              <button
+                type="button"
+                className="auth-social-btn"
+                onClick={handleAppleLogin}
+                disabled={!!socialLoading}
+              >
+                {socialLoading === 'apple' ? (
+                  <span className="auth-spinner-mini" />
+                ) : (
+                  <FaApple className="auth-social-icon apple-icon" />
+                )}
                 Apple
               </button>
             </div>
-          </motion.div>
 
-          <motion.div variants={fadeUpVariant} className="register-link">
-            <p>
-              Don't have an account? <Link to="/register">Register Now</Link>
+            <div className="auth-divider">
+              <span>or continue with email</span>
+            </div>
+
+            {/* Error Message */}
+            {error && <div className="auth-error" role="alert">{error}</div>}
+
+            {/* Login Form */}
+            <form onSubmit={handleSubmit} className="auth-form">
+              <div className="auth-field">
+                <label htmlFor="login-email">Email Address</label>
+                <div className="auth-input-wrap">
+                  <FiMail className="auth-input-icon" />
+                  <input
+                    type="email"
+                    id="login-email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="name@company.com"
+                    autoComplete="email"
+                  />
+                </div>
+              </div>
+
+              <div className="auth-field">
+                <div className="auth-field-row">
+                  <label htmlFor="login-password">Password</label>
+                  <Link to="#" className="auth-forgot">Forgot Password?</Link>
+                </div>
+                <div className="auth-input-wrap">
+                  <FiLock className="auth-input-icon" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="login-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    placeholder="••••••••"
+                    autoComplete="current-password"
+                  />
+                  <button
+                    type="button"
+                    className="auth-eye-btn"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" className="auth-submit-btn" disabled={loading}>
+                {loading ? (
+                  <span className="auth-spinner-mini" />
+                ) : (
+                  <>
+                    Sign In <FiArrowRight />
+                  </>
+                )}
+              </button>
+            </form>
+
+            <p className="auth-footer-text">
+              Don't have an account?{' '}
+              <Link to="/register" className="auth-footer-link">Register Now</Link>
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -33,7 +33,8 @@ const CourseDetail: React.FC = () => {
   const [sidebarWidth, setSidebarWidth] = useState(380);
   const [isResizing, setIsResizing] = useState(false);
 
-  const [chapterTab, setChapterTab] = useState<'read' | 'images' | 'video'>('read');
+  const [chapterTab, setChapterTab] = useState<'read' | 'images' | 'video' | 'visuals'>('read');
+  const [visualsSubTab, setVisualsSubTab] = useState<'videos' | 'images'>('videos');
 
   useEffect(() => {
     fetchCourse();
@@ -161,6 +162,20 @@ const CourseDetail: React.FC = () => {
     }
   };
 
+  let contentMediaBlocks: any[] = [];
+  if (selectedChapter?.content_text) {
+    try {
+      const blocks = JSON.parse(selectedChapter.content_text);
+      if (Array.isArray(blocks)) {
+        contentMediaBlocks = blocks.filter((b: any) => b.type === 'image' || b.type === 'video');
+      }
+    } catch {}
+  }
+
+  const hasVideos = contentMediaBlocks.some((b: any) => b.type === 'video') || !!selectedChapter?.video_url;
+  const hasImages = contentMediaBlocks.some((b: any) => b.type === 'image') || (selectedChapter?.content_images && selectedChapter.content_images.length > 0);
+  const hasVisuals = hasVideos || hasImages;
+
   if (loading) return <div className="course-loading"> <div className="spinner"></div> <span>Loading Experience...</span></div>;
   if (error || !course) return <div className="course-error"><h2>{error || 'Course not found'}</h2><Link to="/courses">Back to Courses</Link></div>;
 
@@ -200,20 +215,12 @@ const CourseDetail: React.FC = () => {
                   >
                     <FiBookOpen /> Read
                   </button>
-                  {selectedChapter.content_images && selectedChapter.content_images.length > 0 && (
+                  {hasVisuals && (
                     <button 
-                      className={`int-tab ${chapterTab === 'images' ? 'active' : ''}`}
-                      onClick={() => setChapterTab('images')}
+                      className={`int-tab ${chapterTab === 'visuals' ? 'active' : ''}`}
+                      onClick={() => setChapterTab('visuals')}
                     >
                       <FiImage /> Visuals
-                    </button>
-                  )}
-                  {selectedChapter.video_url && (
-                    <button 
-                      className={`int-tab ${chapterTab === 'video' ? 'active' : ''}`}
-                      onClick={() => setChapterTab('video')}
-                    >
-                      <FiFilm /> Watch
                     </button>
                   )}
                 </div>
@@ -262,34 +269,86 @@ const CourseDetail: React.FC = () => {
                   </div>
                 )}
                 
-                {chapterTab === 'video' && selectedChapter.video_url && (
-                  <div className="content-video-wrapper fade-in">
-                    <iframe 
-                      src={selectedChapter.video_url.replace('watch?v=', 'embed/')} 
-                      title="Chapter Video"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                )}
-
-                {chapterTab === 'images' && selectedChapter.content_images && selectedChapter.content_images.length > 0 && (
-                  <div className="article-gallery fade-in">
-                    {selectedChapter.content_images.map((img, i) => (
-                      <div 
-                        key={i} 
-                        className="gallery-item"
-                        onClick={() => setEnlargedImage(img)}
-                      >
-                        <img src={img} alt={`Visual aid ${i+1}`} />
+                {chapterTab === 'visuals' && (
+                  <div className="visuals-tab-content fade-in">
+                    
+                    {/* ── VISUALS TOGGLE (SUBTABS) ── */}
+                    {hasVideos && hasImages && (
+                      <div className="visuals-subtabs">
                         <button 
-                          className="btn-expand-img"
+                          className={`subtab-btn ${visualsSubTab === 'videos' ? 'active' : ''}`}
+                          onClick={() => setVisualsSubTab('videos')}
                         >
-                          <FiMaximize2 />
+                          <FiFilm /> Videos
+                        </button>
+                        <button 
+                          className={`subtab-btn ${visualsSubTab === 'images' ? 'active' : ''}`}
+                          onClick={() => setVisualsSubTab('images')}
+                        >
+                          <FiImage /> Images
                         </button>
                       </div>
-                    ))}
+                    )}
+
+                    <div className="media-grid" style={{ marginTop: '24px' }}>
+                      {/* ── VIDEOS SUBSECTION ── */}
+                      {(visualsSubTab === 'videos' || !hasImages) && hasVideos && (
+                        <>
+                          {contentMediaBlocks.filter(b => b.type === 'video').map((block, idx) => (
+                            <div key={`v-${idx}`} className="media-card">
+                              <iframe 
+                                src={block.value.replace('watch?v=', 'embed/')} 
+                                title="Content Video"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                              ></iframe>
+                            </div>
+                          ))}
+                          {selectedChapter.video_url && (
+                            <div className="media-card">
+                              <iframe 
+                                src={selectedChapter.video_url.replace('watch?v=', 'embed/')} 
+                                title="Chapter Video"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                              ></iframe>
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* ── IMAGES SUBSECTION ── */}
+                      {(visualsSubTab === 'images' || !hasVideos) && hasImages && (
+                        <>
+                          {contentMediaBlocks.filter(b => b.type === 'image').map((block, i) => (
+                            <div 
+                              key={`i-${i}`} 
+                              className="media-card image-card"
+                              onClick={() => setEnlargedImage(block.value)}
+                            >
+                              <img src={block.value} alt={`Content visual ${i+1}`} />
+                              <button className="btn-expand-img">
+                                <FiMaximize2 />
+                              </button>
+                            </div>
+                          ))}
+                          {selectedChapter.content_images && selectedChapter.content_images.map((img, i) => (
+                            <div 
+                              key={`ci-${i}`} 
+                              className="media-card image-card"
+                              onClick={() => setEnlargedImage(img)}
+                            >
+                              <img src={img} alt={`Visual aid ${i+1}`} />
+                              <button className="btn-expand-img">
+                                <FiMaximize2 />
+                              </button>
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
